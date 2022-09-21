@@ -3,7 +3,7 @@
 
 
 
-## Members
+## Table Of Contents
 * [Members](#members)
 * [Project Idea](#project-idea)
 * [Business Opportunity](#business-opportunity)
@@ -11,6 +11,10 @@
 
 
 ## Members
+* Dhruv Modi
+* Abraham Mugerwa
+* Dinesh Dalip
+* Favor Fasunwon
 
 ## Project Idea
 A Web Application for University Of Regina(UofR) Residence, a digital community for the U of R Residence Students. It is a digital community for U of Residence Students to stay notified about events hosted by U of R Residence and join these events, students can join a community based on their faculty and help each other out academically, students can connect and make friends, applications also provides faculty based resources/residence based resources [Where the faculty is located/number/emails and residence contacts/emails/locations], and other cool features that will make living on residence fun such as the food feature which provides students with food recipes and food locations close to the U of R Residence. 

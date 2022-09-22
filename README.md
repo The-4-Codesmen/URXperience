@@ -9,6 +9,7 @@
 * [Business Opportunity](#business-opportunity)
 * [Vlogs](#vlogs)
 * [Project Documentation](https://github.com/The-4-Codesmen/URXperience/tree/main/Documentations)
+* [Meeting Minutes](https://github.com/The-4-Codesmen/URXperience/tree/main/Documentations/Meeting%20Minutes)
 
 
 ## Members

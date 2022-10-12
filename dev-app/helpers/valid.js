@@ -2,6 +2,7 @@
 
 //validate registration
 const {check} = require('express-validator');
+var { expressjwt: jwt } = require("express-jwt");
 exports.validRegister = [
     check('name', 'Name is required').notEmpty()
     .isLength({
@@ -44,3 +45,8 @@ exports.resetPasswordValidator = [
         .withMessage('Password must be at least  8 characters long')
         .matches(/\d/).withMessage('password must contain a number')
 ];
+
+exports.requireSignin = jwt({
+    secret: process.env.JWT_SECRET_KEY, // req.user._id
+    algorithms: ["HS256"],
+  });

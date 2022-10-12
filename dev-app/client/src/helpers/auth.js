@@ -1,6 +1,4 @@
 import cookie from "js-cookie";
-
-
 //Set in Cookie and remove it and deal
 // with localstorage
 export const setCookie = (key, value)=>{

@@ -18,7 +18,8 @@ connectDB()
 //Use bodyParser
 app.use(bodyParser.json())
 
-
+//Load all routes
+const authRouter = require('./routes/authroute')
 // Config for only development
 if(process.env.NODE_ENV === 'development'){
     app.use(cors({
@@ -32,9 +33,6 @@ if(process.env.NODE_ENV === 'development'){
     // without much problem
 }
 
-
-//Load all routes
-const authRouter = require('./routes/authroute')
 
 
 //Using routes

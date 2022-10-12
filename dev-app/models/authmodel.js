@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true, 
     },
+    faculty:{
+        type:String,
+        required:true
+    },
     salt:String,
     role:{
         type:String,
@@ -31,15 +35,15 @@ const userSchema = new mongoose.Schema({
         data:String,
         default:""
     }
-}, {timeStamp:true})
+}, {timestamps:true})
 
 
 //Virtual Password
 userSchema.virtual('password')
 .set(function(password){
-    this.password = password;
-    this.salt = this.mnakeSalt()
-    this.hash_password = this.encryptedPass(password)
+    this._password = password;
+    this.salt = this.makeSalt();
+    this.hash_password = this.encryptedPass(password);
 })
 .get(function(){
     return this._password
@@ -48,9 +52,9 @@ userSchema.virtual('password')
 
 //methods
 userSchema.methods = {
-    //generate salt for password
-    makeSalt:function(){
-        return Math.round(new Date().valueOf()*Math.random()) + ""
+    //comparing password to hased password
+    authenticate:function(plainPass){
+        return this.encryptedPass(plainPass) === this.hash_password
     },
     //encrypt password
     encryptedPass:function(password){
@@ -63,11 +67,11 @@ userSchema.methods = {
             return err
         }
     },
+    //generate salt for password
+    makeSalt:function(){
+        return Math.round(new Date().valueOf()*Math.random()) + ""
+    },
 
-    //comparing password to hased password
-    authenticate:function(plainPass){
-        return this.encryptedPass(plainPass) === this.hash_password
-    }
 }
 
 

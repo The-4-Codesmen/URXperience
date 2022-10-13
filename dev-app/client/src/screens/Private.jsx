@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
-import{Navigate, useNavigate} from 'react-router-dom'
+import{ useNavigate} from 'react-router-dom'
 import Logo from '../img/URX-logo.svg'
 const Private = () => {
   const [formData, setFormData] = useState({
@@ -113,13 +113,9 @@ const Private = () => {
                             <span className='ml-4'>Continue</span>
                         </a>
                     </div>
-                </form>
+                </form> 
                 <button
-                  onClick={() => {
-                    signout(()=>{
-                      navigate('/')
-                    })
-                  }}
+                  onClick={()=>signout()}
                   className='mt-5 tracking-wide font-semibold bg-pink-500 text-gray-100 w-full py-4 rounded-lg hover:bg-pink-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
                 >
                   <i className='fas fa-sign-out-alt  w-6  -ml-2' />

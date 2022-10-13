@@ -53,9 +53,10 @@ export const authenticate = (res, next)=>{
 
 
 //signout
-export const signout = (next)=>{
+export const signout = ()=>{
     removeCookie('token')
     removeLocalStorage('user')
+    window.location.replace('/')
 }
 
 

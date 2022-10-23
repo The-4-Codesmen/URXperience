@@ -17,6 +17,7 @@ connectDB()
 
 //Use bodyParser
 app.use(bodyParser.json())
+// comment
 
 //Load all routes
 const authRouter = require('./routes/authroute')

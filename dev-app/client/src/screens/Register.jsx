@@ -4,19 +4,35 @@ import {authenticate, isAuth} from '../helpers/auth'
 import axios from 'axios'
 import{Navigate} from 'react-router-dom'
 import Logo from '../img/URX-logo.svg'
+import Select from 'react-select'
 const Register = () => {
+    const [selected, setSelected] = useState("");
     const [formData, setFormData] = useState({
         name:"",
         email:"",
         pass1:"",
         pass2:"",
-        faculty:""
     })
-    const {email, name, pass1, pass2,faculty} = formData
+    const options = [
+        { value: 'Engineering', label: 'Engineering' },
+        { value: 'Nursing', label: 'Nursing' },
+        { value: 'Science', label: 'Science' },
+        { value: 'Arts', label: 'Arts' },
+        { value: 'Kineseology', label: 'Kineseology' },
+        { value: 'Education', label: 'Education' },
+        { value: 'Business', label: 'Business' },
+        { value: 'SocialWork', label: 'SocialWork' },
+      ]
+    const {email, name, pass1, pass2} = formData
     //Handle inputs
     const handleChange = text=>e=>{
         setFormData({...formData, [text]:e.target.value})
     }
+    const handleDropdown = (select)=>{
+        setSelected(select);
+    }
+    let stringOfSelectedFaculty = JSON.stringify(selected);
+    let faculty = JSON.parse(stringOfSelectedFaculty).label;
     //send data to backend
     const handleSubmit =e=>{
         e.preventDefault()
@@ -30,7 +46,6 @@ const Register = () => {
                             email:"",
                             pass1:"",
                             pass2:"",
-                            faculty:""
                         })
 
                         toast.success(res.data.message)
@@ -71,10 +86,16 @@ const Register = () => {
                         value={pass2}
                         className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
                          />
-                        <input type="text" placeholder='Faculty' onChange= {handleChange('faculty')}
-                        value={faculty}
+                        <Select
                         className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
-                         />
+                        placeholder="Select Faculty"
+                        options={options}
+                        closeMenuOnSelect={true}
+                        hideSelectedOptions={false}
+                        onChange={handleDropdown}
+                        allowSelectAll={false}
+                        value={selected}
+                        />
                          <button type="submit"
                          className='mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none'
                          >

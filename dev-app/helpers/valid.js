@@ -13,8 +13,7 @@ exports.validRegister = [
     check('password','password is required').notEmpty(),
     check('password').isLength({
         min:8
-    }).withMessage("Password must contain at least 8 characters").matches(/\d/).withMessage("Password must contain a number"),
-    check('faculty','faculty is required').notEmpty()
+    }).withMessage("Password must contain at least 8 characters").matches(/\d/).withMessage("Password must contain a number")
 ]
 
 //validate login

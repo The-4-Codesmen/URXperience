@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 //Load all routes
 const authRouter = require('./routes/authroute')
 // Config for only development
-if(process.env.NODE_ENV === 'development'){
+if (process.env.NODE_ENV === 'development') {
     app.use(cors({
         origin: process.env.CLIENT_URL
     }))
@@ -39,16 +39,29 @@ if(process.env.NODE_ENV === 'development'){
 //Using routes
 app.use('/api', authRouter);
 
-app.use((req, res, next) =>{
+app.use((req, res, next) => {
     res.status(404).json({
         sucess: false,
-        message:"Page not found"
+        message: "Page not found"
     })
 })
 
 const PORT = process.env.PORT
 
 //port for server side
-app.listen(PORT,()=>{
-    console.log('listening on port '+PORT);
+const server = app.listen(PORT, () => {
+    console.log('listening on port ' + PORT);
+})
+
+
+//5000-backend
+//const server = require('http').createServer(app)
+//chat system port
+const io = require("socket.io")(server, {
+    pingTimeout: 100000,
+    cors: {
+        origin: "http://localhost:3000",
+
+
+    },
 })

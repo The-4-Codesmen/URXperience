@@ -49,6 +49,48 @@ app.use((req, res, next) =>{
 const PORT = process.env.PORT
 
 //port for server side
-app.listen(PORT,()=>{
+const server = app.listen(PORT,()=>{
     console.log('listening on port '+PORT);
 })
+
+//5000-backend
+//const server = require('http').createServer(app)
+//chat system port
+const io = require("socket.io")(server, {
+    pingTimeout: 100000,
+    cors: {
+        origin: "http://localhost:3000",
+    },
+})
+
+io.on("connection",(socket)=>{
+
+    console.log(socket.id);
+    socket.on('send-message', message, room);
+    io.emit('forwarded-message', message )
+})
+
+
+
+
+//client side 
+// npm i socket.io-client
+
+import io from 'socket.io-client'
+const socket = io("http://localhost:3000");
+
+socket.on('connect', ()=>{
+   
+    displayMessage('connected with id: ' +socket.id)
+
+    //funtion to send message to server 
+    socket.emit('send-message',"data to be passed to server",room);
+
+})
+
+
+socket.on('forwarded-message', message =>{
+    //display message
+
+})
+

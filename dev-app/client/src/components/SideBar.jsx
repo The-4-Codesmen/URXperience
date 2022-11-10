@@ -44,30 +44,31 @@ const SideBar = () => {
                 </div>
                 {/* for members who joined the chat */}
                 <h2 className="text-lg font-extrabold">Online Members:</h2>
-                <a
+                <div className="container overflow-y-scroll rounded bg-green-600 px-2 font-medium border border-green-600" style={{ height: '300px' }}>                <a
                     className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline mt-5'
+                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-800 focus:shadow-sm focus:shadow-outline mt-5'
                     href='#'
                     target='_self'
                 >
                     <span>Sarah</span>
                 </a>
-                <a
-                    className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline mt-5'
-                    href='#'
-                    target='_self'
-                >
-                    <span>Sarah</span>
-                </a>
-                <a
-                    className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline mt-5'
-                    href='#'
-                    target='_self'
-                >
-                    <span>Sarah</span>
-                </a>
+                    <a
+                        className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
+                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-800 focus:shadow-sm focus:shadow-outline mt-5'
+                        href='#'
+                        target='_self'
+                    >
+                        <span>Sarah</span>
+                    </a>
+                    <a
+                        className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
+                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-800 focus:shadow-sm focus:shadow-outline mt-5'
+                        href='#'
+                        target='_self'
+                    >
+                        <span>Sarah</span>
+                    </a>
+                </div>
 
                 <div className='flex flex-col items-center'>
                     <a

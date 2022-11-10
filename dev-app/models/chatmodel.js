@@ -1,41 +1,29 @@
 const mongoose = require('mongoose')
 
-
-//User Schema
 const chatSchema = new mongoose.Schema({
-    email: {
+
+    isGroupChat: {
+        type: Boolean,
+        default: false,
+    },
+    Admin: {
+        type: mongoose.schema.Types.ObjectId,
+        ref: "User"
+    },
+    chatId: {
         type: String,
         trim: true,
-        required: true,
-        unique: true,
-        lowercase: true,
     },
-    name: {
-        type: String,
-        trim: true,
-        required: true,
-    },
-    hash_password: {
-        //password will be saved as hash after encryption
-        type: String,
-        required: true,
-    },
-    faculty: {
-        type: String,
-        required: true
-    },
-    salt: String,
-    role: {
-        type: String,
-        //there will be one for students(normal) and RAs()
-        default: "Normal",
-    },
-    resetPasswordLink: {
-        data: String,
-        default: ""
-    }
-}, { timestamps: true })
 
+    users: [
+        {
+            type: mongoose.schema.Types.ObjectId,
+            ref: "User"
+        },
+    ],
 
+}, { timestamps: true });
 
-module.exports = mongoose.model('chat', chatSchema)
+const Chat = mongoose.model('Chat', chatSchema);
+
+module.exports = Chat;

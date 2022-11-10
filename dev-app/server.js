@@ -5,7 +5,7 @@ const cors = require('cors')
 const connectDB = require('./config/db')
 const app = express()
 
-
+const rooms = ['Engineering', 'Nursing', 'Business']
 //Config.env to ./config/config.env
 require('dotenv').config({
     path: './config/config.env'
@@ -47,13 +47,10 @@ app.use((req, res, next) => {
 })
 
 const PORT = process.env.PORT
-
 //port for server side
 const server = app.listen(PORT, () => {
     console.log('listening on port ' + PORT);
 })
-
-
 //5000-backend
 //const server = require('http').createServer(app)
 //chat system port
@@ -61,7 +58,7 @@ const io = require("socket.io")(server, {
     pingTimeout: 100000,
     cors: {
         origin: "http://localhost:3000",
-
+        methods: ["GET", "POST"]
 
     },
 })

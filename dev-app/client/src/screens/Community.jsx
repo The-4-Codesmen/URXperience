@@ -4,9 +4,9 @@ import SideBar from '../components/SideBar'
 import MessageForm from '../components/MessageForm'
 const Community = () => {
   return (
-    <div className="md:flex min-h-screen relative">
+    <div className=" md:flex min-h-screen relative overflow-hidden">
       <SideBar />
-      <div className="w-full p-10">
+      <div className="w-full p-3">
         <MessageForm />
       </div>
     </div>

@@ -10,10 +10,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import PlaceDetails from "./PlaceDetails";
+import useStyles from "./Styles/ListStyle";
 
 const List = () => {
   const classes = useStyles();
-  const [type, setType] = useState("restaurants");
+  const [type, setType] = useState("");
   const [rating, setRating] = useState("");
 
   const places = [

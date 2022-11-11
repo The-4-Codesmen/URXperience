@@ -7,7 +7,7 @@ import {
   MenuItem,
   FormControl,
   Select,
-} from "@mui/material";
+} from "@material-ui/core";
 import { useState } from "react";
 import PlaceDetails from "./PlaceDetails";
 import useStyles from "./Styles/ListStyle";

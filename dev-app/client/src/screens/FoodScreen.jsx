@@ -5,7 +5,6 @@ import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import App from "../App";
-import { Card, Button } from "react-bootstrap";
 
 const FoodScreen = () => {
   const [meals, setMeals] = useState([]);

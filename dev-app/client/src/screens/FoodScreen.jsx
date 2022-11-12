@@ -6,6 +6,7 @@ import{ useNavigate} from 'react-router-dom';
 import Navbar from './Navbar';
 import App from '../App';
 
+
 import Pages from './FoodPages/Pages';
 
 function FoodScreen(){

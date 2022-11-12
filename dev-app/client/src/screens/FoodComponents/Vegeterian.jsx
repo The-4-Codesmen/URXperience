@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import {Card, Button} from "react-bootstrap";
 import {Wrapper} from "react-bootstrap"
+
+
 function Vegeterian() {
 
     const[vegeterian, setVegeterian] = useState([]);
@@ -13,7 +15,7 @@ function Vegeterian() {
 
 
     const getVegeterian = async() =>{
-        const api = await fetch('https://api.spoonacular.com/recipes/random?apiKey=06682ec145c2473eabb0c2544fe7cc06&number=1&')
+        const api = await fetch('https://api.spoonacular.com/recipes/random?apiKey=${process.env.FOOD_APP_API_KEY}&number=1')
         const data = await api.json();
         console.log(data)
         setVegeterian(data.recipes)

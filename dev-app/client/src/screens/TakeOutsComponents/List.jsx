@@ -19,7 +19,8 @@ const List = ({ places }) => {
 
   return (
     <div className={classes.container}>
-      <Typography variant="h4">Food Places</Typography>
+      {/*<Typography variant="h4">Food Places</Typography> */}
+      {/*
       <FormControl className={classes.FormControl}>
         <InputLabel>Rating</InputLabel>
         <Select value={rating} onChange={(e) => setRating(e.target.value)}>
@@ -29,6 +30,7 @@ const List = ({ places }) => {
           <MenuItem value={4.5}>Above 4.5</MenuItem>
         </Select>
       </FormControl>
+  */}
       <Grid container spacing={3} className={classes.list}>
         {places?.map((place, i) => (
           <Grid item key={i} xs={12}>

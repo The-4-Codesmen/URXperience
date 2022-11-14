@@ -8,8 +8,8 @@ import { getPlacesData } from "../backendtakeouts/takeouts";
 const TakeOuts = () => {
   const [places, setPlaces] = useState([]);
   const [coordinates, setCoordinates] = useState({
-    lat: 52.520007,
-    lng: 13.404954,
+    lat: 50.44521,
+    lng: -104.618896,
   });
   const [bounds, setBounds] = useState({});
 

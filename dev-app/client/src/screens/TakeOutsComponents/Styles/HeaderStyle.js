@@ -2,6 +2,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { alpha } from "@material-ui/core";
 
 export default makeStyles((theme) => ({
+  header: {
+    backgroundColor: "green",
+  },
+
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {

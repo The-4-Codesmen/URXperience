@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import { authenticate, isAuth } from '../helpers/auth'
-import axios from 'axios'
+//import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Logo from '../img/URX-logo.svg'
+import { useLoginUserMutation } from "../services/appApi";
 const Login = () => {
     const [formData, setFormData] = useState({
         email: "",
         pass1: "",
     })
     const navigate = useNavigate();
+    const [loginUser] = useLoginUserMutation();
+    // const { socket } = useContext(AppContext);
     const { email, pass1 } = formData
     //Handle inputs
     const handleChange = text => e => {
@@ -19,9 +22,7 @@ const Login = () => {
     const handleSubmit = e => {
         e.preventDefault()
         if (email && pass1) {
-            axios.post(`http://localhost:5000/api/login`, {
-                email, password: pass1
-            }).then(res => {
+            loginUser({ email, password: pass1 }).then(res => {
                 authenticate(res, () => {
                     setFormData({
                         ...formData,
@@ -29,10 +30,16 @@ const Login = () => {
                         pass1: "",
                     })
                 })
+                // socket.emit('new-user')
                 isAuth() && isAuth().role === 'admin' ? navigate('/admin') : navigate('/')
                 toast.success(`Hey ${res.data.user.name}`)
             }).catch(err => {
-                toast.error(err.response.data.error)
+                toast.error("User with that email does not exist")
+                setFormData({
+                    ...formData,
+                    email: "",
+                    pass1: "",
+                })
             })
         } else {
             toast.error("Please fill all fields")

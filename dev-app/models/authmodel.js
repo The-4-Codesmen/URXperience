@@ -31,11 +31,19 @@ const userSchema = new mongoose.Schema({
         //there will be one for students(normal) and RAs()
         default: "Normal",
     },
+    newMessages: {
+        type: Object,
+        default: {}
+    },
+    status: {
+        type: String,
+        default: 'offline'
+    },
     resetPasswordLink: {
         data: String,
         default: ""
     }
-}, { timestamps: true })
+}, { timestamps: true, minimize: false })
 
 
 //Virtual Password

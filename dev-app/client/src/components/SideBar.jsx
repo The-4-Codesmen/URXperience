@@ -1,18 +1,81 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import Logo from '../img/URX-logo.svg'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import { AppContext } from '../context/appContext';
+import ListGroup from 'react-bootstrap/ListGroup'
+import { addNotifications, resetNotifications } from '../features/userSlice'
+import { useLogoutUserMutation } from "../services/appApi";
+import axios from 'axios'
 const SideBar = () => {
     const sideBarRef = useRef()
     function toogleSideBar() {
         sideBarRef.current.classList.toggle('-translate-x-full')
     }
+    const { user } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
     const navigate = useNavigate();
+    const { socket, currentRoom, setCurrentRoom, members,
+        setMembers, directMemberMessage,
+        setDirectMemberMessage, rooms, setRooms, } = useContext(AppContext)
+    var stringRoom = user.faculty
+    const [logoutUser] = useLogoutUserMutation();
+    useEffect(() => {
+        setCurrentRoom(stringRoom)
+        getAttributedRoom()
+        socket.emit('join-room', stringRoom)
+        socket.emit("new-user")
+    }, [])
+    socket.off('new-user').on('new-user', (payload) => {
+        setMembers(payload)
+    })
+    function getAttributedRoom() {
+        axios.get("http://localhost:5000/api/rooms").then((res) => {
+            setRooms(res.data)
+        })
+
+    }
+    function handleLeaveChat(e) {
+        e.preventDefault()
+        socket.emit('leave-chat')
+        // console.log(user.newMessages)
+        //logoutUser(tempUser);
+        window.location.replace('/dashboard')
+    }
+    // socket.off('notifications').on('notifications', (room) => {
+    //     if (currentRoom !== room) dispatch(addNotifications(room))
+    // })
+    function joinRoom(room, isPublic = true) {
+        if (!user) {
+            navigate('/login')
+        }
+        socket.emit('join-room', room, currentRoom);
+        setCurrentRoom(room)
+        if (isPublic) {
+            setDirectMemberMessage(null)
+        }
+        //dispatch notifications
+        // dispatch(resetNotifications(room));
+    }
+
+    function sortIds(id1, id2) {
+        if (id1 > id2) {
+            return id1 + '-' + id2
+        } else {
+            return id2 + '-' + id1
+        }
+    }
+    function handleDirectMemberMessage(member) {
+        setDirectMemberMessage(member)
+        const roomID = sortIds(user._id, member._id)
+        joinRoom(roomID, false)
+    }
     return (
         <div className="md:sticky md:top-0 z-50 text-white">
             {/* MOBILE SIDEBAR */}
             <div className="bg-green-800 flex justify-between p-2 items-center sticky top-0 z-30">
 
-                <a className="block text-white font-extrabold dark:text-dw">URXPERIENCE CHAT</a>
+                <p className="block text-white font-extrabold dark:text-dw">URXPERIENCE CHAT</p>
                 <button
 
                     className="rounded text-3l"
@@ -31,50 +94,54 @@ const SideBar = () => {
                     URXPERIENCE CHAT
                 </h1>
                 <h2 className="text-lg font-extrabold">Avaliable Room:</h2>
-                <div className='flex flex-col items-center'>
-                    <a
-                        className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline mt-1'
-                        href=''
-                        target='_self'
-                    >
-                        <i className='fa-solid fa-book fa 1x w-6  -ml-2 text-white' />
-                        <span className='ml-2'>Faculy of Engineering</span>
-                    </a>
-                </div>
+                {/* <div className='flex flex-col items-center'>
+
+
+                </div> */}
+                <ListGroup>
+                    {rooms.map((room, idx) => (
+                        room === user.faculty ?
+                            <ListGroup.Item
+                                key={idx} onClick={() => joinRoom(room)}
+                                active={room === currentRoom}
+                                className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
+                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 
+                                focus:shadow-sm focus:shadow-outline mt-1'>
+                                <i className='fa-solid fa-book fa 1x w-6  -ml-2 text-white' />
+                                {room}
+                                {/* {currentRoom !== room && <span className='rounded bg-yellow-200 text-black text-center'>{console.log(user.newMessages[0])}</span>} */}
+                            </ListGroup.Item> : null
+                    ))}
+                </ListGroup>
                 {/* for members who joined the chat */}
                 <h2 className="text-lg font-extrabold">Online Members:</h2>
-                <div className="container overflow-y-scroll rounded bg-green-600 px-2 font-medium border border-green-600" style={{ height: '300px' }}>                <a
-                    className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-800 focus:shadow-sm focus:shadow-outline mt-5'
-                    href='#'
-                    target='_self'
-                >
-                    <span>Sarah</span>
-                </a>
-                    <a
-                        className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-800 focus:shadow-sm focus:shadow-outline mt-5'
-                        href='#'
-                        target='_self'
-                    >
-                        <span>Sarah</span>
-                    </a>
-                    <a
-                        className='w-full max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-800 focus:shadow-sm focus:shadow-outline mt-5'
-                        href='#'
-                        target='_self'
-                    >
-                        <span>Sarah</span>
-                    </a>
+
+                <div className="container overflow-y-scroll rounded bg-yellow-100 px-2 font-medium border border-yellow-100" style={{ height: '300px' }}>
+                    {members.map((member, idx) => (
+                        member._id === user._id ? <ListGroup.Item key={idx} className="hidden"></ListGroup.Item>
+                            : <ListGroup.Item key={member._id}
+                                className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
+                                bg-green-700 text-white flex items-center justify-center transition-all 
+                                duration-300 ease-in-out focus:outline-none hover:bg-green-800 
+                                focus:shadow-sm focus:shadow-outline mt-5'
+                                active={directMemberMessage?._id === member?._id} onClick={() => handleDirectMemberMessage(member)}>
+                                <div className='flex gap-3 flex-row'>
+                                    <div >
+                                        {member.status === "online" ? <i className="fas fa-circle text-green-300 "></i>
+                                            : <i className="fas fa-circle text-red-600"></i>}
+                                    </div>
+                                    <div>{member.name}</div>
+
+                                </div>
+                            </ListGroup.Item>
+                    ))}
                 </div>
 
                 <div className='flex flex-col items-center'>
                     <a
                         className='w-full mt-56 max-w-xs font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline mt-5'
-                        href='/dashboard'
+                        onClick={handleLeaveChat}
                         target='_self'
                     >
                         <i className='fas fa-sign-in-alt fa 1x w-6  -ml-2 text-white' />

@@ -1,7 +1,18 @@
 const User = require('../models/authmodel')
 var userId = '';
-const expressjwt = require('express-jwt')
 
+// const express = require('express')
+// const app = express()
+// const http = require('http')
+// const { Server } = require('socket.io')
+// const server = http.createServer(app)
+// const io = new Server(server, {
+//     cors: {
+//         origin: "http://localhost:3000",
+//         methods: ["GET", "POST"]
+
+//     },
+// })
 // Defining Lodash variable 
 const _ = require('lodash');
 
@@ -9,7 +20,8 @@ const { validationResult } = require('express-validator')
 const nodeMailer = require('nodemailer');
 const jwt = require('jsonwebtoken')
 //custom error handler to get usfeul error from database
-const { errorHandler } = require('../helpers/dbErrorHandling')
+const { errorHandler } = require('../helpers/dbErrorHandling');
+
 
 
 exports.registerController = (req, res) => {
@@ -140,7 +152,8 @@ exports.loginController = (req, res) => {
                     error: 'User with that email does not exist'
                 })
             }
-
+            user.status = 'online';
+            user.save()
             //Authenticate
             if (!user.authenticate(password)) {
                 return res.status(400).json({
@@ -152,10 +165,10 @@ exports.loginController = (req, res) => {
             const token = jwt.sign({
                 _id: user._id,
             }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' })
-            const { _id, name, email, faculty, role } = user
+            const { _id, name, email, faculty, role, newMessages } = user
             return res.json({
                 token, user: {
-                    _id, name, email, faculty, role
+                    _id, name, email, faculty, role, newMessages
                 }
             })
         })
@@ -335,3 +348,23 @@ exports.readController = (req, res) => {
         res.json(user);
     });
 };
+
+exports.roomController = (req, res) => {
+    const rooms = ['Engineering', 'Nursing', 'Business', "Arts"]
+    res.json(rooms)
+}
+exports.chatLogoutController = (req, res) => {
+    try {
+        User.findById({ _id: userId }, (err, user) => {
+            user.status = "offline"
+            user.newMessages = {};
+            user.save()
+        })
+        // const user = User.findById(_id);
+        // user.save();
+        res.status(200).send()
+    } catch (error) {
+        return res.status(400).send();
+    }
+
+}

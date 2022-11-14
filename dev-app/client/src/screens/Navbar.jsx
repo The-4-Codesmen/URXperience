@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { signout } from '../helpers/auth';
 import Logo from '../img/URX-logo.svg'
+import axios from 'axios'
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const toggleOpen = () => {
     setShow(!show)
+  }
+  function handleSignout() {
+    axios.delete("http://localhost:5000/api/logout").then((res) => {
+      const { temp } = res.data
+    })
+    signout();
   }
   return (
     <div className='min-h-screen bg gray-100 text-gray-900 flex justify-center'>
@@ -15,7 +22,7 @@ const Navbar = () => {
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">URXperience</span>
           </a>
           <div className="flex md:order-2">
-            <button type="button" onClick={() => signout()} className="text-white bg-green-800 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Logout</button>
+            <button type="button" onClick={handleSignout} className="text-white bg-green-800 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Logout</button>
             <button onClick={toggleOpen} data-collapse-toggle="navbar-sticky" type="button" className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
               <span className="sr-only">Open main menu</span>
               <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>

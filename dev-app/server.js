@@ -4,7 +4,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const connectDB = require('./config/db')
 const app = express()
-
+const message = require('./models/messagemodel');
+const User = require('./models/authmodel');
 const rooms = ['Engineering', 'Nursing', 'Business']
 //Config.env to ./config/config.env
 require('dotenv').config({
@@ -21,6 +22,7 @@ app.use(bodyParser.json())
 
 //Load all routes
 const authRouter = require('./routes/authroute')
+
 // Config for only development
 if (process.env.NODE_ENV === 'development') {
     app.use(cors({
@@ -47,18 +49,105 @@ app.use((req, res, next) => {
 })
 
 const PORT = process.env.PORT
-//port for server side
-const server = app.listen(PORT, () => {
-    console.log('listening on port ' + PORT);
-})
-//5000-backend
-//const server = require('http').createServer(app)
-//chat system port
-const io = require("socket.io")(server, {
-    pingTimeout: 100000,
+const http = require('http')
+const { Server } = require('socket.io')
+const server = http.createServer(app)
+const io = new Server(server, {
     cors: {
         origin: "http://localhost:3000",
         methods: ["GET", "POST"]
 
     },
+})
+//5000-backend
+//const server = require('http').createServer(app)
+//chat system port
+// const io = require("socket.io")(5001, {
+//     // pingTimeout: 100000,
+//     cors: {
+//         origin: "http://localhost:3000",
+//         methods: ["GET", "POST"]
+
+//     },
+// })
+
+
+
+//get previous messages from room
+async function retrievePreviousMessagesinRoom(room) {
+    let roomMessages = await message.aggregate([
+        { $match: { to: room } },
+        //groups messages of the same date
+        { $group: { _id: '$date', messagesByDate: { $push: '$$ROOT' } } }
+    ])
+    return roomMessages;
+}
+
+// sorting the messages by the dates they were put into chat
+function sortRoomMessagesByDate(messages) {
+    return messages.sort(function (latestMessages, newestMessages) {
+        let previousDate = latestMessages._id.split('/')
+        let currentDate = newestMessages._id.split('/')
+
+        //month + year + day
+        previousDate = previousDate[2] + previousDate[0] + previousDate[1]
+        currentDate = currentDate[2] + currentDate[0] + currentDate[1]
+
+        return previousDate < currentDate ? -1 : 1
+    })
+}
+// async function handleRoomMessages(room) {
+//     let roomMessages = await retrievePreviousMessagesinRoom(room)
+//     roomMessages = sortRoomMessagesByDate(roomMessages)
+//     return roomMessages
+// }
+//socket connection
+io.on('connection', (socket) => {
+    socket.on('new-user', async () => {
+        const members = await User.find();
+        io.emit('new-user', members)
+    })
+    socket.on('join-room', async (newRoom, previousRoom) => {
+        socket.join(newRoom)
+        socket.leave(previousRoom)
+        let roomMessages = await retrievePreviousMessagesinRoom(newRoom)
+        roomMessages = sortRoomMessagesByDate(roomMessages)
+        socket.emit('room-messages', roomMessages)
+    })
+
+    socket.on('message-room', async (room, content, sender, time, date) => {
+        // console.log('new-message', content)
+        const newMessage = await message.create({ content, from: sender, time, date, to: room })
+        //sending message to specified room
+        let roomMessages = await retrievePreviousMessagesinRoom(room)
+        roomMessages = sortRoomMessagesByDate(roomMessages)
+        io.to(room).emit('room-messages', roomMessages)
+        socket.broadcast.emit('notifications', room)
+    })
+    socket.on('leave-chat', async () => {
+        const members = await User.find();
+        socket.broadcast.emit('new-user', members);
+    })
+    // app.delete('/api/logout', async (req, res) => {
+    //     try {
+    //         const { _id, newMessages } = req.body;
+    //         console.log(_id)
+    //         console.log(newMessages);
+    //         const user = await User.findById(_id);
+    //         user.status = "offline"
+    //         user.newMessages = newMessages;
+    //         user.save();
+    //         const members = await User.find();
+    //         socket.broadcast.emit('new-user', members);
+    //         console.log("here")
+    //         res.status(200).send()
+    //     } catch (error) {
+    //         return res.status(400).send()
+    //     }
+    // })
+})
+
+//port for server side
+server.listen(PORT, () => {
+    console.log('listening on port ' + PORT);
 })

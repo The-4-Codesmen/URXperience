@@ -27,14 +27,22 @@ const MessageForm = () => {
         // console.log('room-messages', roomMessages)
         setMessages(roomMessages)
     })
+    function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+    }
 
     function handleSubmit(e) {
         if (!message) return
         e.preventDefault()
         const today = new Date()
-        const mins = today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes()
-        const hours = today.getHours() % 12 == 0 ? 12 : today.getHours() % 12
-        const time = hours + ":" + mins + `${(hours + 11 % 12) < 12 ? "AM" : "PM"}`
+        const time = formatAMPM(today)
         const roomID = currentRoom;
         socket.emit('message-room', roomID, message, user, time, presentDate)
         setMessage('');
@@ -61,7 +69,7 @@ const MessageForm = () => {
                 )}
                 {user && messages.map(({ _id: date, messagesByDate }, idx) => (
                     <div key={idx}>
-                        <div className="flex items-center" >
+                        <div className="flex items-center mt-5" >
                             <div className="flex-grow h-px bg-green-700"></div>
                             <p className="text-green-700 text-center text-white mt-1 flex-shrink p-3">
                                 {date}

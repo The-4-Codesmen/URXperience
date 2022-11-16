@@ -7,11 +7,13 @@ import { getPlacesData } from "../backendtakeouts/takeouts";
 
 const TakeOuts = () => {
   const [places, setPlaces] = useState([]);
+  const [filteredPlaces, setFilteredPlace] = useState([]);
   const [coordinates, setCoordinates] = useState({
     lat: 50.44521,
     lng: -104.618896,
   });
   const [bounds, setBounds] = useState({});
+  const [rating, setRating] = useState("");
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -22,9 +24,15 @@ const TakeOuts = () => {
   }, []);
 
   useEffect(() => {
+    const filteredPlaces = places.filter((place) => place.rating > rating);
+    setFilteredPlace(filteredPlaces);
+  }, [rating]);
+
+  useEffect(() => {
     getPlacesData(bounds.sw, bounds.ne).then((data) => {
-      console.log(data);
       setPlaces(data);
+      setFilteredPlace([]);
+      setRating("");
     });
   }, [coordinates, bounds]);
   return (
@@ -33,14 +41,18 @@ const TakeOuts = () => {
       <Header />
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4}>
-          <List places={places} />
+          <List
+            places={filteredPlaces.length ? filteredPlaces : places}
+            rating={rating}
+            setRating={setRating}
+          />
         </Grid>
         <Grid item xs={12} md={4}>
           <Map
             setCoordinates={setCoordinates}
             setBounds={setBounds}
             coordinates={coordinates}
-            places={places}
+            places={filteredPlaces.length ? filteredPlaces : places}
           />
         </Grid>
       </Grid>

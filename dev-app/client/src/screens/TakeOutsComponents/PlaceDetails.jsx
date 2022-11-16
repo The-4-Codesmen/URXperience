@@ -28,6 +28,11 @@ const PlaceDetails = ({ place }) => {
         <Typography gutterBottom variant="h5">
           {place.name}
         </Typography>
+        <Box display="flex" justifyContent="space_between" my={2}></Box>
+        <Rating name="read-only" value={Number(place.rating)} readOnly></Rating>
+        <Typography component="legend">
+          {place.num_reviews} review{place.num_reviews > 1 && "s"}
+        </Typography>
         {place?.cuisine?.map(({ name }) => (
           <Chip
             key={name}

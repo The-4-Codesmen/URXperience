@@ -10,9 +10,9 @@ import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import Rating from "@material-ui/lab";
 import useStyles from "./Styles/MapStyle";
 
-const Map = ({ setCoordinates, setBounds, coordinates }) => {
+const Map = ({ setCoordinates, setBounds, coordinates, places }) => {
   const classes = useStyles();
-  const isMobile = useMediaQuery("(min-width:600px");
+  const isDesktop = useMediaQuery("(min-width:600px");
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact
@@ -27,7 +27,31 @@ const Map = ({ setCoordinates, setBounds, coordinates }) => {
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
         onChildClick={""}
-      ></GoogleMapReact>
+      >
+        {places?.map((place, i) => (
+          <div
+            className={classes.markerContainer}
+            lat={Number(place.latitude)}
+            lng={Number(place.longitude)}
+            key={i}
+          >
+            {!isDesktop ? (
+              <LocationOnOutlinedIcon color="primary" fontSize="larger" />
+            ) : (
+              <Paper elevation={3} className={classes.paper}>
+                <Typography
+                  className={classes.typography}
+                  variant="subtitle2"
+                  gutterBottom
+                >
+                  {place.name}
+                </Typography>
+                <img className={classes.pointer} alt={place.name} />
+              </Paper>
+            )}
+          </div>
+        ))}
+      </GoogleMapReact>
     </div>
   );
 };

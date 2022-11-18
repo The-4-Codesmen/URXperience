@@ -35,20 +35,22 @@ const Map = ({ setCoordinates, setBounds, coordinates, places }) => {
             lng={Number(place.longitude)}
             key={i}
           >
-            {!isDesktop ? (
+            {/* {!isDesktop ? (
               <LocationOnOutlinedIcon color="primary" fontSize="larger" />
             ) : (
-              <Paper elevation={3} className={classes.paper}>
-                <Typography
-                  className={classes.typography}
-                  variant="subtitle2"
-                  gutterBottom
-                >
-                  {place.name}
-                </Typography>
-                <img className={classes.pointer} alt={place.name} />
-              </Paper>
-            )}
+              // <Paper elevation={3} className={classes.paper}>
+              //   <Typography
+              //     className={classes.typography}
+              //     variant="subtitle2"
+              //     gutterBottom
+              //   >
+
+              //   </Typography>
+              //   <img className={classes.pointer} alt={place.name} />
+              // </Paper>
+              <i className="fa-sharp fa-solid fa-location-dot"></i>
+            )} */}
+            <LocationOnOutlinedIcon color="secondary" fontSize="larger" />
           </div>
         ))}
       </GoogleMapReact>

@@ -17,9 +17,13 @@ const List = ({ places, rating, setRating }) => {
 
   return (
     <div className={classes.container}>
-      <FormControl className={classes.FormControl}>
+      <FormControl className="w-1/3">
         <InputLabel>Rating</InputLabel>
-        <Select value={rating} onChange={(e) => setRating(e.target.value)}>
+        <Select
+          className="mb-3"
+          value={rating}
+          onChange={(e) => setRating(e.target.value)}
+        >
           <MenuItem value={0}>All</MenuItem>
           <MenuItem value={3}>Above 3.0</MenuItem>
           <MenuItem value={4}>Above 4.0</MenuItem>

@@ -4,7 +4,10 @@ import Header from "./TakeOutsComponents/Header";
 import List from "./TakeOutsComponents/List";
 import Map from "./TakeOutsComponents/Map";
 import { getPlacesData } from "../backendtakeouts/takeouts";
-
+import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 const TakeOuts = () => {
   const [places, setPlaces] = useState([]);
   const [filteredPlaces, setFilteredPlace] = useState([]);
@@ -14,7 +17,31 @@ const TakeOuts = () => {
   });
   const [bounds, setBounds] = useState({});
   const [rating, setRating] = useState("");
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = getCookie("token");
+    if (!getCookie("token")) {
+      navigate("/login");
+    } else {
+      axios
+        .get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const { role, name, email } = res.data;
+        })
+        .catch((err) => {
+          toast.error(`Error to your Information ${err.response.statusText}`);
+          if (err.response.status === 401) {
+            signout(() => {
+              navigate("/login");
+            });
+          }
+        });
+    }
+  }, []);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coordinates: { latitude, longitude } }) => {
@@ -35,6 +62,7 @@ const TakeOuts = () => {
       setRating("");
     });
   }, [coordinates, bounds]);
+
   return (
     <>
       <CssBaseline />

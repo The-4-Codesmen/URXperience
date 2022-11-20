@@ -350,7 +350,7 @@ exports.readController = (req, res) => {
 };
 
 exports.roomController = (req, res) => {
-    const rooms = ['Engineering', 'Nursing', 'Business', "Arts"]
+    const rooms = ['Engineering', 'Nursing', 'Business', "Arts", "Science", "Kineseology", "Education", "SocialWork"]
     res.json(rooms)
 }
 exports.chatLogoutController = (req, res) => {

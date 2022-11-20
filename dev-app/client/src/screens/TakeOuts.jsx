@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 const TakeOuts = () => {
   const [places, setPlaces] = useState([]);
+  const [childClicked, setChildClicked] = useState(null);
   const [filteredPlaces, setFilteredPlace] = useState([]);
   const [coordinates, setCoordinates] = useState({
     lat: 50.44521,
@@ -42,6 +43,8 @@ const TakeOuts = () => {
         });
     }
   }, []);
+
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coordinates: { latitude, longitude } }) => {
@@ -56,10 +59,12 @@ const TakeOuts = () => {
   }, [rating]);
 
   useEffect(() => {
+    setIsLoading(true);
     getPlacesData(bounds.sw, bounds.ne).then((data) => {
       setPlaces(data);
       setFilteredPlace([]);
       setRating("");
+      setIsLoading(false);
     });
   }, [coordinates, bounds]);
 
@@ -73,6 +78,8 @@ const TakeOuts = () => {
             places={filteredPlaces.length ? filteredPlaces : places}
             rating={rating}
             setRating={setRating}
+            childClicked={childClicked}
+            isLoading={isLoading}
           />
         </Grid>
         <Grid item xs={12} md={4}>
@@ -81,6 +88,7 @@ const TakeOuts = () => {
             setBounds={setBounds}
             coordinates={coordinates}
             places={filteredPlaces.length ? filteredPlaces : places}
+            setChildClicked={setChildClicked}
           />
         </Grid>
       </Grid>

@@ -1,12 +1,7 @@
 import React from "react";
 import { Autocomplete } from "@react-google-maps/api";
-import { AppBar, Toolbar, Typography, InputBase, Box } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import useStyles from "./Styles/HeaderStyle";
 import Logo from "../../img/URX-logo.svg";
-import Navbar from "../Navbar";
 const Header = () => {
-  const classes = useStyles();
   return (
     <nav className="flex flex-row text-center text-center justify-between py-3 px-4 bg-green-800 shadow items-center w-full mb-5">
       <a href="/dashboard">

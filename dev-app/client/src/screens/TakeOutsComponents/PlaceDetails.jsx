@@ -15,8 +15,11 @@ import Rating from "@material-ui/lab/Rating";
 import useStyles from "./Styles/PlaceDetailsStyle";
 import LocationOn from "@material-ui/icons/LocationOn";
 
-const PlaceDetails = ({ place }) => {
+const PlaceDetails = ({ place, selected, refProp }) => {
   const classes = useStyles();
+
+  if (selected)
+    refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   return (
     <>
       {place.photo ? (

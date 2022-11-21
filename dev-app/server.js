@@ -8,17 +8,15 @@ const message = require('./models/messagemodel');
 const User = require('./models/authmodel');
 const rooms = ['Engineering', 'Nursing', 'Business']
 //Config.env to ./config/config.env
-require('dotenv').config({
-    path: './config/config.env'
-})
+require("dotenv").config({
+  path: "./config/config.env",
+});
 
-//connect to Database 
-connectDB()
-
+//connect to Database
+connectDB();
 
 //Use bodyParser
-app.use(bodyParser.json())
-
+app.use(bodyParser.json());
 
 //Load all routes
 const authRouter = require('./routes/authroute')
@@ -29,17 +27,15 @@ if (process.env.NODE_ENV === 'development') {
         origin: process.env.CLIENT_URL
     }))
 
-    app.use(morgan('dev'))
+  app.use(morgan("dev"));
 
-    // Morgan gives info about each request
-    // Cors it allows to deal with react for localhost at port 3000
-    // without much problem
+  // Morgan gives info about each request
+  // Cors it allows to deal with react for localhost at port 3000
+  // without much problem
 }
 
-
-
 //Using routes
-app.use('/api', authRouter);
+app.use("/api", authRouter);
 
 app.use((req, res, next) => {
     res.status(404).json({

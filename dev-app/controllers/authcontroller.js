@@ -353,9 +353,9 @@ exports.roomController = (req, res) => {
     const rooms = ['Engineering', 'Nursing', 'Business', "Arts", "Science", "Kineseology", "Education", "SocialWork"]
     res.json(rooms)
 }
-exports.chatLogoutController = (req, res) => {
+exports.LogoutController = (req, res) => {
     try {
-        User.findById({ _id: userId }, (err, user) => {
+        User.findById({ _id: req.user_id }, (err, user) => {
             user.status = "offline"
             user.newMessages = {};
             user.save()
@@ -367,4 +367,15 @@ exports.chatLogoutController = (req, res) => {
         return res.status(400).send();
     }
 
+}
+
+exports.deleteController = async (req, res) => {
+    try {
+        //console.log(req.user_id, "we here")
+        await User.findByIdAndDelete(req.user_id)
+        res.status(200).json({msg:"User Successfully Deleted"})
+    } catch (error) {
+        
+        res.status(500).json({err:error.message ||"error while deleting user"})
+    }
 }

@@ -50,7 +50,7 @@ const MessageForm = () => {
     }
     return (
         <div className="lg:mt-12 md:mt-12">
-            <div className="container overflow-y-scroll rounded-lg bg-gray-100 px-2 font-medium border border-gray-200" style={{ height: '720px' }}>
+            <div className="container overflow-y-scroll rounded-lg bg-gray-200 px-2 font-medium border border-gray-200" style={{ height: '720px' }}>
                 {user && !directMemberMessage?._id &&
                     <div className="flex justify-center mt-1">
                         <p className="absolute p-2 text-center w-max rounded text-white bg-green-500">

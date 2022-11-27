@@ -116,13 +116,13 @@ const SideBar = () => {
                 {/* for members who joined the chat */}
                 <h2 className="text-lg font-extrabold">Online Members:</h2>
 
-                <div className="container overflow-y-scroll rounded bg-yellow-100 px-2 font-medium border border-yellow-100" style={{ height: '300px' }}>
+                <div className="container overflow-y-scroll rounded bg-green-800 px-2 font-medium border border-green-800" style={{ height: '300px' }}>
                     {members.map((member, idx) => (
                         member._id === user._id ? <ListGroup.Item key={idx} className="hidden"></ListGroup.Item>
                             : <ListGroup.Item key={member._id}
                                 className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all 
-                                duration-300 ease-in-out focus:outline-none hover:bg-green-800 
+                                duration-300 ease-in-out focus:outline-none hover:bg-green-600 
                                 focus:shadow-sm focus:shadow-outline mt-5'
                                 active={directMemberMessage?._id === member?._id} onClick={() => handleDirectMemberMessage(member)}>
                                 <div className='flex gap-3 flex-row'>
@@ -139,7 +139,7 @@ const SideBar = () => {
 
                 <div className='flex flex-col items-center'>
                     <a
-                        className='w-full mt-56 max-w-xs font-bold shadow-sm rounded-lg py-3
+                        className='w-full cursor-pointer mt-56 max-w-xs font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline mt-5'
                         onClick={handleLeaveChat}
                         target='_self'

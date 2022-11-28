@@ -13,23 +13,26 @@ function RecipeOfTheDay() {
     getRandomRecipe();
   },[]);
 
-  const FOOD_API_KEY = 'a42902460cad4a248268cab667591a2f';
+  const FOOD_API_KEY = '5c447950661d49f0bb7da9115b5b7413';
   const getRandomRecipe = async() =>{
 
-      const Storagecheck = localStorage.getItem('Randomss');
-      if(Storagecheck){
-        setRandomRecipe(JSON.parse(Storagecheck));
-      }else{
+    //  const Storagecheck = localStorage.getItem('Randomss');
+    //  if(Storagecheck){
+    //     setRandomRecipe(JSON.parse(Storagecheck));
+    //    }else{
 
-        const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${FOOD_API_KEY}&number=1&instructionsRequired=true&extendedIgredients=true`)
-        const data = await api.json();
-        console.log(data);
-        localStorage.setItem('Randomss', JSON.stringify(data.recipes));
-        setRandomRecipe(data.recipes);
+    //      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${FOOD_API_KEY}&number=1&instructionsRequired=true&extendedIgredients=true`)
+    //      const data = await api.json();
+    //     console.log(data);
+    //      localStorage.setItem('Randomss', JSON.stringify(data.recipes));
+    //      setRandomRecipe(data.recipes);
+   
+    //   }
 
-        
-      }
-
+      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${FOOD_API_KEY}&number=1&instructionsRequired=true&extendedIgredients=true`)
+      const data = await api.json();
+      //console.log(data);
+      setRandomRecipe(data.recipes);
 
 
   };
@@ -39,12 +42,12 @@ function RecipeOfTheDay() {
   return (
     <>
           {Random.map((recipe)=>(
-            <div className="rounded-lg overflow-hidden shadow-lg" key={recipe.id}>
+            <div className="rounded-lg xl:h-4/5  overflow-hidden shadow-lg " key={recipe.id}>
             <img className="w-full" src={recipe.image} alt ={recipe.title}/>
             <div className="px-6 py-4">
               <div className="flex justify-between">
               <div className="font-bold text-xl mb-2 underline">Recipe of The Day</div>
-              <BookmarkIcon className="text-gray-300" color="action " fontSize="large"></BookmarkIcon>
+              <BookmarkIcon className="text-gray-300 hover:text-gray-500" color="action " fontSize="large"></BookmarkIcon>
               </div>
               <h2 className="text-gray-700 text-base">
                 {recipe.title}
@@ -57,7 +60,7 @@ function RecipeOfTheDay() {
               </p>
             </div>
             <Link  to={"/foodscreen/RecipeList/" +recipe.id}>
-            <div className="text-center p-6 bg-green-800 font-bold text-white hover:bg-green-700">
+            <div className="text-center  p-12 bg-green-800 text-xl font-bold text-white hover:bg-green-700  min-h-full">
                 <span>Show Details</span>
             </div>
             </Link> 

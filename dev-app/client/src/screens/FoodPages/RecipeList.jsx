@@ -7,7 +7,7 @@ import { red } from '@mui/material/colors';
 import { sanitize } from 'dompurify';
 
 function RecipeList() {
- const FOOD_API_KEY ='a42902460cad4a248268cab667591a2f';
+ const FOOD_API_KEY ='5c447950661d49f0bb7da9115b5b7413';
   const [recipeDetail, setRecipeDetail] = useState({});
  const [text, ext]= useState({});
   //const [iext,ext] = useState()

@@ -23,7 +23,7 @@ function FoodScreen() {
         </p>
       </div>
       <Link  to={"/Takeouts"}>
-            <div className="text-center xl:mt-8 p-6 bg-green-800 font-bold text-white hover:bg-green-700">
+            <div className="text-center p-6 bg-green-800 font-bold text-white hover:bg-green-700">
                 <span>Show More</span>
             </div>
       </Link> 

@@ -29,7 +29,7 @@ function Option() {
 
     const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${FOOD_API_KEY}&number=4&tags=${name}&instructionsRequired=true`);
     const data = await api.json();
-        console.log(data)
+        // console.log(data)
   
         setOptions(data.recipes)
 
@@ -41,31 +41,31 @@ function Option() {
 
 
   
-  return (<Grid className="">
-    <div className="grid grid-cols-4 gap-8  grid-flow-col auto-cols-auto"> 
-
-      {Options.map((recipe)=>{
-          return (
-            <div   key={recipe.id}>
+  return (
+    <div className="min-h-screen bg-gray-200 text-gray-900 text-center">
+      <div className="p-3 bg-green-800 flex justify-between">
+        <h1 className="ml-5 mt-1 text-xl font-bold text-white">Dish options </h1>
+        <Link  to={"/foodscreen"}>   
+           <button  className ="mr-5 p-2 text-center bg-green-700 rounded-lg text-white font-bold hover:bg-green-600 text-left"><span>Back to Recipe</span></button>
+        </Link>
+      </div>
+          <div className="grid p-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto"> 
+      {Options.map((recipe)=>(
+            <div className="bg-gray-100 rounded-lg p-3 shadow-lg items-center" key={recipe.id}>
                       
-                        <Card className=' '>
-                     <h4 className="text-center gap-y-7 font-bold text-xl  p-[1rem] ">{recipe.title}</h4>
-                    
-                    
-                            <img className="w-full rounded-2xl" src={recipe.image} alt ={recipe.title}/>
-                                <br></br>   
-                      <Link  to={"/foodscreen/RecipeList/" +recipe.id}>   
-                      <button  className ="recipebtn"><span>Show Details </span></button>
-                      </Link>
-                    </Card>
+                    <div className='rounded-lg'>
+                     <h4 className="text-center mb-2 font-bold">{recipe.title}</h4>
+                       <img className="w-full rounded-2xl" src={recipe.image} alt ={recipe.title}/>   
+                    </div>
+                    <Link  to={"/foodscreen/RecipeList/" +recipe.id}>   
+                      <button  className ="mt-2 text-center w-full bg-green-800 p-2 rounded-lg text-white font-bold hover:bg-green-700 text-left"><span>Show Details </span></button>
+                    </Link>
                 </div>
-          );
 
-      })}
-    
-    
+      ))}
     </div>
-    </Grid>
+    </div>
+
   );
 
 }

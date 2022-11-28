@@ -4,10 +4,10 @@ import {useParams} from "react-router-dom";
 import {Link} from "react-router-dom";
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { red } from '@mui/material/colors';
-
+import { sanitize } from 'dompurify';
 
 function RecipeList() {
- const FOOD_API_KEY ='49198b4329a048b381f314c4141e6c14';
+ const FOOD_API_KEY ='a42902460cad4a248268cab667591a2f';
   const [recipeDetail, setRecipeDetail] = useState({});
  const [text, ext]= useState({});
   //const [iext,ext] = useState()
@@ -24,136 +24,52 @@ function RecipeList() {
     
   };
 
-
   useEffect(()=>{
-    api(params.id);}, [params.id]
-  );
-
-
-  /*
-
-
-<div>
-         {recipeDetail.readyInMinutes}
-           {recipeDetail.servings}
-           <h3 dangerouslySetInnerHTML={{ _html:recipeDetail.summary }}/>  
-           <ul>
-             {recipeDetail.extendedIgredients.map((ingredient)=>
-             <li >{ingredient.origianl}</li>
-             //also have image if need .image
-             
-             )}
-           </ul>
-         </div>
-  <h2 dangerouslySetInnerHTML={{ _html:recipeDetail.instructions}}/>
-   
-
-  for each (index) use original 
-         <ul>
-
-             {recipeDetail.extendedIngredients.map((ingredient)=>(
-             <li key= {ingredient.id}>{ingredients.original}</li>
-            
-            ))}
-      </ul>
-
-       <ul>
-             {recipeDetail.extendedIngredients.map((ingredient)=>(
-             <li key={ingredient.id}>{ingredient.original}</li>
-             //also have image if need .image
-             
-             ))}
-           </ul>
-
-  */
-
-
-           /*
-
-<h1 className="text-center font-bold text-2xl  p-[1rem]"> {recipeDetail.title}</h1><br></br>
-      <div className="float-left">
-         <img className="box-border w-128  " src={recipeDetail.image} alt ={recipeDetail.title}/>
-
-      </div>
-       <div className= "float-right">
-        <h2 className="font-semibold text-gray-500"> Cooking Time: {recipeDetail.readyInMinutes} </h2> <br></br>   
-        <h2 className="font-semibold text-gray-500"> Total Number of Servings: {recipeDetail.servings} </h2> <br></br>   
-      
-
-      
-        <h2 className="font-bold text-xl">Summary:</h2>
-        <h3 dangerouslySetInnerHTML={{ __html: recipeDetail.summary}}></h3> <br></br>
-        
-        <h2 className="font-bold text-xl">Instructions:</h2>
-        <h3 dangerouslySetInnerHTML={{ __html: recipeDetail.instructions}}></h3> <br></br>
-      </div>
-
-
-      for extendedIngredients 
-  <div class="col-start-1 col-end-7 ...">04</div>
-
-           */
- 
-
-
+    api(params.id);
+    },
+    [params.id]);
   return (
-    <div className="  box-border my-12 mx-auto px-4   "  >
-
-      
-
-
-  <div class="grid grid-cols-6 gap-4 bg-gradient-to-r from-green-100 to-yellow-100 rounded-2xl">
-    <div class="col-start-2 col-span-4 ...">
-     <h1 className="text-center font-bold  text-2xl  p-[1rem]"> {recipeDetail.title}</h1><br></br>
-
-    </div>
-
-    <div class="col-start-1 col-end-3 row-end-3 ...   ">
- 
-      <img className="box-border w-128 rounded-3xl shadow-lg " src={recipeDetail.image} alt ={recipeDetail.title}/>
-      <br></br>
-      <br></br>
-        <div   className = "shadow-lg ">
-        <h2 className="font-semibold text-gray-500"> Cooking Time: {recipeDetail.readyInMinutes} </h2> 
-        <h2 className="font-semibold text-gray-500"> Total Number of Servings: {recipeDetail.servings} </h2> <br></br> 
-        
-        
+    <div className="min-h-screen bg-gray-200 text-gray-900 text-center">
+      <div className="p-3 bg-green-800">
+      <h1 className="text-xl font-bold text-white">Recipe Details</h1>
       </div>
-      <br></br>
-      <div className= "show_detail_link">
-        <Link to={"/foodscreen/"}>   
-            <button className="recipebtn"  >Back to Recipes</button>
-        </Link> 
-        <FavoriteRoundedIcon className="justify-between leading-tight relative left-20 " color="action " fontSize="large"  sx={{color:red[500]}} ></FavoriteRoundedIcon>
-        
-        
+    <div className=' flex justify-center'>
+    <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+    <div className="bg-yellow-100 rounded-lg md:h-4/6 xl:h-full overflow-hidden shadow-lg">
+      <img className="w-full" src={recipeDetail.image} alt="River"/>
+      <div className="px-6 py-4">
+      <div className="flex justify-between">
+        <div className="font-bold text-xl mb-2 text-left">{recipeDetail.title}</div>
+        <FavoriteRoundedIcon className="text-red-500" color="action " fontSize="large" ></FavoriteRoundedIcon>
+      </div>
+          <p className="text-gray-700 text-base text-left">
+            <strong>Servings: </strong>{recipeDetail.servings} plate(s)
+          </p>
+          <p className="text-gray-700 text-base text-left">
+            <strong>Prep Time: </strong>{recipeDetail.readyInMinutes} mins
+          </p>
+      <Link to={"/foodscreen/"}>   
+        <button className="mt-10 bg-green-800 p-2 rounded-lg text-white font-bold hover:bg-green-700 text-left"  >Back to Recipes</button>
+      </Link> 
+      </div>
+    </div>
+    <div className="bg-yellow-100 rounded-lg xl:h-full overflow-hidden shadow-lg">
+    <div className="px-6 py-4">
+      <div className="font-bold text-xl mb-2 underline text-left">Summary</div>
+        <p className="text-left" dangerouslySetInnerHTML={{ __html: sanitize(recipeDetail.summary)}}/>
+        <div className='my-12 border-b text-center'>
+          <div className='leading-none px-2 inline-block text-sm tracking-wide font-medium bg-white transform translate-y-1/2'>  
+          </div>
         </div>
+        <div className="font-bold text-left text-xl mb-2 underline">Instructions</div>
+        <p className="text-left " dangerouslySetInnerHTML={{ __html: sanitize(recipeDetail.instructions)}}/>
       </div>
-     
-     
+    </div>
+  </div>
+</div>
 
-    <div class="col-start-4 col-span-4  ... ">
-        <h2 className="font-bold text-xl shadow-lg">Summary</h2><br></br>
-      <h3 className="font-light text-lg"  dangerouslySetInnerHTML={{ __html: recipeDetail.summary}}></h3> <br></br>
-      
-      <div>
-      <h2 className="font-bold text-xl shadow-lg">Instructions</h2><br></br>
-      <h3 className="font-light text-lg"  dangerouslySetInnerHTML={{ __html: recipeDetail.instructions}}></h3> <br></br>
-      </div>
-    
     </div>
 
-
-  
-    
-  </div>
-
-    
-     
-    
-               
-  
-</div>
   );
  
 
@@ -163,3 +79,74 @@ function RecipeList() {
 
 export default RecipeList
 
+
+
+
+{/* <div className="  box-border my-12 mx-auto px-4   "  >
+
+      
+
+
+<div class="grid grid-cols-6 gap-4 bg-gradient-to-r from-green-100 to-yellow-100 rounded-2xl">
+  <div class="col-start-2 col-span-4 ...">
+   <h1 className="text-center font-bold  text-2xl  p-[1rem]"> {recipeDetail.title}</h1><br></br>
+
+  </div>
+
+  <div class="col-start-1 col-end-3 row-end-3 ...   ">
+
+    <img className="box-border w-128 rounded-3xl shadow-lg " src={recipeDetail.image} alt ={recipeDetail.title}/>
+    <br></br>
+    <br></br>
+      <div   className = "shadow-lg ">
+      <h2 className="font-semibold text-gray-500"> Cooking Time: {recipeDetail.readyInMinutes} </h2> 
+      <h2 className="font-semibold text-gray-500"> Total Number of Servings: {recipeDetail.servings} </h2> <br></br> 
+      
+      
+    </div>
+    <br></br>
+    <div className= "show_detail_link">
+      <Link to={"/foodscreen/"}>   
+          <button className="recipebtn"  >Back to Recipes</button>
+      </Link> 
+      <FavoriteRoundedIcon className="justify-between leading-tight relative left-20 " color="action " fontSize="large"  sx={{color:red[500]}} ></FavoriteRoundedIcon>
+      
+      
+      </div>
+    </div>
+   
+   
+
+  <div class="col-start-4 col-span-4  ... ">
+      <h2 className="font-bold text-xl shadow-lg">Summary</h2><br></br>
+    <h3 className="font-light text-lg"  dangerouslySetInnerHTML={{ __html: sanitize(recipeDetail.summary)}}></h3> <br></br>
+    
+    <div>
+    <h2 className="font-bold text-xl shadow-lg">Instructions</h2><br></br>
+    <div>
+    <div dangerouslySetInnerHTML={{ __html: sanitize(recipeDetail.instructions)}}/>
+    </div>
+
+    <ol >
+      <ol style={{listStyle: 'inside'}}>
+        <li>fe</li>
+        <li>le</li>
+        <li>leee</li>
+        <li>ro</li>
+      </ol>
+    </ol>
+    </div>
+  
+  </div>
+
+
+
+  
+</div>
+
+  
+   
+  
+             
+
+</div> */}

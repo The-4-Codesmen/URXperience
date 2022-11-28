@@ -13,7 +13,7 @@ function RecipeOfTheDay() {
     getRandomRecipe();
   },[]);
 
-  const FOOD_API_KEY = '49198b4329a048b381f314c4141e6c14';
+  const FOOD_API_KEY = 'a42902460cad4a248268cab667591a2f';
   const getRandomRecipe = async() =>{
 
       const Storagecheck = localStorage.getItem('Randomss');
@@ -39,7 +39,7 @@ function RecipeOfTheDay() {
   return (
     <>
           {Random.map((recipe)=>(
-            <div className="rounded-lg xl:h-5/6 overflow-hidden shadow-lg" key={recipe.id}>
+            <div className="rounded-lg overflow-hidden shadow-lg" key={recipe.id}>
             <img className="w-full" src={recipe.image} alt ={recipe.title}/>
             <div className="px-6 py-4">
               <div className="flex justify-between">
@@ -57,7 +57,7 @@ function RecipeOfTheDay() {
               </p>
             </div>
             <Link  to={"/foodscreen/RecipeList/" +recipe.id}>
-            <div className="text-center mt-4 lg:mt-20 p-6 bg-green-800 font-bold text-white hover:bg-green-700">
+            <div className="text-center p-6 bg-green-800 font-bold text-white hover:bg-green-700">
                 <span>Show Details</span>
             </div>
             </Link> 

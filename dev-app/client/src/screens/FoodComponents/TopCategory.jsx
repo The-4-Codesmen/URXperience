@@ -4,9 +4,10 @@ import {Link, NavLink} from "react-router-dom";
 import './buttoncss.css';
 function TopCategory() {
   return (
-    <div className="rounded-lg xl:h-4/6 overflow-hidden shadow-lg">
+    <div className="rounded-lg overflow-hidden shadow-lg">
     <div className="px-6 py-4">
       <div className="font-bold text-xl mb-2 underline">Categories</div>
+      <div className="m-auto">
       <NavLink  to={'/foodscreen/Option/ketogenic'}>
         <div className="rounded-lg text-center p-6 bg-green-800 font-bold text-white hover:bg-green-700">
             <span>Meat Lover</span>
@@ -32,6 +33,8 @@ function TopCategory() {
             <span>Vegan</span>
         </div>
          </NavLink>
+      </div>
+
     </div>
   </div>
 

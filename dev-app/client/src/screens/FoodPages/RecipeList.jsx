@@ -19,7 +19,7 @@ function RecipeList() {
    
    const data = await datafetch.json();
     setRecipeDetail(data);
-    console.log(data);
+    //console.log(data);
 
     
   };

@@ -2,16 +2,23 @@ import React, { useState } from "react";
 import { signout } from "../helpers/auth";
 import Logo from "../img/URX-logo.svg";
 import axios from "axios";
+import { getCookie } from "../helpers/auth";
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const toggleOpen = () => {
     setShow(!show);
   };
   function handleSignout() {
-    axios.delete("http://localhost:5000/api/logout").then((res) => {
-      const { temp } = res.data;
-    });
-    signout();
+    const token = getCookie("token");
+    axios
+      .delete("http://localhost:5000/api/logout", {
+        headers: {
+          accessToken: token,
+        },
+      })
+      .then((res) => {
+        signout();
+      });
   }
   return (
     <div className="bg gray-100 text-gray-900 flex justify-center">

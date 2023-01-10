@@ -6,7 +6,8 @@ const { validRegister,
     validLogin,
     forgotPasswordValidator,
     resetPasswordValidator,
-    requireSignin } = require('../helpers/valid')
+    requireSignin,
+    ensureUserExist } = require('../helpers/valid')
 
 
 
@@ -22,7 +23,8 @@ const {
     updateController,
     readController,
     roomController,
-    chatLogoutController
+    LogoutController,
+    deleteController
 } = require('../controllers/authcontroller.js')
 
 router.post('/register', validRegister, registerController)
@@ -40,5 +42,8 @@ router.put('/user/update', requireSignin, updateController);
 //load rooms
 router.get('/rooms', roomController)
 
-router.delete('/logout', chatLogoutController)
+router.delete('/logout', ensureUserExist, LogoutController)
+
+//delete user account
+router.delete('/delete',ensureUserExist, deleteController)
 module.exports = router

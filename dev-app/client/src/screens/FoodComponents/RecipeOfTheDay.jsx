@@ -1,76 +1,75 @@
-import React from 'react';
+import React from "react";
 import { useEffect, useState } from "react";
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
-import {Link} from "react-router-dom";
-import './buttoncss.css';
-import { grey } from '@mui/material/colors';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import { Link } from "react-router-dom";
+import "./buttoncss.css";
+import { grey } from "@mui/material/colors";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 function RecipeOfTheDay() {
-  const [Random, setRandomRecipe]= useState([]);
+  const [Random, setRandomRecipe] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     getRandomRecipe();
-  },[]);
+  }, []);
 
-  const FOOD_API_KEY = '49198b4329a048b381f314c4141e6c14';
-  const getRandomRecipe = async() =>{
-
-      const Storagecheck = localStorage.getItem('Randomss');
-      if(Storagecheck){
-        setRandomRecipe(JSON.parse(Storagecheck));
-      }else{
-
-        const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${FOOD_API_KEY}&number=1&instructionsRequired=true&extendedIgredients=true`)
-        const data = await api.json();
-        console.log(data);
-        localStorage.setItem('Randomss', JSON.stringify(data.recipes));
-        setRandomRecipe(data.recipes);
-
-        
-      }
-
-
-
+  const FOOD_API_KEY = "49198b4329a048b381f314c4141e6c14";
+  const getRandomRecipe = async () => {
+    const Storagecheck = localStorage.getItem("Randomss");
+    if (Storagecheck) {
+      setRandomRecipe(JSON.parse(Storagecheck));
+    } else {
+      const api = await fetch(
+        `https://api.spoonacular.com/recipes/random?apiKey=${FOOD_API_KEY}&number=1&instructionsRequired=true&extendedIgredients=true`
+      );
+      const data = await api.json();
+      console.log(data);
+      localStorage.setItem("Randomss", JSON.stringify(data.recipes));
+      setRandomRecipe(data.recipes);
+    }
   };
 
-
-  
   return (
     <>
-          {Random.map((recipe)=>(
-            <div className="rounded-lg xl:h-5/6 overflow-hidden shadow-lg" key={recipe.id}>
-            <img className="w-full" src={recipe.image} alt ={recipe.title}/>
-            <div className="px-6 py-4">
-              <div className="flex justify-between">
-              <div className="font-bold text-xl mb-2 underline">Recipe of The Day</div>
-              <BookmarkIcon className="text-gray-300" color="action " fontSize="large"></BookmarkIcon>
+      {Random.map((recipe) => (
+        <div className="rounded-lg overflow-hidden shadow-lg" key={recipe.id}>
+          <img className="w-full" src={recipe.image} alt={recipe.title} />
+          <div className="px-6 py-4">
+            <div className="flex justify-between">
+              <div className="font-bold text-xl mb-2 underline">
+                Recipe of The Day
               </div>
-              <h2 className="text-gray-700 text-base">
-                {recipe.title}
-              </h2>
-              <p className="text-gray-700 text-base">
-                <strong>Servings: </strong>{recipe.servings} plate(s)
-              </p>
-              <p className="text-gray-700 text-base">
-              <strong>Prep Time: </strong>{recipe.readyInMinutes} mins
-              </p>
+              <BookmarkIcon
+                className="text-gray-300"
+                color="action "
+                fontSize="large"
+              ></BookmarkIcon>
             </div>
-            <Link  to={"/foodscreen/RecipeList/" +recipe.id}>
-            <div className="text-center mt-4 lg:mt-20 p-6 bg-green-800 font-bold text-white hover:bg-green-700">
-                <span>Show Details</span>
-            </div>
-            </Link> 
+            <h2 className="text-gray-700 text-base">{recipe.title}</h2>
+            <p className="text-gray-700 text-base">
+              <strong>Servings: </strong>
+              {recipe.servings} plate(s)
+            </p>
+            <p className="text-gray-700 text-base">
+              <strong>Prep Time: </strong>
+              {recipe.readyInMinutes} mins
+            </p>
           </div>
+          <Link to={"/foodscreen/RecipeList/" + recipe.id}>
+            <div className="text-center p-6 bg-green-800 font-bold text-white hover:bg-green-700">
+              <span>Show Details</span>
+            </div>
+          </Link>
+        </div>
       ))}
     </>
   );
 }
 
-export default RecipeOfTheDay
+export default RecipeOfTheDay;
 
-
-{/* <div className="grid grid-cols-6 gap-4 "  key={recipe.id}>
+{
+  /* <div className="grid grid-cols-6 gap-4 "  key={recipe.id}>
 
 
 <div class="col-start-1 col-span-4 ... ">
@@ -110,4 +109,5 @@ export default RecipeOfTheDay
   </div>
 </div>
 
-</div> */}
+</div> */
+}

@@ -55,7 +55,10 @@ const SideBar = () => {
             setDirectMemberMessage(null)
         }
         //dispatch notifications
-        // dispatch(resetNotifications(room));
+        dispatch(resetNotifications(room));
+        socket.off('notifications').on('notifications', (room) => {
+            dispatch(addNotifications(room));
+        })
     }
 
     function sortIds(id1, id2) {
@@ -109,7 +112,7 @@ const SideBar = () => {
                                 focus:shadow-sm focus:shadow-outline mt-1'>
                                 <i className='fa-solid fa-book fa 1x w-6  -ml-2 text-white' />
                                 {room}
-                                {/* {currentRoom !== room && <span className='rounded bg-yellow-200 text-black text-center'>{console.log(user.newMessages[0])}</span>} */}
+                                {currentRoom !== room && <span className='rounded bg-yellow-200 text-black text-center'>{console.log(user.newMessages[room])}</span>}
                             </ListGroup.Item> : null
                     ))}
                 </ListGroup>

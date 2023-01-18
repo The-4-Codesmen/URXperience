@@ -1,15 +1,24 @@
 import React, { useState, useContext, useRef, useEffect } from 'react'
 import { AppContext } from '../context/appContext';
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 const MessageForm = () => {
     const [message, setMessage] = useState("")
     const { socket, currentRoom, messages, setMessages, directMemberMessage } = useContext(AppContext)
     const messageEndRef = useRef(null)
     const { user } = useSelector((state) => state.user)
-    useEffect(() => {
-        //scroll to bottom everytime message is sent
+
+    useEffect(()=>{
+        socket.off('room-messages').on('room-messages', (roomMessages) => {
+            console.log(roomMessages)
+            setMessages(roomMessages)
+        })
         messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
-    }, [messages])
+    },[socket, messages])
+    // useEffect(() => {
+    //     //scroll to bottom everytime message is sent
+    //     messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
+    // }, [])
 
     function retrieveFormattedDate() {
         const date = new Date();
@@ -20,13 +29,8 @@ const MessageForm = () => {
         day = day.length > 1 ? day : '0' + day
         return month + "/" + day + "/" + year
     }
-
-
     const presentDate = retrieveFormattedDate()
-    socket.off('room-messages').on('room-messages', (roomMessages) => {
-        // console.log('room-messages', roomMessages)
-        setMessages(roomMessages)
-    })
+
     function formatAMPM(date) {
         var hours = date.getHours();
         var minutes = date.getMinutes();
@@ -39,17 +43,20 @@ const MessageForm = () => {
     }
 
     function handleSubmit(e) {
-        if (!message) return
-        e.preventDefault()
-        const today = new Date()
-        const time = formatAMPM(today)
-        const roomID = currentRoom;
-        socket.emit('message-room', roomID, message, user, time, presentDate)
-        setMessage('');
-
+        e.preventDefault();
+        if (!message){
+            toast.error("Please input something!");
+        }else{
+            const today = new Date()
+            const time = formatAMPM(today)
+            const roomID = currentRoom;
+            socket.emit('message-room', roomID, message, user, time, presentDate)
+            setMessage('');
+        }
     }
     return (
         <div className="lg:mt-12 md:mt-12">
+                  <ToastContainer />
             <div className="container overflow-y-scroll rounded-lg bg-gray-200 px-2 font-medium border border-gray-200" style={{ height: '720px' }}>
                 {user && !directMemberMessage?._id &&
                     <div className="flex justify-center mt-1">

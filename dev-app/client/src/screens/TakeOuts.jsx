@@ -82,7 +82,7 @@ const TakeOuts = () => {
             isLoading={isLoading}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={6} md={4}>
           <Map
             setCoordinates={setCoordinates}
             setBounds={setBounds}

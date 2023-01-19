@@ -11,7 +11,7 @@ function RecipeOfTheDay() {
     getRandomRecipe();
   },[]);
 
-  const FOOD_API_KEY = '5c447950661d49f0bb7da9115b5b7413';
+  const FOOD_API_KEY = 'fafea13599c5427bbf16f0e730c9b0c3';
   const getRandomRecipe = async() =>{
       const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${FOOD_API_KEY}&number=1&instructionsRequired=true&extendedIgredients=true`)
       const data = await api.json();
@@ -19,7 +19,7 @@ function RecipeOfTheDay() {
   }
   return (
     <>
-      {Random.map((recipe) => (
+      {Random?.map((recipe) => (
         <div className="rounded-lg bg-opacity-0 overflow-hidden" key={recipe.id}>
           <img className="w-full" src={recipe.image} alt={recipe.title} />
           <div className="px-6 py-4">

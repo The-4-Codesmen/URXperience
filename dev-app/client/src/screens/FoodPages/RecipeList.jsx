@@ -5,9 +5,10 @@ import {Link} from "react-router-dom";
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { red } from '@mui/material/colors';
 import { sanitize } from 'dompurify';
-
+import image from '../../img/recipelistBG.jpg'
+import Navbar from '../Navbar';
 function RecipeList() {
- const FOOD_API_KEY ='5c447950661d49f0bb7da9115b5b7413';
+ const FOOD_API_KEY ='fafea13599c5427bbf16f0e730c9b0c3';
   const [recipeDetail, setRecipeDetail] = useState({});
  const [text, ext]= useState({});
   //const [iext,ext] = useState()
@@ -23,46 +24,58 @@ function RecipeList() {
 
     
   };
-
+  
   useEffect(()=>{
     api(params.id);
     },
     [params.id]);
   return (
-    <div className="min-h-screen bg-gray-200 text-gray-900 text-center">
-      <div className="p-3 bg-green-800">
-      <h1 className="text-xl font-bold text-white">Recipe Details</h1>
-      </div>
-    <div className=' flex justify-center'>
+    <div className="min-h-screen text-gray-900 text-center"style={{ backgroundImage:`url(${image})`, backgroundSize: 'cover' }} >
+      <Navbar/>
+    <div className='flex mt-10 justify-center'>
     <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
-    <div className="bg-yellow-100 rounded-lg md:h-4/6 xl:h-full overflow-hidden shadow-lg">
+    <div className="backdrop-filter backdrop-blur-xl rounded-lg overflow-hidden shadow-lg">
       <img className="w-full" src={recipeDetail.image} alt="River"/>
       <div className="px-6 py-4">
       <div className="flex justify-between">
-        <div className="font-bold text-xl mb-2 text-left">{recipeDetail.title}</div>
+        <div className="font-bold text-xl mb-2 text-left text-black">{recipeDetail.title}</div>
         <FavoriteRoundedIcon className="text-red-500" color="action " fontSize="large" ></FavoriteRoundedIcon>
       </div>
-          <p className="text-gray-700 text-base text-left">
+          <p className="text-black text-base text-left">
             <strong>Servings: </strong>{recipeDetail.servings} plate(s)
           </p>
-          <p className="text-gray-700 text-base text-left">
+          <p className="text-black text-base text-left">
             <strong>Prep Time: </strong>{recipeDetail.readyInMinutes} mins
           </p>
+          <p className="text-black text-xl underline text-base text-center mt-2">
+            <strong>Ingredients</strong>
+          </p>
+          <div className="grid grid-cols-2 grid-flow-rows gap-2 mt-2">
+          {recipeDetail.extendedIngredients?.map((ingredients)=>(
+              <div key={ingredients.id}>
+                <div className="bg-white rounded-lg p-3 shadow-lg items-center">
+                  <img src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredients.image}`} />
+                  <p>{ingredients.original}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
       <Link to={"/foodscreen/"}>   
         <button className="mt-10 bg-green-800 p-2 rounded-lg text-white font-bold hover:bg-green-700 text-left"  >Back to Recipes</button>
       </Link> 
       </div>
     </div>
-    <div className="bg-yellow-100 rounded-lg xl:h-full overflow-hidden shadow-lg">
+    <div className="backdrop-filter backdrop-blur-xl rounded-lg xl:h-full overflow-hidden shadow-lg">
     <div className="px-6 py-4">
       <div className="font-bold text-xl mb-2 underline text-left">Summary</div>
-        <p className="text-left" dangerouslySetInnerHTML={{ __html: sanitize(recipeDetail.summary)}}/>
+        <p className="text-left text-black" dangerouslySetInnerHTML={{ __html: sanitize(recipeDetail.summary)}}/>
         <div className='my-12 border-b text-center'>
-          <div className='leading-none px-2 inline-block text-sm tracking-wide font-medium bg-white transform translate-y-1/2'>  
+          <div className='leading-none px-2 inline-block text-sm tracking-wide font-medium bg-black transform translate-y-1/2'>  
           </div>
         </div>
         <div className="font-bold text-left text-xl mb-2 underline">Instructions</div>
-        <p className="text-left " dangerouslySetInnerHTML={{ __html: sanitize(recipeDetail.instructions)}}/>
+        <p className="text-left text-black" dangerouslySetInnerHTML={{ __html: sanitize(recipeDetail.instructions)}}/>
       </div>
     </div>
   </div>

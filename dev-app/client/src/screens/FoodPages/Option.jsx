@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 
 import {Link,useParams} from "react-router-dom";
 import {Card, Button} from "react-bootstrap";
-
+import Navbar from '../Navbar';
 
 
 import '../FoodComponents/buttoncss.css';
 function Option() {
 
 
-  const FOOD_API_KEY = '5c447950661d49f0bb7da9115b5b7413';
+  const FOOD_API_KEY = 'fafea13599c5427bbf16f0e730c9b0c3';
     const [Options, setOptions]= useState([]);
     let params=useParams();
 
@@ -43,13 +43,8 @@ function Option() {
   
   return (
     <div className="min-h-screen bg-gray-200 text-gray-900 text-center">
-      <div className="p-3 bg-green-800 flex justify-between">
-        <h1 className="ml-5 mt-1 text-xl font-bold text-white">Dish options </h1>
-        <Link  to={"/foodscreen"}>   
-           <button  className ="mr-5 p-2 text-center bg-green-700 rounded-lg text-white font-bold hover:bg-green-600 text-left"><span>Back to Recipe</span></button>
-        </Link>
-      </div>
-          <div className="grid p-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto"> 
+      <Navbar/>
+          <div className="mt-20 grid p-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto"> 
       {Options.map((recipe)=>(
             <div className="bg-gray-100 rounded-lg p-3 shadow-lg items-center" key={recipe.id}>
                       
@@ -63,7 +58,11 @@ function Option() {
                 </div>
 
       ))}
+
     </div>
+    <Link  to={"/foodscreen"}>   
+           <button  className ="mb-5 p-2 justify-center text-center bg-green-700 rounded-lg text-white font-bold hover:bg-green-600"><span>Back to Recipe</span></button>
+        </Link>
     </div>
 
   );

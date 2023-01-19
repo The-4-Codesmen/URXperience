@@ -10,6 +10,10 @@ const MessageForm = () => {
 
     useEffect(()=>{
         messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
+        socket.off('room-messages').on('room-messages', (roomMessages) => {
+            //console.log(roomMessages)
+            setMessages(roomMessages)
+        })
     },[messages])
     // useEffect(() => {
     //     //scroll to bottom everytime message is sent
@@ -26,10 +30,7 @@ const MessageForm = () => {
         return month + "/" + day + "/" + year
     }
     const presentDate = retrieveFormattedDate()
-    socket.off('room-messages').on('room-messages', (roomMessages) => {
-        console.log(roomMessages)
-        setMessages(roomMessages)
-    })
+
     function formatAMPM(date) {
         var hours = date.getHours();
         var minutes = date.getMinutes();
@@ -45,13 +46,13 @@ const MessageForm = () => {
         e.preventDefault();
         if (!message){
             toast.error("Please input something!");
-        }else{
+        }else{                                     
             const today = new Date()
             const time = formatAMPM(today)
-            const roomID = currentRoom;
-            socket.emit('message-room', roomID, message, user, time, presentDate)
-            setMessage('');
+            const roomID = currentRoom;     
+            socket.emit('message-room',roomID, message, user, time, presentDate)
         }
+        setMessage('')
     }
     return (
         <div className="lg:mt-12 md:mt-12">

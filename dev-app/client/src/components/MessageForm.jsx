@@ -9,12 +9,8 @@ const MessageForm = () => {
     const { user } = useSelector((state) => state.user)
 
     useEffect(()=>{
-        socket.off('room-messages').on('room-messages', (roomMessages) => {
-            console.log(roomMessages)
-            setMessages(roomMessages)
-        })
         messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
-    },[socket, messages])
+    },[messages])
     // useEffect(() => {
     //     //scroll to bottom everytime message is sent
     //     messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
@@ -30,7 +26,10 @@ const MessageForm = () => {
         return month + "/" + day + "/" + year
     }
     const presentDate = retrieveFormattedDate()
-
+    socket.off('room-messages').on('room-messages', (roomMessages) => {
+        console.log(roomMessages)
+        setMessages(roomMessages)
+    })
     function formatAMPM(date) {
         var hours = date.getHours();
         var minutes = date.getMinutes();

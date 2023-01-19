@@ -9,7 +9,8 @@ const MessageForm = () => {
     const { user } = useSelector((state) => state.user)
 
     useEffect(()=>{
-        messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
+        scrollToBottom();
+        // messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
     },[messages])
     // useEffect(() => {
     //     //scroll to bottom everytime message is sent
@@ -24,6 +25,9 @@ const MessageForm = () => {
         let day = date.getDate().toString()
         day = day.length > 1 ? day : '0' + day
         return month + "/" + day + "/" + year
+    }
+    function scrollToBottom() {
+        messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
     const presentDate = retrieveFormattedDate()
     socket.off('room-messages').on('room-messages', (roomMessages) => {
@@ -84,7 +88,7 @@ const MessageForm = () => {
                         </div>
                         {messagesByDate?.map(({ content, time, from: sender }, msgIdx) => (
                             <div className="flow-root p-2" key={msgIdx}>
-                                <div className={sender._id !== user?._id ? "p-2 float-left w-6/12 text-left rounded bg-yellow-100"
+                                <div className={sender?.email !== user?.email ? "p-2 float-left w-6/12 text-left rounded bg-yellow-100"
                                     : "p-2 text-right float-right w-6/12 rounded bg-green-100"}>
                                     <p className="text-sm underline underline-offset-4">{sender._id == user?._id ? "You" : sender.name}</p>
                                     <p>{content}</p>

@@ -8,7 +8,7 @@ import { sanitize } from 'dompurify';
 import image from '../../img/recipelistBG.jpg'
 import Navbar from '../Navbar';
 function RecipeList() {
- const FOOD_API_KEY ='fafea13599c5427bbf16f0e730c9b0c3';
+ const FOOD_API_KEY ='49198b4329a048b381f314c4141e6c14';
   const [recipeDetail, setRecipeDetail] = useState({});
  const [text, ext]= useState({});
   //const [iext,ext] = useState()

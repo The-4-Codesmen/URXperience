@@ -14,7 +14,7 @@ function etc() {
 
   
       // const api= await fetch(`https://api.spoonacular.com/recipes/random?apiKey=fafea13599c5427bbf16f0e730c9b0c3&number=1&instructionsRequired=true&tags=${name}`);
-       const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=fafea13599c5427bbf16f0e730c9b0c3&number=1&tags=${name}&instructionsRequired=true`);
+       const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=49198b4329a048b381f314c4141e6c14&number=1&tags=${name}&instructionsRequired=true`);
        
        const recipe = await api.json();
        console.log(recipe);

@@ -19,17 +19,17 @@ const SideBar = () => {
         setMembers, directMemberMessage,
         setDirectMemberMessage, rooms, setRooms} = useContext(AppContext)
     var stringRoom = user.faculty
-    const [logoutUser] = useLogoutUserMutation();
+    //const [logoutUser] = useLogoutUserMutation();
     useEffect(() => {
         setCurrentRoom(stringRoom)
         getAttributedRoom()
         socket.emit('join-room', stringRoom)
-        // socket.emit("new-user")
+        socket.emit("new-user")
     }, [])
     //this is to show people's status in realtime
-    useEffect(()=>{
-        socket.emit("new-user")
-    },[members])
+    // useEffect(()=>{
+    //     socket.emit("new-user")
+    // },[members])
     socket.off('new-user').on('new-user', (payload) => {
         setMembers(payload)
     })

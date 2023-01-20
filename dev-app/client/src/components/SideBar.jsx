@@ -17,23 +17,19 @@ const SideBar = () => {
     const navigate = useNavigate();
     const { socket, currentRoom, setCurrentRoom, members,
         setMembers, directMemberMessage,
-        setDirectMemberMessage, rooms, setRooms, } = useContext(AppContext)
+        setDirectMemberMessage, rooms, setRooms} = useContext(AppContext)
     var stringRoom = user.faculty
-    const [logoutUser] = useLogoutUserMutation();
+    //const [logoutUser] = useLogoutUserMutation();
     useEffect(() => {
         setCurrentRoom(stringRoom)
         getAttributedRoom()
         socket.emit('join-room', stringRoom)
-       
-       
+        socket.emit("new-user")
     }, [])
     //this is to show people's status in realtime
-    useEffect(()=>{
-        socket.emit("new-user")
-        
-    },[members])
-
-
+    // useEffect(()=>{
+    //     socket.emit("new-user")
+    // },[members])
     socket.off('new-user').on('new-user', (payload) => {
         setMembers(payload)
     })
@@ -64,6 +60,9 @@ const SideBar = () => {
         }
         //dispatch notifications
         // dispatch(resetNotifications(room));
+        // socket.off('notifications').on('notifications', (room) => {
+        //     dispatch(addNotifications(room));
+        // })
     }
 
     function sortIds(id1, id2) {
@@ -117,7 +116,7 @@ const SideBar = () => {
                                 focus:shadow-sm focus:shadow-outline mt-1'>
                                 <i className='fa-solid fa-book fa 1x w-6  -ml-2 text-white' />
                                 {room}
-                                {/* {currentRoom !== room && <span className='rounded bg-yellow-200 text-black text-center'>{console.log(user.newMessages[0])}</span>} */}
+                                {/* {currentRoom !== room && <span className='rounded bg-yellow-200 text-black text-center'>{console.log(user.newMessages[room])}</span>} */}
                             </ListGroup.Item> : null
                     ))}
                 </ListGroup>

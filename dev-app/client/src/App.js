@@ -14,6 +14,7 @@ import Community from "./screens/Community";
 import Option from "./screens/FoodPages/Option";
 import RecipeList from "./screens/FoodPages/RecipeList";
 import "react-toastify/dist/ReactToastify.css";
+import Resources from "./screens/Resources";
 function App() {
   const [rooms, setRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState([]);
@@ -61,6 +62,7 @@ function App() {
             exact
             element={<RecipeList />}
           />
+          <Route path="/resources" exact element={<Resources />} />
         </Routes>
       </Router>
     </AppContext.Provider>

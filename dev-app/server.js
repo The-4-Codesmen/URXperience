@@ -96,9 +96,9 @@ io.on('connection', (socket) => {
         socket.emit('room-messages', roomMessages)
     })
 
-    socket.on('message-room', async (room, content, sender, time, date) => {
+    socket.on('message-room', async(room, content, sender, time, date) => {
         // console.log('new-message', content)
-        const newMessage = await message.create({ content, from: sender, time, date, to: room })
+        await message.create({ content, from: sender, time, date, to: room })
         //sending message to specified room
         let roomMessages = await retrievePreviousMessagesinRoom(room)
         roomMessages = sortRoomMessagesByDate(roomMessages)

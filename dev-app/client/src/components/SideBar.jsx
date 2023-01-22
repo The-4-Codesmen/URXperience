@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from '../context/appContext';
 import ListGroup from 'react-bootstrap/ListGroup'
 import { addNotifications, resetNotifications } from '../features/userSlice'
-import { useLogoutUserMutation } from "../services/appApi";
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
 import axios from 'axios'
 const SideBar = () => {
     const sideBarRef = useRef()
@@ -19,6 +20,26 @@ const SideBar = () => {
         setMembers, directMemberMessage,
         setDirectMemberMessage, rooms, setRooms} = useContext(AppContext)
     var stringRoom = user.faculty
+    function joinRoom(room, isPublic = true) {
+        if (!user) {
+            navigate('/login')
+        }
+        socket.emit('join-room', room, currentRoom);
+        setCurrentRoom(room)
+        if (isPublic) {
+            setDirectMemberMessage(null)
+        }
+        //dispatch notifications
+        dispatch(resetNotifications(room));
+
+        // socket.off('notifications').on('notifications', (room) => {
+        //     dispatch(addNotifications(room));
+        // })
+    }
+    socket.off('notifications').on('notifications', (room) => {
+        if (currentRoom !== room) dispatch(addNotifications(room))
+    })
+
     //const [logoutUser] = useLogoutUserMutation();
     useEffect(() => {
         setCurrentRoom(stringRoom)
@@ -46,24 +67,7 @@ const SideBar = () => {
         //logoutUser(tempUser);
         window.location.replace('/dashboard')
     }
-    // socket.off('notifications').on('notifications', (room) => {
-    //     if (currentRoom !== room) dispatch(addNotifications(room))
-    // })
-    function joinRoom(room, isPublic = true) {
-        if (!user) {
-            navigate('/login')
-        }
-        socket.emit('join-room', room, currentRoom);
-        setCurrentRoom(room)
-        if (isPublic) {
-            setDirectMemberMessage(null)
-        }
-        //dispatch notifications
-        // dispatch(resetNotifications(room));
-        // socket.off('notifications').on('notifications', (room) => {
-        //     dispatch(addNotifications(room));
-        // })
-    }
+
 
     function sortIds(id1, id2) {
         if (id1 > id2) {
@@ -116,7 +120,12 @@ const SideBar = () => {
                                 focus:shadow-sm focus:shadow-outline mt-1'>
                                 <i className='fa-solid fa-book fa 1x w-6  -ml-2 text-white' />
                                 {room}
-                                {/* {currentRoom !== room && <span className='rounded bg-yellow-200 text-black text-center'>{console.log(user.newMessages[room])}</span>} */}
+                                <div className='ml-2'>
+                                {currentRoom !== room && 
+                                <Badge badgeContent={user?.newMessages[room]} color="primary">
+                                    <MailIcon sx={{ color: "white" }} />
+                                </Badge>}
+                                </div>
                             </ListGroup.Item> : null
                     ))}
                 </ListGroup>
@@ -132,28 +141,29 @@ const SideBar = () => {
                                 duration-300 ease-in-out focus:outline-none hover:bg-green-600 
                                 focus:shadow-sm focus:shadow-outline mt-5'
                                 active={directMemberMessage?._id === member?._id} onClick={() => handleDirectMemberMessage(member)}>
-                                <div className='flex gap-3 flex-row'>
-                                    <div >
+                                <div className='flex gap-2 flex-row p-2'>
+                                    <div className = "flex-1" >
                                         {member.status === "online" ? <i className="fas fa-circle text-green-300 "></i>
                                             : <i className="fas fa-circle text-red-600"></i>}
                                     </div>
                                     <div>{member.name}</div>
-
+                                    <Badge badgeContent={user?.newMessages[sortIds(member._id, user._id)]} color="primary">
+                                        <MailIcon sx={{ color: "white" }} />
+                                    </Badge>
                                 </div>
                             </ListGroup.Item>
                     ))}
                 </div>
 
                 <div className='flex flex-col items-center'>
-                    <a
+                    <button
                         className='w-full cursor-pointer mt-56 max-w-xs font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline mt-5'
                         onClick={handleLeaveChat}
-                        target='_self'
                     >
                         <i className='fas fa-sign-in-alt fa 1x w-6  -ml-2 text-white' />
                         <span className='ml-4'>Leave Chat</span>
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

@@ -22,6 +22,9 @@ const Dashboard = () => {
     });
   }, []);
 
+  function changepage(){
+    navigate('/chat')
+  }
   useEffect(() => {
     const token = getCookie("token");
     if (!getCookie("token")) {
@@ -92,7 +95,7 @@ const Dashboard = () => {
             </div>
             <div className="rounded overflow-hidden shadow-lg bg-blue-400">
               <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">Community</div>
+                <div className="font-bold text-xl mb-2">Online Members</div>
                 <div
                   className="items-center justify-center container overflow-y-scroll rounded bg-blue-400 p-2 font-medium border border-blue-400"
                   style={{ height: "250px" }}
@@ -106,9 +109,10 @@ const Dashboard = () => {
                     ) : (
                       <ListGroup.Item
                         key={usr._id}
+                        onClick={changepage}
                         className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all 
-                                duration-300 ease-in-out focus:outline-none hover:bg-green-600 
+                                duration-300 ease-in-out cursor-pointer focus:outline-none hover:bg-green-600 
                                 focus:shadow-sm focus:shadow-outline mt-5"
                       >
                         <div className="flex gap-3 flex-row">

@@ -1,4 +1,5 @@
 const User = require("../models/authmodel");
+const Chat = require('../models/chatmodel');
 var userId = "";
 
 // const express = require('express')
@@ -376,16 +377,34 @@ exports.readController = (req, res) => {
 
 exports.roomController = (req, res) => {
   const rooms = [
-    "Engineering",
-    "Nursing",
-    "Business",
-    "Arts",
-    "Science",
-    "Kineseology",
-    "Education",
-    "SocialWork",
+    {label:"Engineering",_id:"0001"},
+    {label:"Nursing",_id:"0002"},
+    {label:"Business",_id:"0003"},
+    {label:"Arts",_id:"0004"},
+    {label:"Science",_id:"0005"},
+    {label:"Kineseology",_id:"0006"},
+    {label:"Education",_id:"0007"},
+    {label:"SocialWork",_id:"0008"},
   ];
   res.json(rooms);
+
+
+  // "Engineering",
+  // "Nursing",
+  // "Business",
+  // "Arts",
+  // "Science",
+  // "Kineseology",
+  // "Education",
+  // "SocialWork",
+};
+
+exports.groupRoomController = async (req, res) => {
+  //call db.
+  const {userId} = req.body;
+  const groupRooms = await Chat.find({members:userId});
+  res.json(groupRooms);
+  
 };
 exports.LogoutController = (req, res) => {
   try {
@@ -413,6 +432,7 @@ exports.deleteController = async (req, res) => {
 };
 
 exports.retrieveAllContorller = async (req, res) => {
-  const members = await User.find();
+  const members = await User.find().sort({"name":1})
+  // console.log(members)
   res.json({ members });
 };

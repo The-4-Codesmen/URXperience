@@ -5,6 +5,7 @@ const cors = require('cors')
 const connectDB = require('./config/db')
 const app = express()
 const message = require('./models/messagemodel');
+const chat = require('./models/chatmodel');
 const User = require('./models/authmodel');
 const rooms = ['Engineering', 'Nursing', 'Business']
 //Config.env to ./config/config.env
@@ -82,6 +83,21 @@ function sortRoomMessagesByDate(messages) {
         return previousDate < currentDate ? -1 : 1
     })
 }
+
+// function getFormattedDate() {
+//     const date = new Date();
+//     const year = date.getFullYear();
+//     let month = (1 + date.getMonth()).toString();
+  
+//     month = month.length > 1 ? month : "0" + month;
+//     let day = date.getDate().toString();
+//     day = day.length > 1 ? day : "0" + day;
+//     return month + "/" + day + "/" + year;
+// }
+// const today = new Date();
+// const minutes =
+// today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
+
 //socket connection
 io.on('connection', (socket) => {
     socket.on('new-user', async () => {
@@ -105,14 +121,47 @@ io.on('connection', (socket) => {
         io.to(room).emit('room-messages', roomMessages)
         socket.broadcast.emit('notifications', room)
     })
+
+    //creating group chat
+    socket.on('group-chat', async(creator, name, members) =>{
+        await chat.create({ creator: creator, name: name, members: members })
+        socket.emit()
+    })
+
+    socket.on('remove-user', async(memberID) =>{
+        // const user = await User.findById({memberID});
+
+        await chat.deleteOne({"members":memberID});
+        
+    })
+
+    //remove user from group chat
+    // socket.on("remove-user", async (id) => {
+    //     const user = await User.findById(id);
+    //     //const query = { "from._id": id };
+    //     //console.log(message);
+    //     if (user) {
+    //      const h = await message.deleteMany({ "from": id });
+    //       // find the user msg, delete them, and the user from array of users
+    //       await chat.deleteOne({"members":user});
+    //     }
+    //     socket.emit();
+    //   });
+
+      
+    socket.on("delete-room", async (room_id) => {
+        await chat.deleteOne({ "name": room });
+        socket.emit();
+    });  
+
+
     socket.on('leave-chat', async () => {
-        const members = await User.find();
+        const members = await User.findById();
         socket.broadcast.emit('new-user', members);
     })
+    
 })
-
 //port for server side
 server.listen(PORT, () => {
     console.log('listening on port ' + PORT);
 })
-

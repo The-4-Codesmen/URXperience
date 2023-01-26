@@ -14,6 +14,9 @@ import Community from "./screens/Community";
 import Option from "./screens/FoodPages/Option";
 import RecipeList from "./screens/FoodPages/RecipeList";
 import "react-toastify/dist/ReactToastify.css";
+import Events from "./screens/Events";
+import PostEvent from "./screens/EventComponents/PostEvent";
+import EventByDate from "./screens/EventComponents/EventByDate";
 function App() {
   const [rooms, setRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState([]);
@@ -56,6 +59,11 @@ function App() {
           />
           <Route path="/foodscreen" exact element={<FoodScreen />} />
           <Route path="/foodscreen/option/:type" exact element={<Option />} />
+          <Route path="/events" exact element={<Events />} />
+          <Route path="/postevent" exact element={<PostEvent />} />
+          <Route path="/eventbydate" exact element={<EventByDate />} />
+
+
           <Route
             path="/foodscreen/recipelist/:id"
             exact

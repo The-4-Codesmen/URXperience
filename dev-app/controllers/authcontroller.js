@@ -368,3 +368,93 @@ exports.chatLogoutController = (req, res) => {
     }
 
 }
+
+
+
+const Event = require('../models/eventmodel')
+
+
+
+exports.addEventController = (req, res) => {
+    console.log("data recieved");
+  
+    const { title, description,date, from, to, author}= req.body;
+
+   
+
+    const event = new Event({
+    title, description,date, from, to, author
+    })
+
+    event.save().then(() => {
+        return res.json({
+            message: `Event " ${title} " is added.`
+        })
+    })
+   
+
+
+
+
+}
+
+
+
+exports.findEventController = async (req, res) => {
+    console.log("data recieved");
+
+    const {date} = req.body
+
+    const events = await Event.find({ date: date})
+
+   console.log(events);
+   res.send(events);
+   //res.send(toDo)
+
+
+
+}
+
+exports.deleteEventController = async (req, res) => {
+    console.log("delete id received");
+
+    const { _id}= req.body;
+    console.log(_id)
+
+    Event.findByIdAndRemove(_id)
+    .then(()=> res.send("deleted"))
+    .catch((err)=> console.log(err))
+
+ 
+}
+
+
+
+
+
+
+
+exports.findEventAllController = async ( req, res) => {
+    console.log("findign recieved");
+
+
+    const events = await Event.find().sort({'_id':-1})
+
+   res.send(events);
+   //res.send(toDo)
+}
+
+
+
+exports.findEventByIdController = async ( req, res) => {
+    console.log("finding all event by userId ");
+
+  
+    const { userId}= req.body;
+
+
+   const events = await Event.find({author: userId}).sort({'_id':-1})
+
+  
+   res.send(events)
+}

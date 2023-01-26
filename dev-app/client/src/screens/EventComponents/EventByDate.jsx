@@ -8,9 +8,6 @@ import 'react-calendar/dist/Calendar.css';
 import EventBusyTwoToneIcon from '@mui/icons-material/EventBusyTwoTone';
 import { purple, red } from '@mui/material/colors';
 import axios from 'axios'
-
-
-import ReactDOM from 'react-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import Navbar from "../Navbar";

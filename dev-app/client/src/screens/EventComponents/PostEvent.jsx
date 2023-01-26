@@ -9,12 +9,33 @@ import Navbar from '../Navbar'
 
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { purple } from '@mui/material/colors';
-
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
-
+import { updateUser, isAuth, getCookie, signout } from '../../helpers/auth';
 
 function PostEvent() {
-
+    const navigate = useNavigate();
+    useEffect(() => {
+      const token = getCookie('token')
+      if (!getCookie('token')) {
+        navigate("/login");
+      } else {
+        axios.get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).then(res => {
+          const { role, name, email } = res.data
+        }).catch(err => {
+          toast.error(`Error to your Information ${err.response.statusText}`)
+          if (err.response.status === 401) {
+            signout(() => {
+              navigate('/login')
+            })
+          }
+        })
+      }
+    }, []);
 
     const [allEvents, setAllEvents]= useState([]);
 

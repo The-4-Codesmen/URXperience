@@ -7,21 +7,37 @@ import EventPages from "./EventComponents/EventPages";
 import axios from "axios";
 import EventBusyTwoToneIcon from '@mui/icons-material/EventBusyTwoTone';
 import { purple } from '@mui/material/colors';
-
+import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
 function Events() {
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = getCookie('token')
+    if (!getCookie('token')) {
+      navigate("/login");
+    } else {
+      axios.get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(res => {
+        const { role, name, email } = res.data
+      }).catch(err => {
+        toast.error(`Error to your Information ${err.response.statusText}`)
+        if (err.response.status === 401) {
+          signout(() => {
+            navigate('/login')
+          })
+        }
+      })
+    }
+  }, []);
   const [allEvents, setAllEvents]= useState([]);
-
-
-  
-
    const getAllEvents = async() =>{
-
-
- 
     axios.get(`http://localhost:5000/api/eventfindall`)
     .then(res => {
-      console.log(res.data)
+      //console.log(res.data)
       setAllEvents(res.data)
     })
     .catch(err => {
@@ -32,10 +48,8 @@ function Events() {
    };
  
   useEffect(()=>{
-
     getAllEvents();
-
-    },[   getAllEvents() ]);
+  },[]);
 
 
   return (

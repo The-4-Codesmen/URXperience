@@ -22,7 +22,12 @@ const {
     updateController,
     readController,
     roomController,
-    chatLogoutController
+    chatLogoutController,
+    addEventController,
+    findEventController,
+    deleteEventController,
+    findEventAllController,
+    findEventByIdController
 } = require('../controllers/authcontroller.js')
 
 router.post('/register', validRegister, registerController)
@@ -35,7 +40,14 @@ router.put('/user/update', requireSignin, updateController);
 
 
 
+// event routes
+router.post('/postevent',  addEventController)
+router.post('/eventfind',  findEventController)
+router.post('/eventdelete',  deleteEventController)
 
+router.post('/eventfindbyid',  findEventByIdController)
+
+router.get('/eventfindall',  findEventAllController)
 
 //load rooms
 router.get('/rooms', roomController)

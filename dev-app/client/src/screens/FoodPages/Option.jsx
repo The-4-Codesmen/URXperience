@@ -11,7 +11,7 @@ import '../FoodComponents/buttoncss.css';
 function Option() {
 
 
-  const FOOD_API_KEY = '49198b4329a048b381f314c4141e6c14';
+  const FOOD_API_KEY = 'a42902460cad4a248268cab667591a2f';
     const [Options, setOptions]= useState([]);
     let params=useParams();
 

@@ -156,7 +156,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('leave-chat', async () => {
-        const members = await User.findById();
+        const members = await User.find();
         socket.broadcast.emit('new-user', members);
     })
     

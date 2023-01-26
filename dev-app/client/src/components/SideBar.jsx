@@ -10,7 +10,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import axios from 'axios'
 import Select from 'react-select'
 import { ToastContainer, toast } from "react-toastify";
-// import { forEach } from "lodash";
 const SideBar = () => {
     const sideBarRef = useRef()
     function toogleSideBar() {
@@ -40,10 +39,6 @@ const SideBar = () => {
         }
         //dispatch notifications
         dispatch(resetNotifications(room));
-
-        // socket.off('notifications').on('notifications', (room) => {
-        //     dispatch(addNotifications(room));
-        // })
     }
     socket.off('notifications').on('notifications', (room) => {
         if (currentRoom !== room) dispatch(addNotifications(room))
@@ -54,10 +49,7 @@ const SideBar = () => {
         getGroupChatRooms()
         socket.emit('join-room', stringRoom)
         socket.emit("new-user")
-    }, [])
-    // useEffect(()=>{
-    //     console.log("")
-    // },[groupRooms])
+    }, [getGroupChatRooms()])
     socket.off('new-user').on('new-user', (payload) => {    
         setMembers(payload)
     })
@@ -84,11 +76,11 @@ const SideBar = () => {
             return id2 + '-' + id1
         }
     }
-const options = members.map((member, idx)=>{
+const options = members?.map((member, idx)=>{
     return({label:member.name, value:member._id})
 })
 const excludeditem = [`${user._id}`]
-const filteredList = options.filter(({value})=>!excludeditem.includes(value))
+const filteredList = options?.filter(({value})=>!excludeditem.includes(value))
 
 const handelSelectedItems = (selectedOption) => {
    setSelectedMember(selectedOption)
@@ -97,7 +89,7 @@ const handelSelectedItems = (selectedOption) => {
 const  getdatafromsource= selectedMember.map((member, idx)=>{
     return (member.value)
 })
-async function handleGroupCreate(e){
+function handleGroupCreate(e){
     e.preventDefault()
     if(!groupName){
         toast.error("Please Enter groupName");
@@ -107,12 +99,10 @@ async function handleGroupCreate(e){
         const additonalMember = `${user._id}`
         // console.log(getdatafromsource) 
         getdatafromsource.push(additonalMember)
-        await socket.emit("group-chat", user._id, groupName,getdatafromsource)
+        socket.emit("group-chat", user._id, groupName,getdatafromsource)
         getGroupChatRooms()
         setPopUp(false);
     }
-   // cnsole.log(groupRooms)
-    // console.log(getdatafromsource) 
 }
 
 
@@ -149,7 +139,7 @@ function handleDirectMemberMessage(member) {
                 <h1 className="block text-white text-lg font-extrabold dark:text-dw mt-0">
                     URXPERIENCE CHAT
                 </h1>
-                <h2 className="text-lg font-extrabold">Avaliable Room:</h2>
+                <h2 className="text-lg font-extrabold">Faculty Room:</h2>
                 {/* <div className='flex flex-col items-center'>
 
 
@@ -162,10 +152,14 @@ function handleDirectMemberMessage(member) {
                                 active={room === currentRoom}
                                 className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 
-                                focus:shadow-sm focus:shadow-outline mt-1'>
-                                <i className='fa-solid fa-book fa 1x w-6  -ml-2 text-white' />
-                                {room.label}
-                                <div className='ml-2'>
+                                focus:shadow-sm focus:shadow-outline grid grid-cols-5 gap-2 items-center mb-2'>
+                                
+                                
+                                <div className="px-4">
+                                <i className='fa-solid fa-book fa 1x w-6 text-white' />
+                                </div>
+                                <div className="text-center col-span-3">{room.label}</div>
+                                <div className=" ">                                
                                 {currentRoom !== room && 
                                 <Badge badgeContent={user?.newMessages[room.label]} color="primary">
                                     <MailIcon sx={{ color: "white" }} />
@@ -174,16 +168,6 @@ function handleDirectMemberMessage(member) {
                             </ListGroup.Item> : null
                     ))}
                 </ListGroup>
-                <div className='flex flex-col items-center'>
-                    <button
-                        className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline mt-5'
-                        onClick={()=>setPopUp(true)}
-                    >
-                        <i className='fas fa-sign-in-alt fa 1x w-6  -ml-2 text-white' />
-                        <span className='ml-4'>Create Group</span>
-                    </button>
-                </div>
                 {popUp && (
         <>
           <div
@@ -237,68 +221,68 @@ function handleDirectMemberMessage(member) {
         </>
       )}
                 {/* for members who joined the chat */}
-                <h2 className="text-lg font-extrabold">Online Members:</h2>
-
-                <div className="container overflow-y-scroll rounded bg-green-800 px-2 font-medium border border-green-800" style={{ height: '300px' }}>                 
-                    {members.map((member, idx) => (
-                        member._id === user._id ? <ListGroup.Item key={idx} className="hidden"></ListGroup.Item>
+                <h2 className="text-lg font-extrabold">Members:</h2>    
+                <div className="container overflow-y-scroll rounded bg-green-800 px-2 font-medium border border-green-800" style={{ height: '250px' }}>                 
+                    {members?.map((member, idx) => (
+                        member._id === user._id ? <ListGroup.Item key={idx} className="hidden "></ListGroup.Item>
                             : <ListGroup.Item key={member._id}
                                 className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all 
                                 duration-300 ease-in-out focus:outline-none hover:bg-green-600 
-                                focus:shadow-sm focus:shadow-outline mt-5'
+                                focus:shadow-sm focus:shadow-outline mt-5 grid grid-cols-5 gap-2 items-center'
+                                
+                              
                                 active={directMemberMessage?._id === member?._id} onClick={() => handleDirectMemberMessage(member)}>
-                                <div className='flex gap-2 flex-row p-2'>
-                                    <div className = "flex-1" >
-                                        {member.status === "online" ? <i className="fas fa-circle text-green-300 "></i>
-                                            : <i className="fas fa-circle text-red-600"></i>}
-                                    </div>
-                                    <div>{member.name}</div>
-                                    <Badge badgeContent={user?.newMessages[sortIds(member._id, user._id)]} color="primary">
+                               
+                               <div className="col-span-1 px-2">
+                                    {member.status === "online" ? <i className="fas fa-circle text-green-300 "></i>
+                                        : <i className="fas fa-circle text-red-600"></i>}
+                                </div>
+                                <div className=" text-center col-span-3">
+                                    {member.name}
+                                </div>
+                                <div className="col-span-1">
+                                <Badge className="col-span-2" badgeContent={user?.newMessages[sortIds(member._id, user._id)]} color="primary">
                                         <MailIcon sx={{ color: "white" }} />
                                     </Badge>
                                 </div>
                             </ListGroup.Item>
                             // sort by status
                     )).sort((a,b)=>a.status > b.status ? -1 : 1)} 
+                </div> 
+                {/* For newly created group chats */}                
+                <div className='grid grid-cols-5 gap-2  items-center '>
+                <h2 className="text-lg col-span-4 font-extrabold">Group Chat:</h2>
+                    <button
+                        className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
+                                bg-green-700 text-white items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline'
+                        onClick={()=>setPopUp(true)}
+                    >
+                        <i className='fa fa-plus text-white' />
+                    </button>
                 </div>
-                {/* For newly created group chats */}
-                <h2 className="text-lg font-extrabold">Group Chat:</h2>
-                <div className="container overflow-y-scroll rounded bg-green-800 px-2 font-medium border border-green-800" style={{ height: '300px' }}>                 
+                <div className="container overflow-y-scroll rounded bg-green-800 px-2 font-medium border border-green-800" style={{ height: '150px' }}>                 
                 {groupRooms.map((room) => (
                             <ListGroup.Item
                                 key={room._id} onClick={() => joinRoom(room.name)}
                                 active={room === currentRoom}
                                 className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 
-                                focus:shadow-sm focus:shadow-outline mt-1'>
-                                <i className='fa-solid fa-book fa 1x w-6  -ml-2 text-white' />
-                                {room.name}
-                                <div className='ml-2'>
-                                {currentRoom !== room && 
-                                <Badge badgeContent={user?.newMessages[room.name]} color="primary">
-                                    <MailIcon sx={{ color: "white" }} />
-                                </Badge>}
-                                </div>
+                                focus:shadow-sm focus:shadow-outline mt-3 grid grid-cols-4 gap-2 items-center'>
+                                    <div className=" text-center col-span-3"> {room.name}</div>
+                                    <div className="">                                
+                                    {currentRoom !== room && 
+                                        <Badge badgeContent={user?.newMessages[room.name]} color="primary">
+                                            <MailIcon sx={{ color: "white" }} />
+                                        </Badge>}
+                                        </div>
                             </ListGroup.Item>
                     ))}
                 </div>
-                
-{/* 
-                { groupRooms.map((event)=>(
-                <div className="bg-slate-700 bg-gray-100  rounded-lg mt-5 shadow-lg  " key={event._id}>
-                      <p>{event.name}</p>
-                      {console.log(event.name)}
-                   </div>
-
-                 ))} */}
-
-
-
                 <div className='flex flex-col items-center'>
                     <button
-                        className='w-full cursor-pointer mt-56 max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 focus:shadow-sm focus:shadow-outline mt-5'
+                        className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
+                                bg-red-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-red-600 focus:shadow-sm focus:shadow-outline'
                         onClick={handleLeaveChat}
                     >
                         <i className='fas fa-sign-in-alt fa 1x w-6  -ml-2 text-white' />

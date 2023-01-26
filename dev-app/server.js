@@ -44,7 +44,7 @@ app.use((req, res, next) => {
     })
 })
 
-const PORT = process.env.PORT
+const PORT = 5000;
 //5000-backend
 //const server = require('http').createServer(app)
 //chat system port

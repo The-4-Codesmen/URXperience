@@ -29,5 +29,6 @@ ENSE 400
 * [Vlog #1: Project & Team introduction](https://youtu.be/CwC5acNc9uk) (September 21st 2022)
 * [Vlog #2: Mid-Point Vlog](https://www.youtube.com/watch?v=M_x3-5nWpAg) (October 22nd 2022)
 * [Vlog #3: End-Semester Vlog](https://youtu.be/DndX3B8u4a0) (December 12nd 2022)
+
 ENSE 477
 * [Vlog #4: Course - First Vlog]() (January 26th 2023)

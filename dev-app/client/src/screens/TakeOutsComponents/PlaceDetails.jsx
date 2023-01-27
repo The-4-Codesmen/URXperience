@@ -41,7 +41,14 @@ const PlaceDetails = ({ place, selected, refProp }) => {
               readOnly
             ></Rating>
             <Typography component="legend">
-              {place.num_reviews} review{place.num_reviews > 1 && "s"}
+              <a
+                className="text-blue-800"
+                href={place.web_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {place.num_reviews} review{place.num_reviews > 1 && "s"}
+              </a>
             </Typography>
             {place?.cuisine?.map(({ name }) => (
               <Chip

@@ -436,3 +436,9 @@ exports.retrieveAllContorller = async (req, res) => {
   // console.log(members)
   res.json({ members });
 };
+
+//getting all groupChat
+exports.getAllGroupChat = async (req, res) => {
+  const groupChatRooms = await Chat.find();
+  res.json(groupChatRooms)
+}

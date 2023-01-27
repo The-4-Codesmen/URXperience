@@ -19,9 +19,7 @@ const SideBar = () => {
     const [groupName, setGroupName] = useState("");
     const [selectedMember, setSelectedMember] = useState([])
     const [popUp, setPopUp] = useState(false)
-
-
-    
+    const [groupNameCheck, setGroupNameCheck] = useState([])
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const { socket, currentRoom, setCurrentRoom, members,
@@ -49,7 +47,11 @@ const SideBar = () => {
         getGroupChatRooms()
         socket.emit('join-room', stringRoom)
         socket.emit("new-user")
-    }, [getGroupChatRooms()])
+        const interval = setInterval(() => {
+            getGroupChatRooms()
+          },5*1000);
+          return () => clearInterval(interval);
+    }, [])
     socket.off('new-user').on('new-user', (payload) => {    
         setMembers(payload)
     })
@@ -62,6 +64,9 @@ const SideBar = () => {
         axios.post(`http://localhost:5000/api/groupRooms`, {userId:user._id})
         .then(res => {
             setGroupRooms(res.data)
+        })
+        axios.get(`http://localhost:5000/api/groupChatArr`).then((res)=>{
+            setGroupNameCheck(res.data)
         })
     }
     function handleLeaveChat(e) {
@@ -86,7 +91,7 @@ const handelSelectedItems = (selectedOption) => {
    setSelectedMember(selectedOption)
 };
     
-const  getdatafromsource= selectedMember.map((member, idx)=>{
+const getdatafromsource= selectedMember.map((member, idx)=>{
     return (member.value)
 })
 function handleGroupCreate(e){
@@ -96,21 +101,25 @@ function handleGroupCreate(e){
     }else if( selectedMember.length < 2){
         toast.error("Please select at least 2 memebers");
     }else{   
+        const groupChatNames =  groupNameCheck.map((chatNames,idx)=>{
+            return (chatNames.name)
+        })
+        for(let i=0; i<groupChatNames.length; i++){
+            if(groupName.trim() === groupChatNames[i]){
+                toast.error("Sorry that Chat Name is Taken");
+                return;
+            }
+        }
+        //console.log(groupChatNames)
+        // // console.log(getdatafromsource) 
         const additonalMember = `${user._id}`
-        // console.log(getdatafromsource) 
         getdatafromsource.push(additonalMember)
-        socket.emit("group-chat", user._id, groupName,getdatafromsource)
-        getGroupChatRooms()
+        socket.emit("group-chat", user._id, groupName.trim(),getdatafromsource)
+        // getGroupChatRooms()
         setPopUp(false);
+        toast.success("Chat successfully created!");
     }
 }
-
-
-// async function createGroup(e) {
-//     e.preventDefault();
-//    await socket.emit("group-chat", user.name, groupName, memberArray);
-//    groupRooms.push(groupName); 
-// }
 function handleDirectMemberMessage(member) {
     setDirectMemberMessage(member)
     const roomID = sortIds(user._id, member._id)
@@ -171,7 +180,7 @@ function handleDirectMemberMessage(member) {
                 {popUp && (
         <>
           <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+            className="ml-2 mr-2 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
@@ -192,8 +201,19 @@ function handleDirectMemberMessage(member) {
                 </div>
                 {/*body*/}
                 <div className="text-center p-6 flex-auto">
-                    <input type="text" className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md text-black focus:outline-none focus:border-gray-400 focus:bg-white " placeholder="Group Chat Name"onChange={(e)=>setGroupName(e.target.value)}/>
+                    <input type="text" 
+                    className="w-full px-8 py-4 rounded-lg font-medium 
+                    bg-gray-100 border border-gray-200 placeholder-gray-500 
+                    text-md text-black focus:outline-none focus:border-gray-400 
+                    focus:bg-white" 
+                    placeholder="Group Chat Name"
+                    onChange={(e)=>setGroupName(e.target.value)}
+                    />
                 </div>
+                <div className="w-full  px-6 py-3 rounded-lg font-medium 
+                    bg-gray-100 border border-gray-200 placeholder-gray-500 
+                    text-md text-black focus:outline-none focus:border-gray-400 
+                    focus:bg-white">
                 <Select
                     placeholder="Select member"
                     isMulti
@@ -203,6 +223,7 @@ function handleDirectMemberMessage(member) {
                     className="basic-multi-select text-black"
                     classNamePrefix="select"
                 />
+                </div>
                 {/*footer*/}
                 <div className="text-center justify-between p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
@@ -217,7 +238,7 @@ function handleDirectMemberMessage(member) {
               </div>
             </div>
           </div>
-          <div className="opacity-20 fixed inset-0 z-40 bg-black"></div>
+          {/* {console.log(groupNameCheck.name)} */}
         </>
       )}
                 {/* for members who joined the chat */}

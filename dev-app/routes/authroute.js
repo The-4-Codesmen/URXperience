@@ -25,6 +25,7 @@ const {
   deleteController,
   retrieveAllContorller,
   groupRoomController,
+  getAllGroupChat
 } = require("../controllers/authcontroller.js");
 
 router.post("/register", validRegister, registerController)
@@ -42,7 +43,7 @@ router.get("/allUsers", retrieveAllContorller);
 router.get("/rooms", roomController);
 
 router.post("/groupRooms", groupRoomController);
-
+router.get("/groupChatArr", getAllGroupChat)
 
 router.delete("/logout", ensureUserExist, LogoutController);
 

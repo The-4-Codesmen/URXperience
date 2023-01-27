@@ -84,20 +84,6 @@ function sortRoomMessagesByDate(messages) {
     })
 }
 
-// function getFormattedDate() {
-//     const date = new Date();
-//     const year = date.getFullYear();
-//     let month = (1 + date.getMonth()).toString();
-  
-//     month = month.length > 1 ? month : "0" + month;
-//     let day = date.getDate().toString();
-//     day = day.length > 1 ? day : "0" + day;
-//     return month + "/" + day + "/" + year;
-// }
-// const today = new Date();
-// const minutes =
-// today.getMinutes() < 10 ? "0" + today.getMinutes() : today.getMinutes();
-
 //socket connection
 io.on('connection', (socket) => {
     socket.on('new-user', async () => {
@@ -127,10 +113,8 @@ io.on('connection', (socket) => {
         await chat.create({ creator: creator, name: name, members: members })
         socket.emit()
     })
-
     socket.on('remove-user', async(memberID) =>{
         // const user = await User.findById({memberID});
-
         await chat.deleteOne({"members":memberID});
         
     })

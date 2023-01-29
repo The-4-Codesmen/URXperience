@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 
 
 import EventPages from "./EventComponents/EventPages";
-
+import moment from 'moment';
 import axios from "axios";
 import EventBusyTwoToneIcon from '@mui/icons-material/EventBusyTwoTone';
 import { purple } from '@mui/material/colors';
@@ -33,11 +33,19 @@ function Events() {
       })
     }
   }, []);
+
   const [allEvents, setAllEvents]= useState([]);
+
+
+  
+
    const getAllEvents = async() =>{
+
+
+ 
     axios.get(`http://localhost:5000/api/eventfindall`)
     .then(res => {
-      //console.log(res.data)
+      console.log(res.data)
       setAllEvents(res.data)
     })
     .catch(err => {
@@ -48,9 +56,27 @@ function Events() {
    };
  
   useEffect(()=>{
-    getAllEvents();
-  },[]);
 
+    getAllEvents();
+
+    },[   getAllEvents() ]);
+
+
+    //Date fromat for user
+  function changeTime(time){
+
+    const [hours, minute] = time.split(":");
+    const hour = +hours % 24;
+    
+    const TimeFrame = (hour < 12 ? " AM" : " PM")
+    return (hour % 12 || 12) + ":" + minute + TimeFrame;
+  }
+  function changeDate(date){
+
+   return moment(date).format("MMM Do YY");
+
+   
+  }
 
   return (
     <div className='min-h-screen  text-gray-900 flex justify-center mt-20'>
@@ -71,19 +97,25 @@ function Events() {
       { allEvents.map((event)=>(
             <div className="bg-gray-100 rounded-lg p-3 shadow-lg items-center" key={event.id}>
                       
-                    <div className='rounded-lg'>
+                    <div className="ounded-lg text-center">
                         
-                      <h1 className="font-mono font-bold text-indigo-500 text-2xl">{event.title}</h1> <br></br>
-                      <label>Description:</label>
+                      <h1 className="font-mono  font-bold text-indigo-500 text-2xl">{event.title}</h1> <br></br>
+                      <label className="font-bold">Description:</label>
                       <h3>{event.description}</h3><br></br>
 
 
-                      <EventBusyTwoToneIcon className=" flex-right leading-tight relative " color="action " fontSize="large"  sx={{color:purple[900]}} ></EventBusyTwoToneIcon>
+                      <EventBusyTwoToneIcon className=" flex-right mb-2 leading-tight relative " color="action " fontSize="large"  sx={{color:purple[900]}} ></EventBusyTwoToneIcon>
 
-                      <p className=" ">From: {event.from} To: {event.to}</p>
-                    
-                      <p>{event.date}</p><br></br>
-                    
+                      <p className=" font-bold">From: <span className=" font-light">{changeTime(event.from) +" "}</span>
+                      
+                      From: <span className=" font-light ">{changeTime(event.to) }</span></p>
+
+          
+                      <p className=" font-bold">On: <span className=" font-light">{changeDate(event.date)}</span></p>
+
+                      <p className=" font-bold">Posted By: <span className=" font-light">{event.authorName }</span></p>
+
+                   
                     </div>
                     
             </div>

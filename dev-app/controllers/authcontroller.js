@@ -383,7 +383,7 @@ exports.addEventController = (req, res) => {
    
 
     const event = new Event({
-    title, description,date, from, to, author
+    title, description,date, from, to, author, authorName
     })
 
     event.save().then(() => {
@@ -404,6 +404,7 @@ exports.findEventController = async (req, res) => {
     console.log("data recieved");
 
     const {date} = req.body
+    console.log(date)
 
     const events = await Event.find({ date: date})
 
@@ -411,7 +412,12 @@ exports.findEventController = async (req, res) => {
    res.send(events);
    //res.send(toDo)
 
+// console.log("findign recieved");
 
+
+// const events = await Event.find().sort({'_id':-1})
+
+// res.send(events);
 
 }
 

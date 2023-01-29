@@ -28,6 +28,11 @@ const eventmodel = new mongoose.Schema({
         type: String,
         trim: true,
 
+    }, 
+    authorName:{
+        type: String,
+        trim: true,
+
     }
 });
 

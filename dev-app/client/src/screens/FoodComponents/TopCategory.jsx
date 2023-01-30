@@ -7,7 +7,7 @@ import { useState} from "react";
 
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
-
+import { ToastContainer, toast } from 'react-toastify'
 
 function TopCategory() {
 
@@ -20039,16 +20039,18 @@ function TopCategory() {
  const navigate = useNavigate();
 
   function searchRecipe() {
-    
-   
-     var searchP = arr.join(',+')
+    if(selected == null){
+      toast.error("Please Select some Ingredients")
+    }else{
+      var searchP = arr.join(',+')
 
-    searchP = searchP.replace(/\s+/g, '');
-    
-     setFile(searchP)
-
-    a=a+searchP
-    window.location.href =a;
+      searchP = searchP.replace(/\s+/g, '');
+      
+       setFile(searchP)
+  
+      a=a+searchP
+      window.location.href =a;
+    }
 
   ///EXTRA
   // searchCommand = arr.join(',+')
@@ -20077,6 +20079,7 @@ function TopCategory() {
 
   return (
     <div className="rounded-lg overflow-hidden bg-opacity-0">
+      <ToastContainer/>
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2 underline text-center">Categories</div>
 

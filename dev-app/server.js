@@ -23,7 +23,11 @@ app.use(bodyParser.json());
 const authRouter = require('./routes/authroute')
 
 // Config for only development
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'production') {
+        //*Set static folder up in production
+        app.use(express.static('client/build'));
+
+        app.get('*', (req,res) => res.sendFile(path.resolve(__dirname, 'client', 'build','index.html')));
     app.use(cors({
         origin: process.env.CLIENT_URL
     }))

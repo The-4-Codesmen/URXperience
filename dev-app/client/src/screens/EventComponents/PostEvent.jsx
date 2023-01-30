@@ -96,7 +96,7 @@ const handleSubmit = async (e) => {
     if (title && description && date && from && to && role ==="Admin") {
        console.log(role)
         axios.post(`http://localhost:5000/api/postevent`, {
-            title,description,date, from ,to ,author
+            title,description,date, from ,to ,author, authorName:user.name
         }).then(res => {
             setFormData({
                 ...formData,

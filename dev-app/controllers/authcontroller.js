@@ -378,7 +378,7 @@ const Event = require('../models/eventmodel')
 exports.addEventController = (req, res) => {
     console.log("data recieved");
   
-    const { title, description,date, from, to, author}= req.body;
+    const { title, description,date, from, to, author,authorName}= req.body;
 
    
 

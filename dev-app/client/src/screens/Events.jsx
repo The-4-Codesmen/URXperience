@@ -56,10 +56,12 @@ function Events() {
    };
  
   useEffect(()=>{
-
     getAllEvents();
-
-    },[   getAllEvents() ]);
+    const interval = setInterval(() => {
+      getAllEvents();
+    },2*1000);
+    return () => clearInterval(interval);
+  },[]);
 
 
     //Date fromat for user

@@ -25,7 +25,8 @@ const {
   deleteController,
   retrieveAllContorller,
   groupRoomController,
-  getAllGroupChat
+  getAllGroupChat,
+  deleteGroupChatController
 } = require("../controllers/authcontroller.js");
 
 router.post("/register", validRegister, registerController)
@@ -46,6 +47,7 @@ router.post("/groupRooms", groupRoomController);
 router.get("/groupChatArr", getAllGroupChat)
 
 router.delete("/logout", ensureUserExist, LogoutController);
+router.post("/deletegroup",  deleteGroupChatController);
 
 //delete user account
 router.delete("/delete", ensureUserExist, deleteController);

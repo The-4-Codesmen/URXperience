@@ -120,6 +120,18 @@ function handleGroupCreate(e){
         toast.success("Chat successfully created!");
     }
 }
+function deleteGroupRoom(room) {
+    try {
+        axios.post(`http://localhost:5000/api/deletegroup`, {groupRoom:room})
+        .then(res => {
+            toast.success(res.data.msg)
+            joinRoom(user.faculty)
+        })
+        
+    } catch (error) {
+        toast.error("Somethign went Wrong")
+    }
+}
 function handleDirectMemberMessage(member) {
     setDirectMemberMessage(member)
     const roomID = sortIds(user._id, member._id)
@@ -248,7 +260,7 @@ function handleDirectMemberMessage(member) {
                         member._id === user._id ? <ListGroup.Item key={idx} className="hidden "></ListGroup.Item>
                             : <ListGroup.Item key={member._id}
                                 className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all 
+                                bg-green-700 text-white justify-center transition-all 
                                 duration-300 ease-in-out focus:outline-none hover:bg-green-600 
                                 focus:shadow-sm focus:shadow-outline mt-5 grid grid-cols-5 gap-2 items-center'
                                 
@@ -288,15 +300,22 @@ function handleDirectMemberMessage(member) {
                                 key={room._id} onClick={() => joinRoom(room.name)}
                                 active={room === currentRoom}
                                 className='w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
-                                bg-green-700 text-white flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 
-                                focus:shadow-sm focus:shadow-outline mt-3 grid grid-cols-4 gap-2 items-center'>
-                                    <div className=" text-center col-span-3"> {room.name}</div>
-                                    <div className="">                                
+                                bg-green-700 text-white justify-center transition-all duration-300 ease-in-out focus:outline-none hover:bg-green-600 
+                                focus:shadow-sm focus:shadow-outline mt-3 grid grid-cols-5 gap-2 items-center'>
+                               <div className="col-span-1 px-4">
+                                    {room.creator === user._id ? 
+                                        <i className="fas fa-trash-alt text-white hover:text-red-600"  onClick={()=>deleteGroupRoom(room.name)}/>:
+                                        <i className="fa fa-users" aria-hidden="true"/>}
+                                </div>
+                                <div className=" text-center col-span-3">
+                                    {room.name}
+                                </div>
+                                <div className="col-span-1">
                                     {currentRoom !== room && 
                                         <Badge badgeContent={user?.newMessages[room.name]} color="primary">
                                             <MailIcon sx={{ color: "white" }} />
                                         </Badge>}
-                                        </div>
+                                </div>           
                             </ListGroup.Item>
                     ))}
                 </div>

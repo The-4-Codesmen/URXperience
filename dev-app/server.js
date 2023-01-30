@@ -113,32 +113,6 @@ io.on('connection', (socket) => {
         await chat.create({ creator: creator, name: name, members: members })
         socket.emit()
     })
-    socket.on('remove-user', async(memberID) =>{
-        // const user = await User.findById({memberID});
-        await chat.deleteOne({"members":memberID});
-        
-    })
-
-    //remove user from group chat
-    // socket.on("remove-user", async (id) => {
-    //     const user = await User.findById(id);
-    //     //const query = { "from._id": id };
-    //     //console.log(message);
-    //     if (user) {
-    //      const h = await message.deleteMany({ "from": id });
-    //       // find the user msg, delete them, and the user from array of users
-    //       await chat.deleteOne({"members":user});
-    //     }
-    //     socket.emit();
-    //   });
-
-      
-    socket.on("delete-room", async (room_id) => {
-        await chat.deleteOne({ "name": room });
-        socket.emit();
-    });  
-
-
     socket.on('leave-chat', async () => {
         const members = await User.find();
         socket.broadcast.emit('new-user', members);

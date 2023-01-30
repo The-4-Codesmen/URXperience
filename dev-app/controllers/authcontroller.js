@@ -1,5 +1,6 @@
 const User = require("../models/authmodel");
 const Chat = require('../models/chatmodel');
+const Message = require('../models/messagemodel');
 var userId = "";
 
 // const express = require('express')
@@ -441,4 +442,12 @@ exports.retrieveAllContorller = async (req, res) => {
 exports.getAllGroupChat = async (req, res) => {
   const groupChatRooms = await Chat.find();
   res.json(groupChatRooms)
+}
+
+exports.deleteGroupChatController = async (req, res)=>{
+  const {groupRoom} = req.body;
+  // console.log(groupRoom)
+  await Message.deleteMany({to:groupRoom});
+  await Chat.deleteOne({ name: groupRoom });
+  res.status(200).json({ msg: `Successfully Deleted GroupChat "${groupRoom}"` });
 }

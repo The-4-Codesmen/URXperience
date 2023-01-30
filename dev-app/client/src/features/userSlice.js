@@ -1,20 +1,23 @@
 //redux store to handle user state for message notification
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 import appApi from "../services/appApi";
 export const userSlice = createSlice({
-    name: 'user',
+    name: "user",
     initialState: null,
     reducers: {
-        addNotifications: (state, { payload }) => {
-            if (state.newMessages[payload]) {
-                state.newMessages[payload] = state.newMessages[payload] + 1;
+        addNotifications: (state, {payload}) => {
+            // console.log('before', current(state.user.newMessages))
+            // state.push(action.payload)
+            // console.log('after', current(state))
+            if (state.user.newMessages[payload]) {
+                state.user.newMessages[payload] = state.user.newMessages[payload] + 1;
             } else {
-                state.newMessages[payload] = 1;
+                state.user.newMessages[payload] = 1;
             }
         },
         resetNotifications: (state, { payload }) => {
-            delete state.newMessages[payload];
-        }
+            delete state.user.newMessages[payload];
+        },
     },
 
     extraReducers: (builder) => {

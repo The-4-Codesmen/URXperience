@@ -10,7 +10,7 @@ import thunk from "redux-thunk";
 // reducers
 const reducer = combineReducers({
     user: userSlice,
-    [appApi.reducerPath]: appApi.reducerPath
+    [appApi.reducerPath]: appApi.reducer
 });
 
 const persistConfig = {

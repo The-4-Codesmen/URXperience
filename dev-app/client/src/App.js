@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Resources from "./screens/Resources";
 function App() {
   const [rooms, setRooms] = useState([]);
+  const [groupRooms, setGroupRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState([]);
   const [members, setMembers] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -36,6 +37,8 @@ function App() {
         setDirectMemberMessage,
         rooms,
         setRooms,
+        groupRooms, 
+        setGroupRooms,
         newMessages,
         setNewMessages,
       }}

@@ -5,6 +5,7 @@ const cors = require('cors')
 const connectDB = require('./config/db')
 const app = express()
 const message = require('./models/messagemodel');
+const chat = require('./models/chatmodel');
 const User = require('./models/authmodel');
 const rooms = ['Engineering', 'Nursing', 'Business']
 //Config.env to ./config/config.env
@@ -82,6 +83,7 @@ function sortRoomMessagesByDate(messages) {
         return previousDate < currentDate ? -1 : 1
     })
 }
+
 //socket connection
 io.on('connection', (socket) => {
     socket.on('new-user', async () => {
@@ -105,14 +107,19 @@ io.on('connection', (socket) => {
         io.to(room).emit('room-messages', roomMessages)
         socket.broadcast.emit('notifications', room)
     })
+
+    //creating group chat
+    socket.on('group-chat', async(creator, name, members) =>{
+        await chat.create({ creator: creator, name: name, members: members })
+        socket.emit()
+    })
     socket.on('leave-chat', async () => {
         const members = await User.find();
         socket.broadcast.emit('new-user', members);
     })
+    
 })
-
 //port for server side
 server.listen(PORT, () => {
     console.log('listening on port ' + PORT);
 })
-

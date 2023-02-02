@@ -14,6 +14,9 @@ import ReactDOM from 'react-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { Carousel } from 'react-responsive-carousel';
 import Navbar from "../Navbar";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function EventByDate() {
 
@@ -134,6 +137,35 @@ function EventByDate() {
                   showArrows={true }
                   infiniteLoop={true}
                   showThumbs={false}
+                 
+                  renderArrowPrev={(clickHandler, hasPrev) => {
+                    return (
+                      <div
+                        className={`${
+                          hasPrev ? "absolute" : "hidden"
+                        } top-0 bottom-0 left-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20`}
+                        onClick={clickHandler}
+                      >
+                        
+                            <ArrowBackIosIcon className=" flex-right leading-tight relative " color="action " fontSize="large"   ></ArrowBackIosIcon>
+                     </div>
+                    );
+                  }}
+
+
+                  renderArrowNext={(clickHandler, hasNext) => {
+                    return (
+                      <div
+                        className={`${
+                          hasNext ? "absolute" : "hidden"
+                        } top-0 bottom-0 right-0 flex justify-center items-center p-3 opacity-30 hover:opacity-100 cursor-pointer z-20`}
+                        onClick={clickHandler}
+                      >
+                        
+                        <ArrowForwardIosIcon className=" flex-right leading-tight relative " color="action " fontSize="large"   ></ArrowForwardIosIcon>
+                      </div>
+                    );
+                  }}
                   >
                   {  
                     allEvents && allEvents.length ? 
@@ -209,7 +241,7 @@ function EventByDate() {
               
                 :
                
-              
+                <Carousel>
                 <div className=" mt-10 mb-10"  >
 
                   <h1 className="font-mono  text-6xl font-extrabold tracking-tighter
@@ -226,7 +258,7 @@ function EventByDate() {
                   
 
                 </div>
-
+                </Carousel>
                 
               }
        

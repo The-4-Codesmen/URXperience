@@ -60,13 +60,16 @@ function App() {
           <Route path="/foodscreen" exact element={<FoodScreen />} />
           <Route path="/foodscreen/option/:type" exact element={<Option />} />
 
-          <Route path="/foodscreen/ingredientsearched/:type" exact element={<IngredientSearched />} />
+          <Route
+            path="/foodscreen/ingredientsearched/:type"
+            exact
+            element={<IngredientSearched />}
+          />
           <Route
             path="/foodscreen/recipelist/:id"
             exact
             element={<RecipeList />}
           />
-          <Route path="/resources" exact element={<Resources />} />
         </Routes>
       </Router>
     </AppContext.Provider>

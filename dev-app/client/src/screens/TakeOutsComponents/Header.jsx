@@ -7,15 +7,17 @@ import Navbar from "../Navbar";
 const Header = ({ onPlaceChanged, onLoad }) => {
   return (
     <>
-      <div className="mb-20">
+      <div className="mb-24">
         <Navbar />
       </div>
-      <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-        <div>
-          <div>
-            <SearchIcon />
-          </div>
-          <InputBase placeholder="Search…" />
+      <Autocomplete
+        onLoad={onLoad}
+        onPlaceChanged={onPlaceChanged}
+        className="flex"
+      >
+        <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
+          <i className="fa fa-search absolute ml-9 mt-2"></i>
+          <input className="pl-7 ml-7 w-80 h-8 border border-green-800 rounded hover:border-green-500"></input>
         </div>
       </Autocomplete>
     </>

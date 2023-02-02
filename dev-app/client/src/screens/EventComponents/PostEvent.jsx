@@ -56,7 +56,7 @@ function PostEvent() {
       
     })
     .catch(err => {
-     console.log(err)
+      toast.error("Please try again")
      })
 
    };
@@ -92,9 +92,9 @@ function PostEvent() {
 
 const handleSubmit = async (e) => { 
    e.preventDefault(); 
-   console.log(role)
+  
     if (title && description && date && from && to && role ==="Admin") {
-       console.log(role)
+       
         axios.post(`http://localhost:5000/api/postevent`, {
             title,description,date, from ,to ,author, authorName:user.name
         }).then(res => {
@@ -128,16 +128,16 @@ const handleSubmit = async (e) => {
     if(_id){
         axios.post(`http://localhost:5000/api/eventdelete`, {_id})
         .then(res => {
-          console.log(res.data)
+         
 
           getAllEvents();
         })
         .catch(err => {
-        console.log(err)
+      
         })
 
     }else{
-      console.log("Try again")
+      toast.error("Please try again")
     }
       
 

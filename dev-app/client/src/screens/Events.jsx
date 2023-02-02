@@ -46,11 +46,11 @@ function Events() {
  
     axios.get(`http://localhost:5000/api/eventfindall`)
     .then(res => {
-      console.log(res.data)
+   
       setAllEvents(res.data)
     })
     .catch(err => {
-     console.log(err)
+ 
      })
  //    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
 

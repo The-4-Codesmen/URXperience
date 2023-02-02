@@ -28,24 +28,24 @@ function EventByDate() {
     
     if(!dateValue){
 
-      console.log("pick date")
+     
       toast.error("Please Select a Date ")
      
     }else{
       setDateChosen(dateValue)
   
-      console.log(dateValue)
+     
     const date = moment(dateValue).format('YYYY-MM-DD');
     date.toString();
-    console.log(date);
+    
 
     axios.post(`http://localhost:5000/api/eventfind`, {date})
     .then(res => {
-      console.log(res.data)
+    
       setAllEvents(res.data)
     })
     .catch(err => {
-     console.log(err)
+     
      })
 
 

@@ -46,11 +46,11 @@ function Events() {
  
     axios.get(`http://localhost:5000/api/eventfindall`)
     .then(res => {
-      console.log(res.data)
+   
       setAllEvents(res.data)
     })
     .catch(err => {
-     console.log(err)
+ 
      })
  //    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
 
@@ -75,9 +75,9 @@ function Events() {
     return (hour % 12 || 12) + ":" + minute + TimeFrame;
   }
   function changeDate(date){
-
+    
    return moment(date).format("MMM Do YY");
-
+  //  return date;
    
   }
 
@@ -101,7 +101,7 @@ function Events() {
             <div className="mt-2 grid p-4 grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto"> 
 
               { allEvents.map((event)=>(
-                <div className="  bg-green-800  ok rounded-lg  mt-20 mb-20 ">
+                <div className="  bg-green-800  ok rounded-lg  mt-20 mb-20 " key={event._id}>
                   <div className=" bg-yellow-200  ok2 rounded-lg  mt-10 ">
                   
 

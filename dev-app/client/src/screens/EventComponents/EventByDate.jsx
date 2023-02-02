@@ -28,24 +28,24 @@ function EventByDate() {
     
     if(!dateValue){
 
-      console.log("pick date")
+     
       toast.error("Please Select a Date ")
      
     }else{
       setDateChosen(dateValue)
   
-      console.log(dateValue)
+     
     const date = moment(dateValue).format('YYYY-MM-DD');
     date.toString();
-    console.log(date);
+    
 
     axios.post(`http://localhost:5000/api/eventfind`, {date})
     .then(res => {
-      console.log(res.data)
+    
       setAllEvents(res.data)
     })
     .catch(err => {
-     console.log(err)
+     
      })
 
 
@@ -133,6 +133,7 @@ function EventByDate() {
                 
                   showArrows={true }
                   infiniteLoop={true}
+                  showThumbs={false}
                   >
                   {  
                     allEvents && allEvents.length ? 
@@ -152,7 +153,7 @@ function EventByDate() {
                           
                             <EventBusyTwoToneIcon className=" flex-right leading-tight relative " color="action " fontSize="large"  sx={{color:green[700]}} ></EventBusyTwoToneIcon>
                             
-                            <div class="grid grid-cols-1 mr-20 ml-20 gap-2   sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3  xl:grid-cols-3 ">
+                            <div className="grid grid-cols-1 mr-20 ml-20 gap-2   sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3  xl:grid-cols-3 ">
                               <div className="m-6  box   bg-indigo-500 shadow-3xl  sm:bg-indigo-500 md:bg-indigo-500 lg:bg-indigo-500  xl:bg-indigo-500">
                             
                               {/* sm: md: lg:  xl: */}

@@ -370,7 +370,7 @@ exports.chatLogoutController = (req, res) => {
 }
 
 
-
+//Event controllers
 const Event = require('../models/eventmodel')
 
 
@@ -410,14 +410,7 @@ exports.findEventController = async (req, res) => {
 
    console.log(events);
    res.send(events);
-   //res.send(toDo)
-
-// console.log("findign recieved");
-
-
-// const events = await Event.find().sort({'_id':-1})
-
-// res.send(events);
+ 
 
 }
 
@@ -433,11 +426,6 @@ exports.deleteEventController = async (req, res) => {
 
  
 }
-
-
-
-
-
 
 
 exports.findEventAllController = async ( req, res) => {
@@ -463,4 +451,16 @@ exports.findEventByIdController = async ( req, res) => {
 
   
    res.send(events)
+}
+
+
+
+exports.findEventforDashboardController = async ( req, res) => {
+    console.log("findign recieved");
+
+
+    const events = await Event.find().sort({'_id':-1}).limit(5)
+
+   res.send(events);
+   //res.send(toDo)
 }

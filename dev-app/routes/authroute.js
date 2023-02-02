@@ -27,7 +27,8 @@ const {
     findEventController,
     deleteEventController,
     findEventAllController,
-    findEventByIdController
+    findEventByIdController,
+    findEventforDashboardController
 } = require('../controllers/authcontroller.js')
 
 router.post('/register', validRegister, registerController)
@@ -44,10 +45,10 @@ router.put('/user/update', requireSignin, updateController);
 router.post('/postevent',  addEventController)
 router.post('/eventfind',  findEventController)
 router.post('/eventdelete',  deleteEventController)
-
 router.post('/eventfindbyid',  findEventByIdController)
-
 router.get('/eventfindall',  findEventAllController)
+router.get('/dashboardevent',  findEventforDashboardController)
+
 
 //load rooms
 router.get('/rooms', roomController)

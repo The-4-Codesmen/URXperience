@@ -17,6 +17,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Resources from "./screens/Resources";
 import IngredientSearched from "./screens/FoodPages/IngredientSearched";
 
+import Events from "./screens/Events";
+import PostEvent from "./screens/EventComponents/PostEvent";
+import EventByDate from "./screens/EventComponents/EventByDate";
 function App() {
   const [rooms, setRooms] = useState([]);
   const [groupRooms, setGroupRooms] = useState([]);
@@ -64,6 +67,11 @@ function App() {
           <Route path="/foodscreen/option/:type" exact element={<Option />} />
 
           <Route path="/foodscreen/ingredientsearched/:type" exact element={<IngredientSearched />} />
+          <Route path="/events" exact element={<Events />} />
+          <Route path="/postevent" exact element={<PostEvent />} />
+          <Route path="/eventbydate" exact element={<EventByDate />} />
+
+
           <Route
             path="/foodscreen/recipelist/:id"
             exact

@@ -88,12 +88,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a
-                  href="/dashboard"
-                  className="block py-2 pr-4 pl-3 text-black font-medium rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Events
-                </a>
+                <a href="/Events" className="block py-2 pr-4 pl-3 text-black font-medium rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Events</a>
               </li>
               <li>
                 <a

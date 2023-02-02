@@ -26,7 +26,13 @@ const {
   retrieveAllContorller,
   groupRoomController,
   getAllGroupChat,
-  deleteGroupChatController
+  deleteGroupChatController,
+  addEventController,
+  findEventController,
+  deleteEventController,
+  findEventAllController,
+  findEventByIdController,
+  findEventforDashboardController
 } = require("../controllers/authcontroller.js");
 
 router.post("/register", validRegister, registerController)
@@ -36,6 +42,15 @@ router.put("/forgotpassword", forgotPasswordValidator, forgotController);
 router.put("/resetpassword", resetPasswordValidator, resetController);
 router.get("/user/:id", requireSignin, readController);
 router.put("/user/update", requireSignin, updateController);
+  
+
+// event routes
+router.post('/postevent',  addEventController)
+router.post('/eventfind',  findEventController)
+router.post('/eventdelete',  deleteEventController)
+router.post('/eventfindbyid',  findEventByIdController)
+router.get('/eventfindall',  findEventAllController)
+router.get('/dashboardevent',  findEventforDashboardController)
 
 //get all members
 router.get("/allUsers", retrieveAllContorller);
@@ -51,4 +66,7 @@ router.post("/deletegroup",  deleteGroupChatController);
 
 //delete user account
 router.delete("/delete", ensureUserExist, deleteController);
+
+
+
 module.exports = router;

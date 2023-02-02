@@ -78,26 +78,27 @@ const TakeOuts = () => {
     <>
       <CssBaseline />
       <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
-      <Grid container spacing={3} style={{ width: "100%" }}>
-        <Grid item xs={12} md={4}>
-          <List
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div>
+        <List
             places={filteredPlaces.length ? filteredPlaces : places}
             rating={rating}
             setRating={setRating}
             childClicked={childClicked}
             isLoading={isLoading}
           />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Map
+        </div>
+        <div>
+        <Map 
             setBounds={setBounds}
             setCoords={setCoords}
             coords={coords}
             places={filteredPlaces.length ? filteredPlaces : places}
             setChildClicked={setChildClicked}
           />
-        </Grid>
-      </Grid>
+        </div>
+
+      </div>
     </>
   );
 };

@@ -71,6 +71,9 @@ function App() {
             exact
             element={<IngredientSearched />}
           />
+          <Route path="/events" exact element={<Events />} />
+          <Route path="/postevent" exact element={<PostEvent />} />
+          <Route path="/eventbydate" exact element={<EventByDate />} />
           <Route
             path="/foodscreen/recipelist/:id"
             exact

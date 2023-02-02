@@ -1,6 +1,8 @@
 const User = require("../models/authmodel");
 const Chat = require('../models/chatmodel');
 const Message = require('../models/messagemodel');
+//Event controllers
+const Event = require('../models/eventmodel')
 var userId = "";
 
 // const express = require('express')
@@ -453,13 +455,11 @@ exports.deleteGroupChatController = async (req, res)=>{
 }
 
 
-//Event controllers
-const Event = require('../models/eventmodel')
+
 
 
 
 exports.addEventController = (req, res) => {
-    console.log("data recieved");
   
     const { title, description,date, from, to, author,authorName}= req.body;
 
@@ -484,24 +484,18 @@ exports.addEventController = (req, res) => {
 
 
 exports.findEventController = async (req, res) => {
-    console.log("data recieved");
 
     const {date} = req.body
-    console.log(date)
 
     const events = await Event.find({ date: date})
-
-   console.log(events);
    res.send(events);
  
 
 }
 
 exports.deleteEventController = async (req, res) => {
-    console.log("delete id received");
 
     const { _id}= req.body;
-    console.log(_id)
 
     Event.findByIdAndRemove(_id)
     .then(()=> res.send("deleted"))
@@ -512,7 +506,6 @@ exports.deleteEventController = async (req, res) => {
 
 
 exports.findEventAllController = async ( req, res) => {
-    console.log("findign recieved");
 
 
     const events = await Event.find().sort({'_id':-1})
@@ -524,8 +517,6 @@ exports.findEventAllController = async ( req, res) => {
 
 
 exports.findEventByIdController = async ( req, res) => {
-    console.log("finding all event by userId ");
-
   
     const { userId}= req.body;
 
@@ -539,10 +530,9 @@ exports.findEventByIdController = async ( req, res) => {
 
 
 exports.findEventforDashboardController = async ( req, res) => {
-    console.log("findign recieved");
 
 
-    const events = await Event.find().sort({'_id':-1}).limit(5)
+  const events = await Event.find().sort({'_id':-1}).limit(5)
 
    res.send(events);
    //res.send(toDo)

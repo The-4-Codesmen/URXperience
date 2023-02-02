@@ -12,7 +12,6 @@ import PlaceDetails from "./PlaceDetails";
 
 const List = ({ places, rating, setRating, childClicked, isLoading }) => {
   const [elRefs, setElRefs] = useState([]);
-  console.log({ elRefs });
   useEffect(() => {
     const refs = Array(places?.length)
       .fill()

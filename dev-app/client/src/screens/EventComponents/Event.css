@@ -1,7 +1,37 @@
 
   
+.divB{
 
 
+    z-index: -1;
+    animation: eventB;
+    animation-duration: 20s;
+    position: absolute;
+    animation-iteration-count: infinite;
+
+}
+@keyframes eventB {
+
+    from { -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   { -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
+.divB2{
+
+    z-index: -1;
+    animation: eventB2;
+    animation-duration: 18s;
+    position: absolute;
+    animation-iteration-count: infinite;
+
+}
+@keyframes eventB2 {
+
+    from { -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   { -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
+.eventPageBd{
+    z-index: 950;
+}
     
     .CalendarContainer {
     
@@ -12,7 +42,7 @@
         margin: auto;
         margin-top: 20px;
        
-      
+      text-align: center;
         border-radius: 6px;
          
       

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
-
+import './EventComponents/EventPage.css';
 
 import EventPages from "./EventComponents/EventPages";
 import moment from 'moment';
 import axios from "axios";
-import EventBusyTwoToneIcon from '@mui/icons-material/EventBusyTwoTone';
-import { purple } from '@mui/material/colors';
+
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import { green } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import { updateUser, isAuth, getCookie, signout } from '../helpers/auth';
@@ -84,50 +85,64 @@ function Events() {
     <div className='min-h-screen  text-gray-900 flex justify-center mt-20'>
       <Navbar />
       
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
     
- 
-    <EventPages />
-     
-     <div className="col-span-2 justify-center ">
-    
-      <h1 className='text-2xl xl:text-3xl font-extrabold text-center '>ALL EVENTS</h1>
 
-    
-       <div className="mt-2 grid p-4 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto"> 
+        <div className="text-center Align-items">
+          <EventPages />
+        
+        </div>
+      
+        <div className="col-span-2 justify-center ">
+        
+          <h1 className='text-2xl xl:text-3xl font-extrabold text-center '>ALL EVENTS</h1>
 
-      { allEvents.map((event)=>(
-            <div className="bg-gray-100 rounded-lg p-3 shadow-lg items-center" key={event.id}>
+        
+            <div className="mt-2 grid p-4 grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto"> 
+
+              { allEvents.map((event)=>(
+                <div className="  bg-green-800  ok rounded-lg  mt-20 mb-20 ">
+                  <div className=" bg-yellow-200  ok2 rounded-lg  mt-10 ">
+                  
+
+
+                    <div className="bg-gray-100 rounded-lg p-3 shadow-lg items-center now" key={event.id}>
                       
-                    <div className="ounded-lg text-center">
-                        
-                      <h1 className="font-mono  font-bold text-indigo-500 text-2xl">{event.title}</h1> <br></br>
-                      <label className="font-bold">Description:</label>
-                      <h3>{event.description}</h3><br></br>
+                            <div className="rounded-lg text-center ">
+                                
+                              <h1 className="font-mono tracking-tight font-bold  italic  text-green-800 text-4xl overflow-hidden">{event.title}</h1> <br></br>
+                              <label className="font-bold">Description</label>
+                              <h3 className="object-none h-40 overflow-hidden ">{event.description}</h3><br></br>
+                            
+                              <EventNoteIcon className=" flex-right mb-2 leading-tight relative mb-5 " color="action " fontSize="large"  sx={{color:green[900]}} ></EventNoteIcon> 
+                            
+                            
 
+                            
+                              <p className=" font-bold">From: <span className=" font-light">{changeTime(event.from) +" "}</span>
+                              
+                              From: <span className=" font-light ">{changeTime(event.to) }</span></p>
 
-                      <EventBusyTwoToneIcon className=" flex-right mb-2 leading-tight relative " color="action " fontSize="large"  sx={{color:purple[900]}} ></EventBusyTwoToneIcon>
+                  
+                              <p className=" font-bold">On: <span className=" font-light">{changeDate(event.date)}</span></p>
 
-                      <p className=" font-bold">From: <span className=" font-light">{changeTime(event.from) +" "}</span>
-                      
-                      From: <span className=" font-light ">{changeTime(event.to) }</span></p>
+                              <p className=" font-bold">Posted By: <span className=" font-light">{event.authorName }</span></p>
 
-          
-                      <p className=" font-bold">On: <span className=" font-light">{changeDate(event.date)}</span></p>
-
-                      <p className=" font-bold">Posted By: <span className=" font-light">{event.authorName }</span></p>
-
-                   
+                          
+                            </div>
+                            
                     </div>
-                    
+                
+
+                  </div>
+                </div>
+
+              ))}
+      
             </div>
+        </div>
 
-      ))}
-   
-    </div>
-    </div>
-
-    </div>
+      </div>
 
      
      

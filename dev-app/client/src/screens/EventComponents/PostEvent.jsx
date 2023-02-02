@@ -8,7 +8,7 @@ import axios from 'axios'
 import Navbar from '../Navbar'
 
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { purple } from '@mui/material/colors';
+import { purple, red } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser, isAuth, getCookie, signout } from '../../helpers/auth';
@@ -113,7 +113,7 @@ const handleSubmit = async (e) => {
             toast.error(err.response.data.error)
         })
     } else {
-        toast.error("Plese fill all the feilds")
+        toast.error("Please fill all the fields")
     }
 }
 
@@ -124,66 +124,41 @@ const handleSubmit = async (e) => {
 
 
 
-const deleteEvent =  (_id) => { 
-    
+  const deleteEvent =  (_id) => {         
+    if(_id){
+        axios.post(`http://localhost:5000/api/eventdelete`, {_id})
+        .then(res => {
+          console.log(res.data)
 
-    
-if(_id){
-    axios.post(`http://localhost:5000/api/eventdelete`, {_id})
-    .then(res => {
-      console.log(res.data)
+          getAllEvents();
+        })
+        .catch(err => {
+        console.log(err)
+        })
 
-      getAllEvents();
-    })
-    .catch(err => {
-     console.log(err)
-     })
+    }else{
+      console.log("Try again")
+    }
+      
 
-}else{
-
-    console.log("Try again")
-}
-   
-
-
-
-
-
-  
 
   }
 
 
-
-/*
-
-
-
-    if (title && description && date && from && to) {
-         axios.post(`http://localhost:5000/api/addevent`, formData).then((res) => console.log(res)).catch(err => {
-            console.log(err.response.data)
-        }); 
-    } else { 
-            console.log("Plese try again"); } 
-    };
-
-
-    */
-
   return (
-    <div className='min-h-screen  text-gray-900 flex  justify-center mt-20'>
+    <div className='min-h-screen  text-gray-900 flex  text-center  mt-20   text-center justify-center'>
 
         <ToastContainer />
         <Navbar/>
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-5   text-center justify-center ">
 
         <div className="col-span-2 justify-center ">
-        <h1 className=' text-2xl xl:text-3xl font-extrabold text-center '>Post Event</h1>
+           <h1 className=' text-2xl xl:text-3xl font-extrabold text-center '>Post Event</h1>
 
             <form className='  w-full flex-1 mt-8 text-indigo-500' onSubmit={handleSubmit}>
 
                 <div className="mx-auto max-w-xs relative">
-                <label>Title</label>
+                <label >Title</label>
                     <input type="text" placeholder='Title' onChange={handleChange('title')}
                     value={title}
                     className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
@@ -197,6 +172,7 @@ if(_id){
                 <label>Date</label>
                     <input type="date"  onChange={handleChange('date')}
                     value={date}
+                    min={new Date()}
                     className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5'
                     />
                 <label>From</label>
@@ -223,38 +199,56 @@ if(_id){
         </div>
 
 
-             <div className="bg-slate-700">
+             <div className="bg-slate-700 ">
 
-        <p className=' text-s xl:text-s font-extrabold text-center '>My Events</p>
+        <p className=' text-s xl:text-s font-extrabold text-center  '>My Events</p>
 
-
+          <div className="  text-center justify-center ">
+  
+            
+        
              { allEvents.map((event)=>(
-            <div className="bg-slate-700 bg-gray-100  rounded-lg mt-5 shadow-lg  " key={event._id}>
+            <div className=" bg-gray-100 box transition-all   justify-center 
+            duration-300 ease-in-out hover:bg-yellow-200  rounded-lg mt-5 mr-20 ml-20 shadow-lg grid grid-cols-5  gap-4 
+
+            sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5  xl:grid-cols-5
+
+
+            " key={event._id}>
                       
-                    <div className='ml-2 bg-slate-400 p-0 grid grid-cols-2 gap-5 rounded-lg'>
-                        <div>
-                            <h1 className="bg-gray- 900 font-mono font-bold text-m">{event.title}</h1> 
+                  
+                    <div className=" text-center col-span-4 overflow-hidden">     
+                       <h1 className="text-center  font-mono font-bold text-m  text-indigo-500">{event.title}</h1>
+                       
+                       {/* <p className="text-xs   ">On: {event.date}</p>      */}
 
-                               { /* <p className=" text-s">From: {event.from} To: {event.to}</p> */}
-
-                            <p className="text-xs ">On: {event.date}</p>
-
-                        </div>
-                        
-                        <div  className="flex-left ml-20">
-                           <button  onClick={() => deleteEvent(event._id)} >
-                            <DeleteTwoToneIcon  className=" leading-tight relative " color="action " fontSize="medium"  sx={{color:purple[900]}} ></DeleteTwoToneIcon>
-                         </button>
-                        </div>
-
+                        <p className="text-xs  text-green-800">Posted On: <span className="  font-nold text-xs text-black">{event.date}</span></p>               
                     </div>
+
+                    <div className="mt-2 ml-2 ">
+
+                      <button className="cursor-pointer "  onClick={() => deleteEvent(event._id)} >
+
+                        <i className="fas fa-trash-alt   text-red-500 hover:text-red-800"  />
+                       </button>
+                    
+                    </div>
+
+          
+           
+                   
+                   
+                   
+                   
+                   
+
                     
                     
                  </div>
 
                  ))}
              </div>
-      
+             </div>
         </div>
 
       

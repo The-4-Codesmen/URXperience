@@ -42,7 +42,7 @@ function App() {
         setDirectMemberMessage,
         rooms,
         setRooms,
-        groupRooms, 
+        groupRooms,
         setGroupRooms,
         newMessages,
         setNewMessages,
@@ -66,18 +66,16 @@ function App() {
           <Route path="/foodscreen" exact element={<FoodScreen />} />
           <Route path="/foodscreen/option/:type" exact element={<Option />} />
 
-          <Route path="/foodscreen/ingredientsearched/:type" exact element={<IngredientSearched />} />
-          <Route path="/events" exact element={<Events />} />
-          <Route path="/postevent" exact element={<PostEvent />} />
-          <Route path="/eventbydate" exact element={<EventByDate />} />
-
-
+          <Route
+            path="/foodscreen/ingredientsearched/:type"
+            exact
+            element={<IngredientSearched />}
+          />
           <Route
             path="/foodscreen/recipelist/:id"
             exact
             element={<RecipeList />}
           />
-          <Route path="/resources" exact element={<Resources />} />
         </Routes>
       </Router>
     </AppContext.Provider>

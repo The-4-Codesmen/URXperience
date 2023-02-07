@@ -1,8 +1,10 @@
 const User = require("../models/authmodel");
-const Chat = require('../models/chatmodel');
-const Message = require('../models/messagemodel');
+const Chat = require("../models/chatmodel");
+const Message = require("../models/messagemodel");
 //Event controllers
-const Event = require('../models/eventmodel')
+const Event = require("../models/eventmodel");
+const Complain = require("../models/complain");
+const fs = require("fs");
 var userId = "";
 
 // const express = require('express')
@@ -380,17 +382,16 @@ exports.readController = (req, res) => {
 
 exports.roomController = (req, res) => {
   const rooms = [
-    {label:"Engineering",_id:"0001"},
-    {label:"Nursing",_id:"0002"},
-    {label:"Business",_id:"0003"},
-    {label:"Arts",_id:"0004"},
-    {label:"Science",_id:"0005"},
-    {label:"Kineseology",_id:"0006"},
-    {label:"Education",_id:"0007"},
-    {label:"SocialWork",_id:"0008"},
+    { label: "Engineering", _id: "0001" },
+    { label: "Nursing", _id: "0002" },
+    { label: "Business", _id: "0003" },
+    { label: "Arts", _id: "0004" },
+    { label: "Science", _id: "0005" },
+    { label: "Kineseology", _id: "0006" },
+    { label: "Education", _id: "0007" },
+    { label: "SocialWork", _id: "0008" },
   ];
   res.json(rooms);
-
 
   // "Engineering",
   // "Nursing",
@@ -404,10 +405,9 @@ exports.roomController = (req, res) => {
 
 exports.groupRoomController = async (req, res) => {
   //call db.
-  const {userId} = req.body;
-  const groupRooms = await Chat.find({members:userId});
+  const { userId } = req.body;
+  const groupRooms = await Chat.find({ members: userId });
   res.json(groupRooms);
-  
 };
 exports.LogoutController = (req, res) => {
   try {
@@ -435,7 +435,7 @@ exports.deleteController = async (req, res) => {
 };
 
 exports.retrieveAllContorller = async (req, res) => {
-  const members = await User.find().sort({"name":1})
+  const members = await User.find().sort({ name: 1 });
   // console.log(members)
   res.json({ members });
 };
@@ -443,97 +443,114 @@ exports.retrieveAllContorller = async (req, res) => {
 //getting all groupChat
 exports.getAllGroupChat = async (req, res) => {
   const groupChatRooms = await Chat.find();
-  res.json(groupChatRooms)
-}
+  res.json(groupChatRooms);
+};
 
-exports.deleteGroupChatController = async (req, res)=>{
-  const {groupRoom} = req.body;
+exports.deleteGroupChatController = async (req, res) => {
+  const { groupRoom } = req.body;
   // console.log(groupRoom)
-  await Message.deleteMany({to:groupRoom});
+  await Message.deleteMany({ to: groupRoom });
   await Chat.deleteOne({ name: groupRoom });
-  res.status(200).json({ msg: `Successfully Deleted GroupChat "${groupRoom}"` });
-}
-
-
-
-
-
+  res
+    .status(200)
+    .json({ msg: `Successfully Deleted GroupChat "${groupRoom}"` });
+};
 
 exports.addEventController = (req, res) => {
-  
-    const { title, description,date, from, to, author,authorName}= req.body;
+  const { title, description, date, from, to, author, authorName } = req.body;
 
-   
+  const event = new Event({
+    title,
+    description,
+    date,
+    from,
+    to,
+    author,
+    authorName,
+  });
 
-    const event = new Event({
-    title, description,date, from, to, author, authorName
-    })
-
-    event.save().then(() => {
-        return res.json({
-            message: `Event " ${title} " is added.`
-        })
-    })
-   
-
-
-
-
-}
-
-
+  event.save().then(() => {
+    return res.json({
+      message: `Event " ${title} " is added.`,
+    });
+  });
+};
 
 exports.findEventController = async (req, res) => {
+  const { date } = req.body;
 
-    const {date} = req.body
-
-    const events = await Event.find({ date: date})
-   res.send(events);
- 
-
-}
+  const events = await Event.find({ date: date });
+  res.send(events);
+};
 
 exports.deleteEventController = async (req, res) => {
+  const { _id } = req.body;
 
-    const { _id}= req.body;
+  Event.findByIdAndRemove(_id)
+    .then(() => res.send("deleted"))
+    .catch((err) => console.log(err));
+};
 
-    Event.findByIdAndRemove(_id)
-    .then(()=> res.send("deleted"))
-    .catch((err)=> console.log(err))
+exports.findEventAllController = async (req, res) => {
+  const events = await Event.find().sort({ _id: -1 });
 
- 
-}
+  res.send(events);
+  //res.send(toDo)
+};
 
+exports.findEventByIdController = async (req, res) => {
+  const { userId } = req.body;
 
-exports.findEventAllController = async ( req, res) => {
+  const events = await Event.find({ author: userId }).sort({ _id: -1 });
 
+  res.send(events);
+};
 
-    const events = await Event.find().sort({'_id':-1})
+exports.findEventforDashboardController = async (req, res) => {
+  const events = await Event.find().sort({ _id: -1 }).limit(5);
 
-   res.send(events);
-   //res.send(toDo)
-}
+  res.send(events);
+  //res.send(toDo)
+};
 
+exports.complaintPostController = async (req, res) => {
+  const name = req.body.name;
+  const title = req.body.title;
+  const description = req.body.description;
+  const date = req.body.date;
+  let image = "";
+  if (req.file?.filename) {
+    image = req.file.filename;
+  } else {
+    image = null;
+  }
+  const complaintMessage = await Complain.create({
+    title: title,
+    description: description,
+    image: image,
+    user: name,
+    createdAt: date,
+  });
+  if (complaintMessage) {
+    res.json({ message: "Complaint successfully created!" });
+  } else {
+    res.json({ message: "Something went Wrong when creating" });
+  }
+};
 
-
-exports.findEventByIdController = async ( req, res) => {
-  
-    const { userId}= req.body;
-
-
-   const events = await Event.find({author: userId}).sort({'_id':-1})
-
-  
-   res.send(events)
-}
-
-
-
-exports.findEventforDashboardController = async ( req, res) => {
-
-
-  const events = await Event.find().sort({'_id':-1}).limit(5)
-
-   res.send(events);
-   //res.send(toDo)
-}
+exports.getComplaintController = async (req, res) => {
+  const complaints = await Complain.find().sort({ _id: -1 });
+  res.send(complaints);
+};
+exports.deleteComplaintController = async (req, res) => {
+  const { postID } = req.body;
+  const post = await Complain.findById(postID);
+  const path = `./client/public/uploads/${post.image}`;
+  fs.unlink(path, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+  await Complain.deleteOne({ _id: postID });
+  res.status(200).json({ msg: `Successfully Resolved Post` });
+};

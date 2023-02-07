@@ -1,0 +1,15 @@
+.img{
+    
+    height: 250px; 
+    transition: transform .2s; 
+
+
+}
+.img:hover {
+    transform: scale(1.2);
+
+
+  }
+.b{
+    background-color: red;
+}

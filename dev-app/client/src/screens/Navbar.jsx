@@ -3,6 +3,19 @@ import { signout } from "../helpers/auth";
 import Logo from "../img/URX-logo.svg";
 import axios from "axios";
 import { getCookie } from "../helpers/auth";
+import { DropDownButton } from "@progress/kendo-react-buttons";
+const itemRender = (props) => {
+  return (
+    <div>
+      <a
+        href={props.item.href}
+        className="block py-2 pr-4 pl-3 text-black font-medium rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+      >
+        {props.item.text}
+      </a>
+    </div>
+  );
+};
 const Navbar = () => {
   const [show, setShow] = useState(false);
   const toggleOpen = () => {
@@ -20,8 +33,28 @@ const Navbar = () => {
         signout();
       });
   }
+  const items = [
+    {
+      text: "Recipe",
+      href: "/FoodScreen",
+    },
+    {
+      text: "Takeout",
+      href: "/takeouts",
+    },
+  ];
+  const items2 = [
+    {
+      text: "Chat",
+      href: "/chat",
+    },
+    {
+      text: "Complaint box",
+      href: "/complaints",
+    },
+  ];
   return (
-    <div className="bg gray-100 text-gray-900 flex justify-center">
+    <div className="bg-gray-100 text-gray-900 flex justify-center">
       <nav className="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
         <div className="container flex flex-wrap justify-between items-center mx-auto">
           <a href="/dashboard" className="flex items-center">
@@ -72,44 +105,35 @@ const Navbar = () => {
           >
             <ul className="flex text-center flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-                <a
-                  href="/FoodScreen"
-                  className="block py-2 pr-4 pl-3 text-black font-medium rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Recipe
-                </a>
+                <DropDownButton
+                  className="-mt-1 block py-2 pr-4 pl-3 text-black font-medium rounded md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  text="Cuisine"
+                  itemRender={itemRender}
+                  items={items}
+                  fillMode={"flat"}
+                />
               </li>
               <li>
                 <a
-                  href="/takeouts"
-                  className="block py-2 pr-4 pl-3 text-black font-medium rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  href="/Events"
+                  className="block py-2 pr-4 pl-3 text-black font-normal rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
-                  Takeout
+                  Events
                 </a>
               </li>
               <li>
-                <a href="/Events" className="block py-2 pr-4 pl-3 text-black font-medium rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Events</a>
+                <DropDownButton
+                  className="-mt-1 block py-2 pr-4 pl-3 text-black font-medium rounded md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  text="Community"
+                  itemRender={itemRender}
+                  items={items2}
+                  fillMode={"flat"}
+                />
               </li>
-              <li>
-                <a
-                  href="/chat"
-                  className="block py-2 pr-4 pl-3 text-black font-medium rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Community
-                </a>
-              </li>
-              {/* <li>
-                <a
-                  href="/resources"
-                  className="block py-2 pr-4 pl-3 text-black font-medium rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Resources
-                </a>
-              </li> */}
               <li>
                 <a
                   href="/"
-                  className="block py-2 pr-4 pl-3 text-black font-medium rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  className="block py-2 pr-4 pl-3 text-black font-normal rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   Profile
                 </a>

@@ -1,4 +1,0 @@
-
-Install
-server side: 
-npm install socket.io

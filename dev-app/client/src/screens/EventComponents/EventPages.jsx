@@ -10,7 +10,7 @@ function EventPages() {
   return (
     <div>
              
-        <div className=" grid grid-rows2   justify-center  place-items-center mt-10">
+        <div className=" grid grid-rows-2   justify-center  place-items-center mt-10">
         {/* <h1 className='justify-center mb-15 mt-5 '>Advanced Options</h1> */}
             <div className=' mb-5'>
               <NavLink  to={'/EventByDate'}>

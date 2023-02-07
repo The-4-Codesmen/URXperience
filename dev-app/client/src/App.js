@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "@progress/kendo-theme-default/dist/all.css";
 import { AppContext, socket } from "./context/appContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./screens/Register";
@@ -14,12 +15,12 @@ import Community from "./screens/Community";
 import Option from "./screens/FoodPages/Option";
 import RecipeList from "./screens/FoodPages/RecipeList";
 import "react-toastify/dist/ReactToastify.css";
-import Resources from "./screens/Resources";
 import IngredientSearched from "./screens/FoodPages/IngredientSearched";
 
 import Events from "./screens/Events";
 import PostEvent from "./screens/EventComponents/PostEvent";
 import EventByDate from "./screens/EventComponents/EventByDate";
+import Complaints from "./screens/Complaints";
 function App() {
   const [rooms, setRooms] = useState([]);
   const [groupRooms, setGroupRooms] = useState([]);
@@ -79,6 +80,7 @@ function App() {
             exact
             element={<RecipeList />}
           />
+          <Route path="/complaints" exact element={<Complaints />} />
         </Routes>
       </Router>
     </AppContext.Provider>

@@ -76,18 +76,13 @@ function EventByDate() {
 
 
   return (
-    <div   className="eventPageBd flex  text-center  relative  justify-center" >
-
+    <div className="flex  text-center  relative  justify-center" >
+      <Navbar/>
+      <ToastContainer />
         <div className="divB absolute rounded-full top-60 left-50 ml-20 mt-20 w-80 h-80 bg-green-600 mix-blend-multiply opacity-20 filter blur-xl "></div>
        <div className="divB absolute rounded-full top-60 left-50 top-20  w-80 h-80 bg-yellow-200 mix-blend-multiply  opacity-20 filter blur-xl"></div>
         <div className="divB2 absolute rounded-full top-60 left-50 mr-20  top-40  w-80 h-80 bg-indigo-500 mix-blend-multiply opacity-20 filter blur-xl"></div>
-  
-   
-      <ToastContainer />
-      <Navbar/>
      <div className=" mt-4 m-4  flex text-center justify-center grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-10">
-      
-      
       <div className="   col-span-1 justify-center  align-center text-center ">
         <h1 className =" underline mt-20 mb-10  text-black font-bold dark:text-dw">Pick a Date</h1>    
         <Calendar

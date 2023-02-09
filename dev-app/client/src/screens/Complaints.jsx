@@ -122,7 +122,7 @@ const Complaints = () => {
       <ToastContainer />
       {role === "Admin" ? (
         <div className="mt-16">
-          <h1 className="text-2xl xl:text-3xl text-center font-extrabold mt-2 mb-5">
+          <h1 className="text-2xl xl:text-3xl text-center font-extrabold mt-5 mb-5">
             Complaint Box
           </h1>
           <div
@@ -212,7 +212,7 @@ const Complaints = () => {
                   <div className="flex">
                     <input
                       type="text"
-                      placeholder="Location (e.g lounge FL2)"
+                      placeholder="Location (e.g Kisik Lounge FL2)"
                       onChange={handleChange}
                       name="title"
                       value={complainForm.title}

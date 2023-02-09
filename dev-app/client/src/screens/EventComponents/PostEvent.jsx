@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 
 import axios from "axios";
 import Navbar from "../Navbar";
-
+import moment from "moment";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import { purple, red } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
@@ -76,6 +76,16 @@ function PostEvent() {
     setFormData({ ...formData, [text]: e.target.value });
   };
 
+  // function checkFromDate() {
+  //   if (to < from) {
+  //     return `${from}`;
+  //   }
+  //   return to;
+  // }
+  function disableDate() {
+    const date = new Date();
+    return moment(date).format("YYYY-MM-DD");
+  }
   // on submit
 
   const handleSubmit = async (e) => {
@@ -163,6 +173,7 @@ function PostEvent() {
               <label>Date</label>
               <input
                 type="date"
+                min={disableDate()}
                 onChange={handleChange("date")}
                 value={date}
                 className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
@@ -178,6 +189,7 @@ function PostEvent() {
               <label>To</label>
               <input
                 type="time"
+                // min={checkFromDate()}
                 onChange={handleChange("to")}
                 value={to}
                 className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"

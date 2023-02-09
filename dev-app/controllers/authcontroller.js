@@ -507,7 +507,7 @@ exports.findEventByIdController = async (req, res) => {
 };
 
 exports.findEventforDashboardController = async (req, res) => {
-  const events = await Event.find().sort({ _id: -1 }).limit(4);
+  const events = await Event.find().sort({ date: 1 }).limit(4);
 
   res.send(events);
   //res.send(toDo)

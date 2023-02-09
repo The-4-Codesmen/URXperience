@@ -9,29 +9,29 @@ function RecipeOfTheDay() {
 
   useEffect(() => {
     getRandomRecipe();
-  },[]);
+  }, []);
 
-  const FOOD_API_KEY = 'a42902460cad4a248268cab667591a2f';
-  const getRandomRecipe = async() =>{
-      const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${FOOD_API_KEY}&number=1&instructionsRequired=true&extendedIgredients=true`)
-      const data = await api.json();
-      setRandomRecipe(data.recipes);
-  }
+  const FOOD_API_KEY = "a42902460cad4a248268cab667591a2f";
+  const getRandomRecipe = async () => {
+    const api = await fetch(
+      `https://api.spoonacular.com/recipes/random?apiKey=${FOOD_API_KEY}&number=1&instructionsRequired=true&extendedIgredients=true`
+    );
+    const data = await api.json();
+    setRandomRecipe(data.recipes);
+  };
   return (
     <>
       {Random?.map((recipe) => (
-        <div className="rounded-lg bg-opacity-0 overflow-hidden" key={recipe.id}>
+        <div
+          className="rounded-lg bg-opacity-0 overflow-hidden"
+          key={recipe.id}
+        >
           <img className="w-full" src={recipe.image} alt={recipe.title} />
           <div className="px-6 py-4">
             <div className="flex justify-between">
               <div className="font-bold text-xl mb-2 underline">
                 Recipe of The Day
               </div>
-              <BookmarkIcon
-                className="text-gray-300 hover:text-gray-200"
-                color="action "
-                fontSize="large"
-              ></BookmarkIcon>
             </div>
             <h2 className="text-gray-700 text-base">{recipe.title}</h2>
             <p className="text-gray-700 text-base">
@@ -55,4 +55,3 @@ function RecipeOfTheDay() {
 }
 
 export default RecipeOfTheDay;
-

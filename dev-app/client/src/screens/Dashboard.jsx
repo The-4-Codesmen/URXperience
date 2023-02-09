@@ -66,10 +66,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     getAllEvents();
-    const interval = setInterval(() => {
-      getAllEvents();
-    }, 2 * 1000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(() => {
+    //   getAllEvents();
+    // }, 4 * 1000);
+    // return () => clearInterval(interval);
   }, []);
 
   function changeTime(time) {
@@ -109,10 +109,7 @@ const Dashboard = () => {
         </div>
         <div className="mt-20">
           <div className="p-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-2">
-            <div
-              className="h-86 rounded overflow-hidden shadow-lg bg-red-400"
-              style={{ height: "600px" }}
-            >
+            <div className="h-86 rounded overflow-hidden shadow-lg bg-red-400 h-fit">
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 text-center">Foods</div>
                 <div className="">
@@ -120,16 +117,13 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div
-              className="rounded overflow-hidden shadow-lg bg-green-400"
-              style={{ height: "600px" }}
-            >
+            <div className="rounded overflow-hidden shadow-lg bg-green-400 h-fit">
               <div className="px-12 py-4">
                 <div className="font-bold text-xl mb-6 text-center">Events</div>
                 {allEvents.map((event) => (
                   <div
                     key={event._id}
-                    className="mb-8 pl-2 w-full p-2 rounded-lg shadow-lg bg-white text-center"
+                    className="mb-8 pl-2 w-full p-4 rounded-lg shadow-lg bg-white text-center"
                   >
                     <div className="italic font-bold text-lg text-indigo-500 underline">
                       <h1>{event.title}</h1>
@@ -154,10 +148,7 @@ const Dashboard = () => {
                 ))}
               </div>
             </div>
-            <div
-              className="rounded overflow-hidden shadow-lg overflow-y-scroll container bg-blue-400"
-              style={{ height: "600px" }}
-            >
+            <div className="rounded overflow-hidden shadow-lg overflow-y-scroll container bg-blue-400 h-fit">
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 text-center">
                   Online Members

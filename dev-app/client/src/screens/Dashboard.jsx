@@ -10,11 +10,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "./Navbar";
 import Typical from "react-typical";
 import RecipeOfTheDay from "./FoodComponents/RecipeOfTheDay";
+import moment from "moment";
 const Dashboard = () => {
   const [userName, setUserName] = useState("");
   const [users, setUsers] = useState([]);
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const [allEvents, setAllEvents] = useState([]);
+
   useEffect(() => {
     axios.get("http://localhost:5000/api/allUsers").then((res) => {
       const temp = res.data.members;
@@ -50,6 +53,37 @@ const Dashboard = () => {
         });
     }
   }, []);
+
+  const getAllEvents = async () => {
+    axios
+      .get(`http://localhost:5000/api/dashboardevent`)
+      .then((res) => {
+        setAllEvents(res.data);
+      })
+      .catch((err) => {});
+    //    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
+  };
+
+  useEffect(() => {
+    getAllEvents();
+    const interval = setInterval(() => {
+      getAllEvents();
+    }, 2 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  function changeTime(time) {
+    const [hours, minute] = time.split(":");
+    const hour = +hours % 24;
+
+    const TimeFrame = hour < 12 ? " AM" : " PM";
+    return (hour % 12 || 12) + ":" + minute + TimeFrame;
+  }
+  function changeDate(date) {
+    return moment(date).format("MMM Do YY");
+    //  return date;
+  }
+
   return (
     <>
       <Navbar />
@@ -75,60 +109,87 @@ const Dashboard = () => {
         </div>
         <div className="mt-20">
           <div className="p-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-2">
-            <div className="h-86 rounded overflow-hidden shadow-lg bg-red-400">
+            <div
+              className="h-86 rounded overflow-hidden shadow-lg bg-red-400"
+              style={{ height: "600px" }}
+            >
               <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">Foods</div>
+                <div className="font-bold text-xl mb-2 text-center">Foods</div>
                 <div className="">
                   <RecipeOfTheDay />
                 </div>
               </div>
             </div>
-            <div className="rounded overflow-hidden shadow-lg bg-green-400">
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">Events</div>
-                <p className="text-gray-700 text-base">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Voluptatibus quia, Nonea! Maiores et perferendis eaque,
-                  exercitationem praesentium nihil.
-                </p>
+            <div
+              className="rounded overflow-hidden shadow-lg bg-green-400"
+              style={{ height: "600px" }}
+            >
+              <div className="px-12 py-4">
+                <div className="font-bold text-xl mb-6 text-center">Events</div>
+                {allEvents.map((event) => (
+                  <div
+                    key={event._id}
+                    className="mb-8 pl-2 w-full p-2 rounded-lg shadow-lg bg-white text-center"
+                  >
+                    <div className="italic font-bold text-lg text-indigo-500 underline">
+                      <h1>{event.title}</h1>
+                    </div>
+                    <p className=" font-bold">
+                      From:{" "}
+                      <span className="font-light">
+                        {changeTime(event.from) + " "}
+                      </span>
+                      To:{" "}
+                      <span className="font-light ">
+                        {changeTime(event.to)}
+                      </span>
+                    </p>
+                    <p className="font-bold">
+                      On:{" "}
+                      <span className=" font-light">
+                        {changeDate(event.date)}
+                      </span>
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="rounded overflow-hidden shadow-lg bg-blue-400 ">
+            <div
+              className="rounded overflow-hidden shadow-lg overflow-y-scroll container bg-blue-400"
+              style={{ height: "600px" }}
+            >
               <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">Online Members</div>
-                <div
-                  className="items-center justify-center container overflow-y-scroll rounded bg-blue-400 p-2 font-medium border border-blue-400"
-                  style={{ height: "250px" }}
-                >
-                  {users.map((usr, idx) =>
-                    usr._id === user._id ? (
-                      <ListGroup.Item
-                        key={idx}
-                        className="hidden"
-                      ></ListGroup.Item>
-                    ) : (
-                      <ListGroup.Item
-                        key={usr._id}
-                        onClick={changepage}
-                        className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3
+                <div className="font-bold text-xl mb-2 text-center">
+                  Online Members
+                </div>
+                {users.map((usr, idx) =>
+                  usr._id === user._id ? (
+                    <ListGroup.Item
+                      key={idx}
+                      className="hidden"
+                    ></ListGroup.Item>
+                  ) : (
+                    <ListGroup.Item
+                      key={usr._id}
+                      onClick={changepage}
+                      className="w-full font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all 
                                 duration-300 ease-in-out cursor-pointer focus:outline-none hover:bg-green-600 
                                 focus:shadow-sm focus:shadow-outline mt-5"
-                      >
-                        <div className="flex gap-3 flex-row">
-                          <div>
-                            {usr.status === "online" ? (
-                              <i className="fas fa-circle text-green-300 "></i>
-                            ) : (
-                              <i className="fas fa-circle text-red-600"></i>
-                            )}
-                          </div>
-                          <div>{usr.name}</div>
+                    >
+                      <div className="flex gap-3 flex-row">
+                        <div>
+                          {usr.status === "online" ? (
+                            <i className="fas fa-circle text-green-300 "></i>
+                          ) : (
+                            <i className="fas fa-circle text-red-600"></i>
+                          )}
                         </div>
-                      </ListGroup.Item>
-                    )
-                  )}
-                </div>
+                        <div>{usr.name}</div>
+                      </div>
+                    </ListGroup.Item>
+                  )
+                )}
                 {/* <p className="text-gray-700 text-base">
                   {users.map((user, idx) => console.log(user.status))}
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.

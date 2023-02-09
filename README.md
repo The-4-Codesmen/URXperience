@@ -32,3 +32,4 @@ ENSE 400
 
 ENSE 477
 * [Vlog #4: Course - First Vlog](https://youtu.be/t9MdULwZKtA) (January 26th 2023)
+* [Vlog #5: Course - Mid-Point Vlog](https://youtu.be/lrFzDl1KM0w) (February 09 2023)

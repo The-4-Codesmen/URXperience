@@ -8,14 +8,14 @@ import { sanitize } from "dompurify";
 import image from "../../img/recipelistBG.jpg";
 import Navbar from "../Navbar";
 function RecipeList() {
-  const FOOD_API_KEY = "a42902460cad4a248268cab667591a2f";
+  // const FOOD_API_KEY = "a42902460cad4a248268cab667591a2f";
   const [recipeDetail, setRecipeDetail] = useState({});
   const [text, ext] = useState({});
   //const [iext,ext] = useState()
   let params = useParams();
   const api = async () => {
     const datafetch = await fetch(
-      `https://api.spoonacular.com/recipes/${params.id}/information?apiKey=${FOOD_API_KEY}`
+      `https://api.spoonacular.com/recipes/${params.id}/information?apiKey=${process.env.REACT_APP_FOOD_API_KEY}`
     );
 
     const data = await datafetch.json();
@@ -53,17 +53,22 @@ function RecipeList() {
               <p className="text-black text-xl underline text-base text-center mt-2">
                 <strong>Ingredients</strong>
               </p>
-              <div className="grid grid-cols-2 grid-flow-rows gap-2 mt-2">
-                {recipeDetail.extendedIngredients?.map((ingredients) => (
-                  <div key={ingredients.id}>
-                    <div className="bg-white rounded-lg p-3 shadow-lg items-center">
-                      <img
-                        src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredients.image}`}
-                      />
-                      <p>{ingredients.original}</p>
+              <div
+                className="container overflow-y-scroll"
+                style={{ height: "300px" }}
+              >
+                <div className="grid grid-cols-2 grid-flow-rows gap-2 mt-2">
+                  {recipeDetail.extendedIngredients?.map((ingredients) => (
+                    <div key={ingredients.id}>
+                      <div className="bg-white rounded-lg p-3 shadow-lg items-center">
+                        <img
+                          src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredients.image}`}
+                        />
+                        <p>{ingredients.original}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
               <Link to={"/foodscreen/"}>

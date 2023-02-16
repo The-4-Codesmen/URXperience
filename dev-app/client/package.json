@@ -30,6 +30,7 @@
     "cors": "^2.8.5",
     "decimal.js": "^10.4.3",
     "dompurify": "^2.4.3",
+    "env-cmd": "^10.1.0",
     "flowbite": "^1.5.3",
     "flowbite-react": "^0.3.4",
     "framer-motion": "^8.5.5",
@@ -58,8 +59,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "start": "env-cmd -f .env.production react-app-rewired start",
+    "build": "env-cmd -f .env.production react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },

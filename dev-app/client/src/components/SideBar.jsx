@@ -66,17 +66,20 @@ const SideBar = () => {
     setMembers(payload);
   });
   function getAttributedRoom() {
-    axios.get("http://localhost:5000/api/rooms").then((res) => {
+    //console.log(process.env.REACT_APP_SERVER);
+    axios.get(`${process.env.REACT_APP_SERVER}api/rooms`).then((res) => {
       setRooms(res.data);
     });
   }
   function getGroupChatRooms() {
     axios
-      .post(`http://localhost:5000/api/groupRooms`, { userId: user._id })
+      .post(`${process.env.REACT_APP_SERVER}api/groupRooms`, {
+        userId: user._id,
+      })
       .then((res) => {
         setGroupRooms(res.data);
       });
-    axios.get(`http://localhost:5000/api/groupChatArr`).then((res) => {
+    axios.get(`${process.env.REACT_APP_SERVER}api/groupChatArr`).then((res) => {
       setGroupNameCheck(res.data);
     });
   }
@@ -136,7 +139,9 @@ const SideBar = () => {
   function deleteGroupRoom(room) {
     try {
       axios
-        .post(`http://localhost:5000/api/deletegroup`, { groupRoom: room })
+        .post(`${process.env.REACT_APP_SERVER}api/deletegroup`, {
+          groupRoom: room,
+        })
         .then((res) => {
           toast.success(res.data.msg);
           joinRoom(user.faculty);
@@ -273,40 +278,44 @@ const SideBar = () => {
           style={{ height: "250px" }}
         >
           {members
-            ?.map((member, idx) =>
-              member._id === user._id ? (
-                <ListGroup.Item key={idx} className="hidden "></ListGroup.Item>
-              ) : (
-                <ListGroup.Item
-                  key={member._id}
-                  className="w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
+            ?.map(
+              (member, idx) =>
+                member._id === user._id ? (
+                  <ListGroup.Item
+                    key={idx}
+                    className="hidden "
+                  ></ListGroup.Item>
+                ) : (
+                  <ListGroup.Item
+                    key={member._id}
+                    className="w-full cursor-pointer max-w-xs font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white justify-center transition-all 
                                 duration-300 ease-in-out focus:outline-none hover:bg-green-600 
                                 focus:shadow-sm focus:shadow-outline mt-5 grid grid-cols-5 gap-2 items-center"
-                  active={directMemberMessage?._id === member?._id}
-                  onClick={() => handleDirectMemberMessage(member)}
-                >
-                  <div className="col-span-1 px-2">
-                    {member.status === "online" ? (
-                      <i className="fas fa-circle text-green-300 "></i>
-                    ) : (
-                      <i className="fas fa-circle text-red-600"></i>
-                    )}
-                  </div>
-                  <div className=" text-center col-span-3">{member.name}</div>
-                  <div className="col-span-1">
-                    <Badge
-                      className="col-span-2"
-                      badgeContent={
-                        user?.newMessages[sortIds(member._id, user._id)]
-                      }
-                      color="primary"
-                    >
-                      <MailIcon sx={{ color: "white" }} />
-                    </Badge>
-                  </div>
-                </ListGroup.Item>
-              )
+                    active={directMemberMessage?._id === member?._id}
+                    onClick={() => handleDirectMemberMessage(member)}
+                  >
+                    <div className="col-span-1 px-2">
+                      {member.status === "online" ? (
+                        <i className="fas fa-circle text-green-300 "></i>
+                      ) : (
+                        <i className="fas fa-circle text-red-600"></i>
+                      )}
+                    </div>
+                    <div className=" text-center col-span-3">{member.name}</div>
+                    <div className="col-span-1">
+                      <Badge
+                        className="col-span-2"
+                        badgeContent={
+                          user?.newMessages[sortIds(member._id, user._id)]
+                        }
+                        color="primary"
+                      >
+                        <MailIcon sx={{ color: "white" }} />
+                      </Badge>
+                    </div>
+                  </ListGroup.Item>
+                )
               // sort by status
             )
             .sort((a, b) => (a.status > b.status ? -1 : 1))}

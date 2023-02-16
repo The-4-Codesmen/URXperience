@@ -10,11 +10,9 @@ function FoodScreen() {
   return (
     <div className="min-h-screen bg gray-100 text-gray-900 flex justify-center">
       <Navbar />
-      
+
       <div className="mt-16 p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-        
-     
-         <RecipeOfTheDay /> 
+        <RecipeOfTheDay />
         <TopCategory />
         <div className="rounded-lg overflow-hidden bg-opacity-0 ">
           <img className="w-full" src={TakeoutImage} alt="River" />
@@ -34,4 +32,3 @@ function FoodScreen() {
 }
 
 export default FoodScreen;
-

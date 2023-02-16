@@ -19,7 +19,7 @@ const Dashboard = () => {
   const [allEvents, setAllEvents] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/allUsers").then((res) => {
+    axios.get(`${process.env.REACT_APP_SERVER}api/allUsers`).then((res) => {
       const temp = res.data.members;
       setUsers(temp);
     });
@@ -34,7 +34,7 @@ const Dashboard = () => {
       navigate("/login");
     } else {
       axios
-        .get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+        .get(`${process.env.REACT_APP_SERVER}api/user/${isAuth()._id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -56,7 +56,7 @@ const Dashboard = () => {
 
   const getAllEvents = async () => {
     axios
-      .get(`http://localhost:5000/api/dashboardevent`)
+      .get(`${process.env.REACT_APP_SERVER}api/dashboardevent`)
       .then((res) => {
         setAllEvents(res.data);
       })

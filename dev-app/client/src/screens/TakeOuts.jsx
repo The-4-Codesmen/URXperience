@@ -23,7 +23,7 @@ const TakeOuts = () => {
       navigate("/login");
     } else {
       axios
-        .get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+        .get(`${process.env.REACT_APP_SERVER}api/user/${isAuth()._id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -80,7 +80,7 @@ const TakeOuts = () => {
       <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
         <div>
-        <List
+          <List
             places={filteredPlaces.length ? filteredPlaces : places}
             rating={rating}
             setRating={setRating}
@@ -89,7 +89,7 @@ const TakeOuts = () => {
           />
         </div>
         <div>
-        <Map 
+          <Map
             setBounds={setBounds}
             setCoords={setCoords}
             coords={coords}
@@ -97,7 +97,6 @@ const TakeOuts = () => {
             setChildClicked={setChildClicked}
           />
         </div>
-
       </div>
     </>
   );

@@ -20,7 +20,7 @@ function PostEvent() {
       navigate("/login");
     } else {
       axios
-        .get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+        .get(`${process.env.REACT_APP_SERVER}api/user/${isAuth()._id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -49,7 +49,7 @@ function PostEvent() {
     const userId = user._id;
 
     axios
-      .post(`http://localhost:5000/api/eventfindbyid`, { userId })
+      .post(`${process.env.REACT_APP_SERVER}api/eventfindbyid`, { userId })
       .then((res) => {
         setAllEvents(res.data);
       })
@@ -93,7 +93,7 @@ function PostEvent() {
 
     if (title && description && date && from && to && role === "Admin") {
       axios
-        .post(`http://localhost:5000/api/postevent`, {
+        .post(`${process.env.REACT_APP_SERVER}api/postevent`, {
           title,
           description,
           date,
@@ -128,8 +128,9 @@ function PostEvent() {
   const deleteEvent = (_id) => {
     if (_id) {
       axios
-        .post(`http://localhost:5000/api/eventdelete`, { _id })
+        .post(`${process.env.REACT_APP_SERVER}api/eventdelete`, { _id })
         .then((res) => {
+          toast.success("Successfully deleted Events");
           getAllEvents();
         })
         .catch((err) => {});

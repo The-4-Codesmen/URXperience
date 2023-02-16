@@ -34,7 +34,7 @@ const Complaints = () => {
       navigate("/login");
     } else {
       axios
-        .get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+        .get(`${process.env.REACT_APP_SERVER}api/user/${isAuth()._id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -62,7 +62,7 @@ const Complaints = () => {
   };
   const getAllComplaints = async () => {
     axios
-      .get(`http://localhost:5000/api/getcomplaints`)
+      .get(`${process.env.REACT_APP_SERVER}api/getcomplaints`)
       .then((res) => {
         setAllComplaints(res.data);
       })
@@ -86,7 +86,7 @@ const Complaints = () => {
     formData.append("date", complainForm.date);
     if (complainForm.title && complainForm.description) {
       axios
-        .post(`http://localhost:5000/api/complaintbox`, formData)
+        .post(`${process.env.REACT_APP_SERVER}api/complaintbox`, formData)
         .then((res) => {
           setComplainForm({
             name: name,
@@ -107,7 +107,9 @@ const Complaints = () => {
   const handleCompleteComplaint = (postId) => {
     try {
       axios
-        .post(`http://localhost:5000/api/deletecomplaints`, { postID: postId })
+        .post(`${process.env.REACT_APP_SERVER}api/deletecomplaints`, {
+          postID: postId,
+        })
         .then((res) => {
           toast.success(res.data.msg);
         });

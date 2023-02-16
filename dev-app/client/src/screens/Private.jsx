@@ -24,7 +24,7 @@ const Private = () => {
       navigate("/login");
     } else {
       axios
-        .get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+        .get(`${process.env.REACT_APP_SERVER}api/user/${isAuth()._id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -54,7 +54,7 @@ const Private = () => {
       setFormData({ ...formData, textChange: "Updated" });
       axios
         .put(
-          `http://localhost:5000/api/user/update`,
+          `${process.env.REACT_APP_SERVER}api/user/update`,
           { name, password: pass1 },
           {
             headers: {
@@ -79,7 +79,7 @@ const Private = () => {
     const token = getCookie("token");
     if (isAuth()._id != null) {
       axios
-        .delete(`http://localhost:5000/api/delete/`, {
+        .delete(`${process.env.REACT_APP_SERVER}api/delete/`, {
           headers: {
             accessToken: token,
           },

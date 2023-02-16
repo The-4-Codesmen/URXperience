@@ -24,7 +24,7 @@ const Navbar = () => {
   function handleSignout() {
     const token = getCookie("token");
     axios
-      .delete("http://localhost:5000/api/logout", {
+      .delete(`${process.env.REACT_APP_SERVER}api/logout`, {
         headers: {
           accessToken: token,
         },

@@ -25,7 +25,7 @@ const authRouter = require("./routes/authroute");
 if (process.env.NODE_ENV === "production") {
   app.use(
     cors({
-      origin: process.env.CLIENT_URL,
+      origin: "*",
     })
   );
 
@@ -55,7 +55,7 @@ const { Server } = require("socket.io");
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });

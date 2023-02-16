@@ -7,10 +7,9 @@ const app = express();
 const message = require("./models/messagemodel");
 const chat = require("./models/chatmodel");
 const User = require("./models/authmodel");
-const rooms = ["Engineering", "Nursing", "Business"];
 //Config.env to ./config/config.env
 require("dotenv").config({
-  path: "./config/config.env",
+  path: "./config/.env",
 });
 
 //connect to Database
@@ -23,10 +22,10 @@ app.use(bodyParser.json());
 const authRouter = require("./routes/authroute");
 
 // Config for only development
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "production") {
   app.use(
     cors({
-      origin: process.env.CLIENT_URL,
+      origin: [process.env.CLIENT_URL, process.env.LIVE_URL],
     })
   );
 

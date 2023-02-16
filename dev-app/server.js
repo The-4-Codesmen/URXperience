@@ -9,7 +9,7 @@ const chat = require("./models/chatmodel");
 const User = require("./models/authmodel");
 //Config.env to ./config/config.env
 require("dotenv").config({
-  path: "./config/config.env",
+  path: "./config/.env",
 });
 
 //connect to Database

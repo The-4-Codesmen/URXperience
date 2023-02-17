@@ -25,7 +25,7 @@ const authRouter = require("./routes/authroute");
 if (process.env.NODE_ENV === "production") {
   app.use(
     cors({
-      origin: "https://ur-xperience.vercel.app/",
+      origin: "*",
     })
   );
 
@@ -54,19 +54,12 @@ const http = require("http");
 const { Server } = require("socket.io");
 const server = http.createServer(app);
 const io = new Server(server, {
-  origins: ["https://ur-xperience.vercel.app/"],
-  handlePreflightRequest: (req, res) => {
-    res.writeHead(200, {
-      "Access-Control-Allow-Origin": "https://ur-xperience.vercel.app/",
-      "Access-Control-Allow-Methods": "GET,POST",
-    });
-    res.end();
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
   },
 });
-// cors: {
-//   origin: "https://ur-xperience.vercel.app/",
-//   methods: ["GET", "POST"],
-// },
+
 //get previous messages from room
 async function retrievePreviousMessagesinRoom(room) {
   let roomMessages = await message.aggregate([

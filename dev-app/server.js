@@ -9,7 +9,7 @@ const chat = require("./models/chatmodel");
 const User = require("./models/authmodel");
 //Config.env to ./config/config.env
 require("dotenv").config({
-  path: "./config/.env",
+  path: "./config/.env.production",
 });
 
 //connect to Database
@@ -55,7 +55,7 @@ const { Server } = require("socket.io");
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://ur-xperience.vercel.app/",
+    origin: "https://ur-xperience.vercel.app",
     methods: ["GET", "POST"],
   },
 });

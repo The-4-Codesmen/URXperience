@@ -12,12 +12,10 @@ const TakeOuts = () => {
   const [places, setPlaces] = useState([]);
   const [childClicked, setChildClicked] = useState(null);
   const [filteredPlaces, setFilteredPlace] = useState([]);
-  const [coordinates, setCoordinates] = useState({
-    lat: 50.44521,
-    lng: -104.618896,
-  });
+  const [coords, setCoords] = useState({});
   const [bounds, setBounds] = useState({});
   const [rating, setRating] = useState("");
+  const [autocomplete, setAutocomplete] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     const token = getCookie("token");
@@ -25,7 +23,7 @@ const TakeOuts = () => {
       navigate("/login");
     } else {
       axios
-        .get(`http://localhost:5000/api/user/${isAuth()._id}`, {
+        .get(`${process.env.REACT_APP_SERVER}api/user/${isAuth()._id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -47,8 +45,8 @@ const TakeOuts = () => {
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-      ({ coordinates: { latitude, longitude } }) => {
-        setCoordinates({ lat: latitude, lng: longitude });
+      ({ coords: { latitude, longitude } }) => {
+        setCoords({ lat: latitude, lng: longitude });
       }
     );
   }, []);
@@ -66,14 +64,22 @@ const TakeOuts = () => {
       setRating("");
       setIsLoading(false);
     });
-  }, [coordinates, bounds]);
+  }, [coords, bounds]);
+
+  const onLoad = (autoC) => setAutocomplete(autoC);
+
+  const onPlaceChanged = () => {
+    const lat = autocomplete.getPlace().geometry.location.lat();
+    const lng = autocomplete.getPlace().geometry.location.lng();
+    setCoords({ lat, lng });
+  };
 
   return (
     <>
       <CssBaseline />
-      <Header />
-      <Grid container spacing={3} style={{ width: "100%" }}>
-        <Grid item xs={12} md={4}>
+      <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div>
           <List
             places={filteredPlaces.length ? filteredPlaces : places}
             rating={rating}
@@ -81,17 +87,17 @@ const TakeOuts = () => {
             childClicked={childClicked}
             isLoading={isLoading}
           />
-        </Grid>
-        <Grid item xs={12} md={4}>
+        </div>
+        <div>
           <Map
-            setCoordinates={setCoordinates}
             setBounds={setBounds}
-            coordinates={coordinates}
+            setCoords={setCoords}
+            coords={coords}
             places={filteredPlaces.length ? filteredPlaces : places}
             setChildClicked={setChildClicked}
           />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </>
   );
 };

@@ -1,19 +1,6 @@
 {
-  "name": "urxperience",
-  "version": "1.0.0",
-  "description": "* [Members](#members)\r * [Project Idea](#project-idea)\r * [Business Opportunity](#business-opportunity)\r * [Vlogs](#vlogs)\r * [Project Documentation](https://github.com/The-4-Codesmen/URXperience/tree/main/Documentations)\r * [Meeting Minutes](https://github.com/The-4-Codesmen/URXperience/tree/main/Documentations/Meeting%20Minutes)",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/The-4-Codesmen/URXperience.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/The-4-Codesmen/URXperience/issues"
-  },
-  "homepage": "https://github.com/The-4-Codesmen/URXperience#readme"
+  "dependencies": {
+    "dompurify": "^2.4.3",
+    "react-typical": "^0.1.3"
+  }
 }

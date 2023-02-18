@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "@progress/kendo-theme-default/dist/all.css";
 import { AppContext, socket } from "./context/appContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./screens/Register";
@@ -14,11 +15,15 @@ import Community from "./screens/Community";
 import Option from "./screens/FoodPages/Option";
 import RecipeList from "./screens/FoodPages/RecipeList";
 import "react-toastify/dist/ReactToastify.css";
+import IngredientSearched from "./screens/FoodPages/IngredientSearched";
+
 import Events from "./screens/Events";
 import PostEvent from "./screens/EventComponents/PostEvent";
 import EventByDate from "./screens/EventComponents/EventByDate";
+import Complaints from "./screens/Complaints";
 function App() {
   const [rooms, setRooms] = useState([]);
+  const [groupRooms, setGroupRooms] = useState([]);
   const [currentRoom, setCurrentRoom] = useState([]);
   const [members, setMembers] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -38,6 +43,8 @@ function App() {
         setDirectMemberMessage,
         rooms,
         setRooms,
+        groupRooms,
+        setGroupRooms,
         newMessages,
         setNewMessages,
       }}
@@ -59,16 +66,21 @@ function App() {
           />
           <Route path="/foodscreen" exact element={<FoodScreen />} />
           <Route path="/foodscreen/option/:type" exact element={<Option />} />
+
+          <Route
+            path="/foodscreen/ingredientsearched/:type"
+            exact
+            element={<IngredientSearched />}
+          />
           <Route path="/events" exact element={<Events />} />
           <Route path="/postevent" exact element={<PostEvent />} />
           <Route path="/eventbydate" exact element={<EventByDate />} />
-
-
           <Route
             path="/foodscreen/recipelist/:id"
             exact
             element={<RecipeList />}
           />
+          <Route path="/complaints" exact element={<Complaints />} />
         </Routes>
       </Router>
     </AppContext.Provider>

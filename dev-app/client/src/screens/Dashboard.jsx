@@ -25,9 +25,6 @@ const Dashboard = () => {
     });
   }, []);
 
-  function changepage() {
-    navigate("/chat");
-  }
   useEffect(() => {
     const token = getCookie("token");
     if (!getCookie("token")) {
@@ -112,14 +109,34 @@ const Dashboard = () => {
             <div className="h-86 rounded overflow-hidden shadow-lg bg-red-400 h-fit">
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 text-center">Foods</div>
-                <div className="">
-                  <RecipeOfTheDay />
+                <div className="font-regular italic font-serif text-md mb-2 text-center">
+                  Feeling adventurous to cook? Explore some{" "}
+                  <a
+                    href="/FoodScreen"
+                    className="underline text-indigo-500 hover:text-blue-500"
+                  >
+                    Recipes
+                  </a>
+                  <br />
+                  <i className="fas fa-arrow-down"></i>
                 </div>
+                <RecipeOfTheDay />
               </div>
             </div>
             <div className="rounded overflow-hidden shadow-lg bg-green-400 h-fit">
               <div className="px-12 py-4">
-                <div className="font-bold text-xl mb-6 text-center">Events</div>
+                <div className="font-bold text-xl mb-2 text-center">Events</div>
+                <div className="font-regular italic font-serif text-md mb-2 text-center">
+                  Stay up to date with Events on Residence. Find more on{" "}
+                  <a
+                    href="/Events"
+                    className="underline text-indigo-500 hover:text-blue-500"
+                  >
+                    Events
+                  </a>
+                  <br />
+                  <i className="fas fa-arrow-down"></i>
+                </div>
                 {allEvents.map((event) => (
                   <div
                     key={event._id}
@@ -151,7 +168,18 @@ const Dashboard = () => {
             <div className="rounded overflow-hidden shadow-lg overflow-y-scroll container bg-blue-400 h-fit">
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 text-center">
-                  Online Members
+                  Current Members
+                </div>
+                <div className="font-regular italic font-serif text-md mb-2 text-center">
+                  Here are the members who are currently using this app. Start{" "}
+                  <a
+                    href="/Chat"
+                    className="underline text-indigo-500 hover:text-blue-500"
+                  >
+                    Chatting
+                  </a>
+                  <br />
+                  <i className="fas fa-arrow-down"></i>
                 </div>
                 {users.map((usr, idx) =>
                   usr._id === user._id ? (
@@ -162,10 +190,9 @@ const Dashboard = () => {
                   ) : (
                     <ListGroup.Item
                       key={usr._id}
-                      onClick={changepage}
                       className="w-full font-bold shadow-sm rounded-lg py-3
                                 bg-green-700 text-white flex items-center justify-center transition-all 
-                                duration-300 ease-in-out cursor-pointer focus:outline-none hover:bg-green-600 
+                                duration-300 ease-in-out focus:outline-none hover:bg-green-600 
                                 focus:shadow-sm focus:shadow-outline mt-5"
                     >
                       <div className="flex gap-3 flex-row">

@@ -1,15 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: (req, file, calllback) => {
-    calllback(null, "./client/public/uploads/");
-  },
-  filename: (req, file, calllback) => {
-    calllback(null, file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
+const upload = require("../helpers/multer");
+// const multer = require("multer");
+// const storage = multer.diskStorage({
+//   destination: (req, file, calllback) => {
+//     calllback(null, "./client/public/uploads/");
+//   },
+//   filename: (req, file, calllback) => {
+//     calllback(null, file.originalname);
+//   },
+// });
+// const upload = multer({ storage: storage });
 //validation
 const {
   validRegister,

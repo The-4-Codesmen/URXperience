@@ -4,21 +4,9 @@ const Message = require("../models/messagemodel");
 //Event controllers
 const Event = require("../models/eventmodel");
 const Complain = require("../models/complain");
-const fs = require("fs");
+const cloudinary = require("../helpers/cloudinary");
 var userId = "";
 
-// const express = require('express')
-// const app = express()
-// const http = require('http')
-// const { Server } = require('socket.io')
-// const server = http.createServer(app)
-// const io = new Server(server, {
-//     cors: {
-//         origin: "http://localhost:3000",
-//         methods: ["GET", "POST"]
-
-//     },
-// })
 // Defining Lodash variable
 const _ = require("lodash");
 
@@ -515,23 +503,32 @@ exports.findEventforDashboardController = async (req, res) => {
 };
 
 exports.complaintPostController = async (req, res) => {
+  // console.log(req.file?.path || "here");
   const name = req.body.name;
   const title = req.body.title;
   const description = req.body.description;
   const date = req.body.date;
-  let image = "";
-  if (req.file?.filename) {
-    image = req.file.filename;
+  let complaintMessage = "";
+  if (req?.file?.path) {
+    const image = await cloudinary.uploader.upload(req.file.path);
+    complaintMessage = await Complain.create({
+      title: title,
+      description: description,
+      image: image?.secure_url,
+      cloudinary_id: image?.public_id,
+      user: name,
+      createdAt: date,
+    });
   } else {
-    image = null;
+    complaintMessage = await Complain.create({
+      title: title,
+      description: description,
+      image: null,
+      cloudinary_id: null,
+      user: name,
+      createdAt: date,
+    });
   }
-  const complaintMessage = await Complain.create({
-    title: title,
-    description: description,
-    image: image,
-    user: name,
-    createdAt: date,
-  });
   if (complaintMessage) {
     res.json({ message: "Complaint successfully created!" });
   } else {
@@ -546,12 +543,96 @@ exports.getComplaintController = async (req, res) => {
 exports.deleteComplaintController = async (req, res) => {
   const { postID } = req.body;
   const post = await Complain.findById(postID);
-  const path = `./client/public/uploads/${post.image}`;
-  fs.unlink(path, (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
-  await Complain.deleteOne({ _id: postID });
-  res.status(200).json({ msg: `Successfully Resolved Post` });
+  // console.log(post.user);
+  if (post.cloudinary_id == null) {
+    const postee = await User.findOne({ name: post.user });
+
+    //for sending confirmation for resolving complaint
+    const transporter = nodeMailer.createTransport({
+      service: process.env.EMAIL_SERVICE,
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USERNAME,
+      to: postee.email,
+      subject: "Issue Resolved",
+      html: `
+            <p>Hello ${postee.name},</p>
+            <p>Thank you for making a complaint.</p>
+            <p>
+            We appreciate the time it took to make this complaint. 
+            This email is to inform you that your complaint "${post.title}" is now resolved. 
+            If you have further questions or want to go further with this 
+            complaint please email <a href="mailto: housing.services@uregina.ca">housing.services@uregina.ca</a>
+            or call 306-585-5450 for more assistance
+            <br/>
+            Thank you,
+            <hr/>
+            Residence Assistance - Housing Services
+            </p>
+            `,
+    };
+    transporter
+      .sendMail(mailOptions)
+      .then(async () => {
+        await Complain.deleteOne({ _id: postID });
+        return res.json({
+          msg: `Success. Email has been sent to ${postee.email}`,
+        });
+      })
+      .catch((err) => {
+        return res.status(400).json({
+          error: errorHandler(err),
+        });
+      });
+  } else {
+    const postee = await User.findOne({ name: post.user });
+    //for sending confirmation for resolving complaint
+    const transporter = nodeMailer.createTransport({
+      service: process.env.EMAIL_SERVICE,
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USERNAME,
+      to: postee.email,
+      subject: "Issue Resolved",
+      html: `
+            <p>Hello ${postee.name},</p>
+            <p>Thank you for making a complaint.</p>
+            <p>
+            We appreciate the time it took to make this complaint. 
+            This email is to inform you that your complaint "${post.title}" is now resolved. 
+            If you have further questions or want to go further with this 
+            complaint please email <a href="mailto: housing.services@uregina.ca">housing.services@uregina.ca</a>
+            or call 306-585-5450 for more assistance
+            <br/>
+            Thank you,
+            <hr/>
+            Residence Assistance - Housing Services
+            </p>
+            `,
+    };
+    transporter
+      .sendMail(mailOptions)
+      .then(async () => {
+        await cloudinary.uploader.destroy(post.cloudinary_id);
+        await Complain.deleteOne({ _id: postID });
+        return res.json({
+          msg: `Success. Email has been sent to ${postee.email}`,
+        });
+      })
+      .catch((err) => {
+        return res.status(400).json({
+          error: errorHandler(err),
+        });
+      });
+  }
 };

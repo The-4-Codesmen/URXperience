@@ -32,7 +32,7 @@ const Community = () => {
     }
   }, []);
   return (
-    <div className=" md:flex min-h-screen relative overflow-hidden">
+    <div className=" md:flex min-h-screen relative overflow-hidden bg-green-700">
       <SideBar />
       <div className="w-full p-3">
         <MessageForm />

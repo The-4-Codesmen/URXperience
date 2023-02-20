@@ -118,7 +118,7 @@ const Dashboard = () => {
                     Recipes
                   </a>
                   <br />
-                  <i className="fas fa-arrow-down"></i>
+                  <i className="fas fa-arrow-down animate-bounce w-6 h-6"></i>
                 </div>
                 <RecipeOfTheDay />
               </div>
@@ -135,7 +135,7 @@ const Dashboard = () => {
                     Events
                   </a>
                   <br />
-                  <i className="fas fa-arrow-down"></i>
+                  <i className="fas fa-arrow-down animate-bounce w-6 h-6"></i>
                 </div>
                 {allEvents.map((event) => (
                   <div
@@ -179,7 +179,7 @@ const Dashboard = () => {
                     Chatting
                   </a>
                   <br />
-                  <i className="fas fa-arrow-down"></i>
+                  <i className="fas fa-arrow-down animate-bounce w-6 h-6"></i>
                 </div>
                 {users.map((usr, idx) =>
                   usr._id === user._id ? (
@@ -208,12 +208,6 @@ const Dashboard = () => {
                     </ListGroup.Item>
                   )
                 )}
-                {/* <p className="text-gray-700 text-base">
-                  {users.map((user, idx) => console.log(user.status))}
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Voluptatibus quia, Nonea! Maiores et perferendis eaque,
-                  exercitationem praesentium nihil.
-                </p> */}
               </div>
             </div>
           </div>

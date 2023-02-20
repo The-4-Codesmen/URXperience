@@ -148,7 +148,7 @@ function PostEvent() {
           <h1 className=" text-2xl font-extrabold text-center ">Post Event</h1>
 
           <form
-            className="  w-full flex-1 mt-8 text-indigo-500"
+            className="w-full flex-1 mt-8 text-indigo-500"
             onSubmit={handleSubmit}
           >
             <div className="mx-auto max-w-xs relative">
@@ -170,6 +170,7 @@ function PostEvent() {
               />
 
               <label>Date</label>
+              <br />
               <input
                 type="date"
                 min={disableDate()}
@@ -179,6 +180,7 @@ function PostEvent() {
               />
               <br />
               <label>From</label>
+              <br />
               <input
                 type="time"
                 onChange={handleChange("from")}
@@ -188,6 +190,7 @@ function PostEvent() {
               <br />
 
               <label>To</label>
+              <br />
               <input
                 type="time"
                 // min={checkFromDate()}

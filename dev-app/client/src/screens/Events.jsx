@@ -102,9 +102,11 @@ function Events() {
                       </h1>{" "}
                       <br></br>
                       <label className="font-bold">Description</label>
-                      <h3 className="object-none h-40 overflow-hidden ">
-                        {event.description}
-                      </h3>
+                      <div className="container mt-2 overflow-y-scroll rounded">
+                        <h3 className="object-none h-40">
+                          {event.description}
+                        </h3>
+                      </div>
                       <br></br>
                       <EventNoteIcon
                         className=" flex-right mb-2 leading-tight relative mb-5 "

@@ -12,8 +12,14 @@ import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
 const SideBar = () => {
   const sideBarRef = useRef();
+  const [sideBarState, setSideBarState] = useState(false);
   function toogleSideBar() {
     sideBarRef.current.classList.toggle("-translate-x-full");
+    if (sideBarState == true) {
+      setSideBarState(false);
+    } else {
+      setSideBarState(true);
+    }
   }
   const { user } = useSelector((state) => state.user);
   const [groupName, setGroupName] = useState("");
@@ -167,18 +173,19 @@ const SideBar = () => {
       {/* MAIN SIDEBAR */}
       <div
         ref={sideBarRef}
-        className="backdrop-filter backdrop-blur-xl w-72 px-5 py-4 absolute space-y-4 inset-y-0 left-0 transform -translate-x-full
+        className="bg-green-700 w-72 px-5 py-4 absolute space-y-4 inset-y-0 left-0 transform -translate-x-full
           md:relative md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all h-full md:sticky md:top-0"
       >
-        <h1 className="ml-20 text-lg font-extrabold dark:text-dw mt-0">
-          <img
-            src={Logo}
-            onClick={toogleSideBar}
-            style={{ height: "100px", width: "100px" }}
-            alt=""
-          />
-        </h1>
-        <h2 className="text-lg text-black underline italic font-extrabold">
+        <div className="ml-20 text-lg font-extrabold dark:text-dw mt-0 flex space-x-12">
+          <img src={Logo} style={{ height: "100px", width: "100px" }} alt="" />
+          {sideBarState == true ? (
+            <i
+              className="fas fa-times-circle fa-lg"
+              onClick={toogleSideBar}
+            ></i>
+          ) : null}
+        </div>
+        <h2 className="text-lg text-yellow-200 underline italic font-bold">
           Faculty Room:
         </h2>
         <ListGroup>
@@ -276,7 +283,7 @@ const SideBar = () => {
           </>
         )}
         {/* for members who joined the chat */}
-        <h2 className="text-lg text-black underline italic font-extrabold">
+        <h2 className="text-lg text-yellow-200 underline italic font-bold">
           Members:
         </h2>
         <div
@@ -328,7 +335,7 @@ const SideBar = () => {
         </div>
         {/* For newly created group chats */}
         <div className="grid grid-cols-5 gap-2  items-center ">
-          <h2 className="text-lg col-span-4 text-black underline italic font-extrabold">
+          <h2 className="text-lg col-span-4 text-yellow-200 underline italic font-bold">
             Group Chat:
           </h2>
           <button

@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Logo from "../img/URX-logo.svg";
 import Navbar from "./Navbar";
 const Private = () => {
@@ -15,6 +16,7 @@ const Private = () => {
   });
   const [popUp, setPopUp] = useState(false);
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user);
   useEffect(() => {
     loadProfile();
   }, []);
@@ -55,7 +57,7 @@ const Private = () => {
       axios
         .put(
           `${process.env.REACT_APP_SERVER}api/user/update`,
-          { name, password: pass1 },
+          { name, password: pass1, userID: user._id },
           {
             headers: {
               Authorization: `Bearer ${token}`,

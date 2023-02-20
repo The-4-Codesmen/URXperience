@@ -5,7 +5,7 @@ const Message = require("../models/messagemodel");
 const Event = require("../models/eventmodel");
 const Complain = require("../models/complain");
 const cloudinary = require("../helpers/cloudinary");
-var userId = "";
+// var userId = "";
 
 // Defining Lodash variable
 const _ = require("lodash");
@@ -315,8 +315,9 @@ exports.resetController = (req, res) => {
 
 exports.updateController = (req, res) => {
   // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
-  const { name, password } = req.body;
-  User.findOne({ _id: userId }, (err, user) => {
+  const { name, password, userID } = req.body;
+  // console.log(userID);
+  User.findOne({ _id: userID }, (err, user) => {
     if (err || !user) {
       return res.status(400).json({
         error: "User not found",
@@ -355,7 +356,7 @@ exports.updateController = (req, res) => {
 };
 
 exports.readController = (req, res) => {
-  userId = req.params.id;
+  var userId = req.params.id;
   User.findById(userId).exec((err, user) => {
     if (err || !user) {
       return res.status(400).json({

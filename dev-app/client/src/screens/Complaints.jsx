@@ -128,7 +128,8 @@ const Complaints = () => {
             Complaint Box
           </h1>
           <div
-            className="col-span-2 xl:col-span-3 rounded-lg container overflow-y-scroll rounded-lg px-2 font-medium border border-gray-200 shadow-lg mb-5 p-2"
+            className="col-span-2 xl:col-span-3 rounded-lg container overflow-y-scroll
+            rounded-lg font-medium border border-gray-200 shadow-lg mb-5 xl:p-2 lg:p-2 md:p-2"
             style={{ height: "800px" }}
           >
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-2">
@@ -155,7 +156,7 @@ const Complaints = () => {
                         </h5>
                         <div
                           className="container overflow-y-scroll bg-gray-100 rounded-lg p-2 max-w-sm"
-                          style={{ height: "130px", width: "300px" }}
+                          style={{ height: "130px" }}
                         >
                           <p className="text-black text-base mb-2 break-all ">
                             {complaint.description}
@@ -272,7 +273,7 @@ const Complaints = () => {
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-2">
               {complaints.length != 0 ? (
                 complaints?.map((complaint) => (
-                  <div className="flex justify-center " key={complaint._id}>
+                  <div className="flex justify-center" key={complaint._id}>
                     <div className="rounded-lg shadow-lg bg-white max-w-sm ">
                       <div className="h-30 ">
                         {complaint.image != null ? (
@@ -296,7 +297,7 @@ const Complaints = () => {
                         </h5>
                         <div
                           className="container overflow-y-scroll bg-gray-100 rounded-lg p-2 max-w-sm"
-                          style={{ height: "130px", width: "300px" }}
+                          style={{ height: "130px" }}
                         >
                           <p className="text-black text-base mb-2 break-all">
                             {complaint.description}

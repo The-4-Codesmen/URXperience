@@ -145,9 +145,7 @@ function PostEvent() {
       <Navbar />
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-5   text-center justify-center ">
         <div className="col-span-2 justify-center ">
-          <h1 className=" text-2xl xl:text-3xl font-extrabold text-center ">
-            Post Event
-          </h1>
+          <h1 className=" text-2xl font-extrabold text-center ">Post Event</h1>
 
           <form
             className="  w-full flex-1 mt-8 text-indigo-500"
@@ -163,12 +161,12 @@ function PostEvent() {
                 className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
               <label>Description</label>
-              <input
+              <textarea
                 type="text"
                 placeholder="description"
                 onChange={handleChange("description")}
                 value={description}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                className="w-full px-8 py-4 resize-none h-40 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
 
               <label>Date</label>
@@ -207,16 +205,12 @@ function PostEvent() {
         </div>
 
         <div className="bg-slate-700 ">
-          <p className=" text-s xl:text-s font-extrabold text-center  ">
-            My Events
-          </p>
-
-          <div className="  text-center justify-center ">
+          <h1 className=" text-2xl font-extrabold text-center  ">My Events</h1>
+          <div className="text-center justify-center ">
             {allEvents.map((event) => (
               <div
-                className=" bg-gray-100 box transition-all  px-2 justify-center 
-            duration-300 ease-in-out hover:bg-yellow-200  rounded-lg mt-5 mr-20 ml-20 shadow-lg grid grid-cols-5  gap-4 
-
+                className="bg-gray-100 box transition-all  p-2 justify-center 
+            duration-300 ease-in-out hover:bg-yellow-200 rounded-lg mt-5 mr-20 ml-20 shadow-lg grid grid-cols-5  gap-4
             sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5  xl:grid-cols-5
 
 

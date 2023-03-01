@@ -17,7 +17,7 @@ const jwt = require("jsonwebtoken");
 const { errorHandler } = require("../helpers/dbErrorHandling");
 
 exports.registerController = (req, res) => {
-  const { name, email, password, faculty, presentRole } = req.body;
+  const { name, email, password, faculty } = req.body;
   const errors = validationResult(req);
 
   //validation to request body params and custom valiadtion in secs
@@ -45,7 +45,6 @@ exports.registerController = (req, res) => {
         email,
         password,
         faculty,
-        presentRole,
       },
       process.env.JWT_ACCOUNT_ACTIVATION,
       {
@@ -101,26 +100,13 @@ exports.activationController = (req, res) => {
       } else {
         //if valid save to DB
         //get name, email, password, and faculty from token
-        const { name, email, password, faculty, presentRole } =
-          jwt.decode(token);
-        var user = "";
-        if (presentRole == "Residence Assistant") {
-          user = new User({
-            name,
-            email,
-            password,
-            faculty,
-            role: "Admin",
-          });
-        } else {
-          user = new User({
-            name,
-            email,
-            password,
-            faculty,
-          });
-        }
-
+        const { name, email, password, faculty } = jwt.decode(token);
+        const user = new User({
+          name,
+          email,
+          password,
+          faculty,
+        });
         user.save((err, user) => {
           if (err) {
             return res.status(401).json({

@@ -65,7 +65,7 @@ const SideBar = () => {
     socket.emit("new-user");
     const interval = setInterval(() => {
       getGroupChatRooms();
-    }, 5 * 1000);
+    }, 2 * 1000);
     return () => clearInterval(interval);
   }, []);
   socket.off("new-user").on("new-user", (payload) => {

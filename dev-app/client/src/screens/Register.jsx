@@ -7,6 +7,8 @@ import Logo from "../img/URX-logo.svg";
 import Select from "react-select";
 const Register = () => {
   const [selected, setSelected] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,6 +25,10 @@ const Register = () => {
     { value: "Business", label: "Business" },
     { value: "SocialWork", label: "SocialWork" },
   ];
+  const options2 = [
+    { value: "Residence Assistant", label: "Residence Assistant" },
+    { value: "Student", label: "Student" },
+  ];
   const { email, name, pass1, pass2 } = formData;
   //Handle inputs
   const handleChange = (text) => (e) => {
@@ -31,12 +37,19 @@ const Register = () => {
   const handleDropdown = (select) => {
     setSelected(select);
   };
+  const handleDropdownForRole = (select) => {
+    setSelectedRole(select);
+  };
   let stringOfSelectedFaculty = JSON.stringify(selected);
   let faculty = JSON.parse(stringOfSelectedFaculty).label;
+
+  //for user's role
+  let stringOfSelectedRole = JSON.stringify(selectedRole);
+  let presentRole = JSON.parse(stringOfSelectedRole).label;
   //send data to backend
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name && email && pass1 && faculty) {
+    if (name && email && pass1 && faculty && presentRole) {
       if (pass1 === pass2) {
         axios
           .post(`${process.env.REACT_APP_SERVER}api/register`, {
@@ -44,6 +57,7 @@ const Register = () => {
             email,
             password: pass1,
             faculty,
+            presentRole,
           })
           .then((res) => {
             setFormData({
@@ -53,7 +67,8 @@ const Register = () => {
               pass1: "",
               pass2: "",
             });
-
+            setSelected("");
+            setSelectedRole("");
             toast.success(res.data.message);
           })
           .catch((err) => {
@@ -117,6 +132,16 @@ const Register = () => {
                 onChange={handleDropdown}
                 allowSelectAll={false}
                 value={selected}
+              />
+              <Select
+                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                placeholder="Select Position in Residence"
+                options={options2}
+                closeMenuOnSelect={true}
+                hideSelectedOptions={false}
+                onChange={handleDropdownForRole}
+                allowSelectAll={false}
+                value={selectedRole}
               />
               <button
                 type="submit"

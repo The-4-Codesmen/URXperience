@@ -17,7 +17,7 @@ const jwt = require("jsonwebtoken");
 const { errorHandler } = require("../helpers/dbErrorHandling");
 
 exports.registerController = (req, res) => {
-  const { name, email, password, faculty } = req.body;
+  const { name, email, password, faculty, presentRole } = req.body;
   const errors = validationResult(req);
 
   //validation to request body params and custom valiadtion in secs
@@ -45,6 +45,7 @@ exports.registerController = (req, res) => {
         email,
         password,
         faculty,
+        presentRole,
       },
       process.env.JWT_ACCOUNT_ACTIVATION,
       {
@@ -100,13 +101,26 @@ exports.activationController = (req, res) => {
       } else {
         //if valid save to DB
         //get name, email, password, and faculty from token
-        const { name, email, password, faculty } = jwt.decode(token);
-        const user = new User({
-          name,
-          email,
-          password,
-          faculty,
-        });
+        const { name, email, password, faculty, presentRole } =
+          jwt.decode(token);
+        var user = "";
+        if (presentRole == "Residence Assistant") {
+          user = new User({
+            name,
+            email,
+            password,
+            faculty,
+            role: "Admin",
+          });
+        } else {
+          user = new User({
+            name,
+            email,
+            password,
+            faculty,
+          });
+        }
+
         user.save((err, user) => {
           if (err) {
             return res.status(401).json({
@@ -415,7 +429,8 @@ exports.LogoutController = (req, res) => {
 
 exports.deleteController = async (req, res) => {
   try {
-    //console.log(req.user_id, "we here")
+    // console.log(req.user_id, "we here");
+    await Chat.deleteMany({ creator: req.user_id });
     await User.deleteOne({ _id: req.user_id });
     // await User.findByIdAndDelete(req.user_id);
     res.status(200).json({ msg: "User Successfully Deleted" });

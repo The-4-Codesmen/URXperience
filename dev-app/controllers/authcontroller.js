@@ -117,7 +117,8 @@ exports.activationController = (req, res) => {
           } else {
             return res.json({
               success: true,
-              message: "Registration successful",
+              message:
+                "Registration successful. Please wait a few secs to be redirected",
               user,
             });
           }
@@ -155,7 +156,7 @@ exports.loginController = (req, res) => {
       //Authenticate
       if (!user.authenticate(password)) {
         return res.status(400).json({
-          error: "Email or Password is incorrect",
+          error: "Password is incorrect",
         });
       }
 
@@ -198,7 +199,7 @@ exports.forgotController = (req, res) => {
     User.findOne({ email }, (err, user) => {
       if (err || !user) {
         return res.status(400).json({
-          error: "User does not exist!",
+          error: "User with that Email does not exist!",
         });
       }
       //if user exists
@@ -417,8 +418,9 @@ exports.deleteController = async (req, res) => {
   try {
     // console.log(req.user_id, "we here");
     await Chat.deleteMany({ creator: req.user_id });
+    const user = await User.findById(req.user_id);
+    await Complain.deleteMany({ user: user.name });
     await User.deleteOne({ _id: req.user_id });
-    // await User.findByIdAndDelete(req.user_id);
     res.status(200).json({ msg: "User Successfully Deleted" });
   } catch (error) {
     res.status(500).json({ err: error.message || "error while deleting user" });

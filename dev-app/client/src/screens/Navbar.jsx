@@ -43,16 +43,7 @@ const Navbar = () => {
       href: "/takeouts",
     },
   ];
-  const items2 = [
-    {
-      text: "Chat",
-      href: "/chat",
-    },
-    {
-      text: "Complaint box",
-      href: "/complaints",
-    },
-  ];
+
   return (
     <div className="bg-gray-100 text-gray-900 flex justify-center">
       <nav className="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
@@ -122,13 +113,20 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <DropDownButton
-                  className="-mt-1 block py-2 pr-4 pl-3 text-black font-medium rounded md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                  text="Community"
-                  itemRender={itemRender}
-                  items={items2}
-                  fillMode={"flat"}
-                />
+                <a
+                  href="/chat"
+                  className="block py-2 pr-4 pl-3 text-black font-normal rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                >
+                  Chat
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/complaints"
+                  className="block py-2 pr-4 pl-3 text-black font-normal rounded hover:bg-green-700 md:hover:bg-transparent md:hover:text-green-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                >
+                  Complaint Box
+                </a>
               </li>
               <li>
                 <a

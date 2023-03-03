@@ -20082,7 +20082,7 @@ function TopCategory() {
             />
 
             <NavLink onClick={searchRecipe} className="  text-center">
-              <div className="grid grid-cols-1 place-content-center rounded-lg text-center justify-center  p-2 mt-5 w-1/4 bg-green-800 font-bold text-white hover:bg-green-700">
+              <div className="grid grid-cols-1 place-content-center rounded-lg text-center justify-center  p-2 mt-5 w-full bg-yellow-200 font-bold text-black hover:bg-yellow-300">
                 <div>
                   <span>Find</span>
                 </div>

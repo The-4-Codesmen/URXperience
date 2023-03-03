@@ -32,18 +32,13 @@ const Login = () => {
             });
           });
           // socket.emit('new-user')
-          isAuth() && isAuth().role === "admin"
-            ? navigate("/admin")
-            : navigate("/dashboard");
           toast.success(`Hey ${res.data.user.name}`);
+          navigate("/dashboard");
         })
         .catch((err) => {
-          toast.error("User with that email does not exist");
-          setFormData({
-            ...formData,
-            email: "",
-            pass1: "",
-          });
+          toast.error(
+            "Email or password is incorrect. Have you activated your account?"
+          );
         });
     } else {
       toast.error("Please fill all fields");

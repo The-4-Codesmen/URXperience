@@ -134,6 +134,16 @@ function Events() {
                         Posted By:{" "}
                         <span className=" font-light">{event.authorName}</span>
                       </p>
+                      <i>
+                        To register contact{" "}
+                        <a
+                          className="underline text-blue-500"
+                          href="mailto:housing.services@uregina.ca"
+                        >
+                          {" "}
+                          housing.services@uregina.ca
+                        </a>
+                      </i>
                     </div>
                   </div>
                 </div>

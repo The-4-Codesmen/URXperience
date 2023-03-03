@@ -88,7 +88,7 @@ const TakeOuts = () => {
             isLoading={isLoading}
           />
         </div>
-        <div>
+        <div className="xl:col-span-2 xl:mt-24">
           <Map
             setBounds={setBounds}
             setCoords={setCoords}

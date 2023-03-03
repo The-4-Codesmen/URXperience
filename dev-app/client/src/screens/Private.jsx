@@ -13,6 +13,7 @@ const Private = () => {
     pass1: "",
     textChange: "Update",
     role: "",
+    pass2: "",
   });
   const [popUp, setPopUp] = useState(false);
   const navigate = useNavigate();
@@ -45,34 +46,52 @@ const Private = () => {
         });
     }
   };
-  const { name, email, pass1, textChange, role } = formData;
+  const { name, email, pass1, textChange, role, pass2 } = formData;
   const handleChange = (text) => (e) => {
     setFormData({ ...formData, [text]: e.target.value });
   };
   const handleSubmit = (e) => {
     const token = getCookie("token");
     e.preventDefault();
-    if (name && pass1) {
-      setFormData({ ...formData, textChange: "Updated" });
-      axios
-        .put(
-          `${process.env.REACT_APP_SERVER}api/user/update`,
-          { name, password: pass1, userID: user._id },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          updateUser(res, () => {
-            toast.success("Profile Successfully Updated");
-            setFormData({ ...formData, pass1: "", textChange: "Update" });
-          });
-        })
-        .catch((err) => {
-          toast.error(err.response.data.error);
+    if (name && pass1 && pass2) {
+      if (!pass1.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+        toast.error(
+          "Password must be minimum eight characters, at least one letter and one number"
+        );
+        setFormData({
+          ...formData,
+          pass1: "",
+          pass2: "",
         });
+      } else if (pass1 != pass2) {
+        toast.error("Passwords needs to match");
+      } else {
+        setFormData({ ...formData, textChange: "Updated" });
+        axios
+          .put(
+            `${process.env.REACT_APP_SERVER}api/user/update`,
+            { name, password: pass1, userID: user._id },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((res) => {
+            updateUser(res, () => {
+              toast.success("Profile Successfully Updated");
+              setFormData({
+                ...formData,
+                pass1: "",
+                pass2: "",
+                textChange: "Update",
+              });
+            });
+          })
+          .catch((err) => {
+            toast.error(err.response.data.error);
+          });
+      }
     } else {
       toast.error("Please fill all required fields");
     }
@@ -100,7 +119,7 @@ const Private = () => {
     <div className="min-h-screen bg gray-100 text-gray-900 flex justify-center">
       <Navbar />
       <ToastContainer />
-      <div className="max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1">
+      <div className="max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center items-center flex-1">
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 text-center text-black">
           <h1 className="text-2xl xl:text-3xl font-extrabold">Profile Page</h1>
           <div className="mt-2 flex flex-col items-center">
@@ -111,12 +130,10 @@ const Private = () => {
             onSubmit={handleSubmit}
           >
             <div className="mx-auto max-w-xs relative">
-              <input
-                disabled
-                placeholder="Role"
-                value={role}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-              />
+              <i className="text-black font-bold">
+                <i>The only changeable fields are marked with the asterisk</i>
+                <i className="text-red-500 font-bold"> *</i> symbol
+              </i>
               <input
                 disabled
                 placeholder="Email"
@@ -136,9 +153,27 @@ const Private = () => {
               <div className="flex">
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder=" Change password"
                   onChange={handleChange("pass1")}
                   value={pass1}
+                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                />
+                <label className="text-red-500">*</label>
+              </div>
+              <div className="flex text-black">
+                <div className="">
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <i className="ml-1">Password must be at least 8 chars long</i>
+                </div>
+              </div>
+              <div className="flex">
+                <input
+                  type="password"
+                  placeholder="Confirm password"
+                  onChange={handleChange("pass2")}
+                  value={pass2}
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                 />
                 <label className="text-red-500">*</label>
@@ -156,7 +191,7 @@ const Private = () => {
             <div className="self-center	">
               <button
                 onClick={() => setPopUp(true)}
-                className="mt-5 items-center tracking-wide font-semibold bg-red-800 text-gray-100 w-full lg:w-9/12 lg:ml-14 py-4 rounded-lg hover:bg-red-700 transition-all duration-300 ease-in-out flex justify-center"
+                className="mt-5 items-center tracking-wide font-semibold bg-red-800 text-gray-100 w-full xl:w-9/12 lg:ml-14 py-4 rounded-lg hover:bg-red-700 transition-all duration-300 ease-in-out flex justify-center"
               >
                 <i className="fa fa-trash 1x w-6  -ml-2" />
                 <span className="ml-3">Delete Account</span>

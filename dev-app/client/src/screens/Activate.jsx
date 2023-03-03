@@ -37,7 +37,7 @@ const Activate = () => {
         }, 4000);
       })
       .catch((err) => {
-        toast.error("Account already Activated");
+        toast.error(err.response.data.error);
       });
   };
   return (

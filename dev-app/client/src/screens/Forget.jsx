@@ -25,7 +25,7 @@ const Forget = () => {
           setFormData({
             ...formData,
             email: "",
-            textChange: "Submitting....",
+            textChange: "Submit",
           });
           toast.success(`Password Reset Link is sent to ${email}`);
           setTimeout(() => {
@@ -33,7 +33,7 @@ const Forget = () => {
           }, 4000);
         })
         .catch((err) => {
-          toast.error("Email not valid. Must be your U of R email");
+          toast.error(err.response.data.error);
         });
     } else {
       toast.error("Please fill all fields");

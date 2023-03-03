@@ -60,7 +60,7 @@ function RecipeList() {
                 <div className="grid grid-cols-2 grid-flow-rows gap-2 mt-2">
                   {recipeDetail.extendedIngredients?.map((ingredients) => (
                     <div key={ingredients.id}>
-                      <div className="bg-white rounded-lg p-3 shadow-lg items-center">
+                      <div className="bg-white w-fit rounded-lg p-3 shadow-lg items-center">
                         <img
                           src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredients.image}`}
                         />
@@ -72,7 +72,7 @@ function RecipeList() {
               </div>
 
               <Link to={"/foodscreen/"}>
-                <button className="mt-10 bg-green-800 p-2 rounded-lg text-white font-bold hover:bg-green-700 text-left">
+                <button className="mt-10 w-full text-center bg-green-800 p-2 rounded-lg text-white font-bold hover:bg-green-700 text-left">
                   Back to Recipes
                 </button>
               </Link>

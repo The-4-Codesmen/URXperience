@@ -121,7 +121,7 @@ const SideBar = () => {
     if (!groupName) {
       toast.error("Please Enter groupName");
     } else if (selectedMember.length < 2) {
-      toast.error("Please select at least 2 memebers");
+      toast.error("Please select at least 2 members");
     } else {
       const groupChatNames = groupNameCheck.map((chatNames, idx) => {
         return chatNames.name;
@@ -153,7 +153,7 @@ const SideBar = () => {
           joinRoom(user.faculty);
         });
     } catch (error) {
-      toast.error("Somethign went Wrong");
+      toast.error("Something went Wrong");
     }
   }
   function handleDirectMemberMessage(member) {
@@ -177,7 +177,13 @@ const SideBar = () => {
           md:relative md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all h-full md:sticky md:top-0"
       >
         <div className="ml-20 text-lg font-extrabold dark:text-dw mt-0 flex space-x-12">
-          <img src={Logo} style={{ height: "100px", width: "100px" }} alt="" />
+          <a href="/dashboard">
+            <img
+              src={Logo}
+              style={{ height: "100px", width: "100px" }}
+              alt=""
+            />
+          </a>
           {sideBarState == true ? (
             <i
               className="fas fa-times-circle fa-lg"
@@ -395,7 +401,7 @@ const SideBar = () => {
             onClick={handleLeaveChat}
           >
             <i className="fas fa-sign-in-alt fa 1x w-6 -ml-2 text-white" />
-            <span className="ml-4">Leave Chat</span>
+            <span className="ml-4">Go to Dashboard</span>
           </button>
         </div>
       </div>

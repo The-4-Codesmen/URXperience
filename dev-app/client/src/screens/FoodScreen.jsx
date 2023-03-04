@@ -17,7 +17,9 @@ function FoodScreen() {
         <div className="rounded-lg overflow-hidden bg-opacity-0 ">
           <img className="w-full" src={TakeoutImage} alt="River" />
           <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2 underline">Takeouts</div>
+            <div className="font-bold text-xl mb-2 underline">
+              Find Resturants
+            </div>
             <p className="text-gray-700 text-base">Don't wanna cook?</p>
           </div>
           <Link to={"/Takeouts"}>

@@ -2,8 +2,11 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import { AppContext } from "../context/appContext";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import image from "../img/chatBG.jpg";
+import image2 from "../img/chatBG2.jpg";
 const MessageForm = () => {
   const [message, setMessage] = useState("");
+  const [toggle, setToggle] = useState(false);
   const { socket, currentRoom, messages, setMessages, directMemberMessage } =
     useContext(AppContext);
   const messageEndRef = useRef(null);
@@ -13,11 +16,13 @@ const MessageForm = () => {
     scrollToBottom();
     // messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
   }, [messages]);
-  // useEffect(() => {
-  //     //scroll to bottom everytime message is sent
-  //     messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
-  // }, [])
-
+  function handleToggle() {
+    if (toggle == false) {
+      setToggle(true);
+    } else {
+      setToggle(false);
+    }
+  }
   function retrieveFormattedDate() {
     const date = new Date();
     const year = date.getFullYear();
@@ -61,9 +66,40 @@ const MessageForm = () => {
   return (
     <div className="">
       <ToastContainer />
+      {/* <button onClick={handleToggle}>toggle me</button> */}
+      <div className="float-right mb-5">
+        <label className="flex select-none items-center space-x-4">
+          <div className="relative cursor-pointer">
+            <div
+              onClick={handleToggle}
+              className="h-5 w-14 rounded-lg bg-gray-200 shadow-inner "
+            ></div>
+            <div
+              onClick={handleToggle}
+              className={`${
+                toggle
+                  ? "dot shadow-switch-1 absolute right-0 -top-1 flex h-7 w-7 items-center justify-center rounded-full bg-white"
+                  : "dot shadow-switch-1 absolute left-0 -top-1 flex h-7 w-7 items-center justify-center rounded-full bg-white"
+              }`}
+            >
+              <span
+                className={`${
+                  toggle
+                    ? "active h-4 w-4 rounded-full bg-green-500"
+                    : "active h-4 w-4 rounded-full bg-gray-300"
+                }`}
+              ></span>
+            </div>
+          </div>
+          <div className="text-white font-bold">Toggle Background</div>
+        </label>
+      </div>
       <div
-        className="container overflow-y-scroll rounded-lg bg-gray-200 px-2 font-medium border border-gray-200"
-        style={{ height: "720px" }}
+        className="container overflow-y-scroll rounded-lg px-2 font-medium"
+        style={{
+          height: "720px",
+          backgroundImage: `${toggle ? `url(${image})` : `url(${image2})`}`,
+        }}
       >
         {user && !directMemberMessage?._id && (
           <div className="flex justify-center mt-1">
@@ -94,18 +130,31 @@ const MessageForm = () => {
               {messagesByDate?.map(
                 ({ content, time, from: sender }, msgIdx) => (
                   <div className="flow-root p-2" key={msgIdx}>
+                    {sender._id == user?._id ? (
+                      <p
+                        className={`text-xs underline-offset-4 text-right ${
+                          toggle ? "text-white" : "text-black"
+                        }`}
+                      >
+                        You {time}
+                      </p>
+                    ) : (
+                      <p
+                        className={`text-xs underline-offset-4 ${
+                          toggle ? "text-white" : "text-black"
+                        }`}
+                      >
+                        {sender.name} {time}
+                      </p>
+                    )}
                     <div
                       className={
                         sender?.email !== user?.email
-                          ? "p-2 float-left w-6/12 text-left rounded bg-yellow-100"
-                          : "p-2 text-right float-right w-6/12 rounded bg-green-100"
+                          ? "p-2 float-left max-w-xs break-all text-left rounded-t-2xl rounded-br-2xl bg-blue-400 text-white"
+                          : "p-2 text-right float-right break-all max-w-xs rounded-t-2xl rounded-bl-2xl bg-green-500 text-white"
                       }
                     >
-                      <p className="text-sm underline underline-offset-4">
-                        {sender._id == user?._id ? "You" : sender.name}
-                      </p>
                       <p>{content}</p>
-                      <p className="text-xs">Sent @ {time}</p>
                     </div>
                   </div>
                 )

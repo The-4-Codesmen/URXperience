@@ -170,7 +170,7 @@ const SideBar = () => {
   return (
     <div className="md:sticky md:top-0 z-50 text-white">
       {/* MOBILE SIDEBAR */}
-      <div className="bg-green-700 rounded-br-xl flex justify-between items-center fixed top-0 z-50">
+      <div className="backdrop-filter backdrop-blur-xl rounded-br-xl flex justify-between items-center fixed top-0 z-50">
         <button className="text-xl p-2" onClick={toogleSideBar}>
           <i className="fa fa-bars"></i>
         </button>
@@ -178,7 +178,7 @@ const SideBar = () => {
       {/* MAIN SIDEBAR */}
       <div
         ref={sideBarRef}
-        className="bg-green-700 w-72 px-5 py-4 absolute space-y-4 inset-y-0 left-0 transform -translate-x-full
+        className="backdrop-filter backdrop-blur-2xl w-72 px-5 py-4 absolute space-y-4 inset-y-0 left-0 transform -translate-x-full
           md:relative md:translate-x-0 z-50 transition duration-200 ease-in-out flex flex-col child:transition-all h-full md:sticky md:top-0"
       >
         <div className="ml-20 text-lg font-extrabold dark:text-dw mt-0 flex space-x-12">

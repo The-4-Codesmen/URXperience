@@ -20025,9 +20025,6 @@ function TopCategory() {
   function arrayp(p) {
     arr.push(p);
   }
-
-  // var searchCommand=""
-  // var se= "/foodscreen/IngredientSearched/"
   const navigate = useNavigate();
 
   function searchRecipe() {
@@ -20043,15 +20040,6 @@ function TopCategory() {
       a = a + searchP;
       window.location.href = a;
     }
-
-    ///EXTRA
-    // searchCommand = arr.join(',+')
-    //   searchCommand = searchCommand.replace(/\s+/g, '');
-    // se= se+searchCommand
-
-    // se = se.replace(/\s+/g, '');
-
-    // navigate("/foodscreen/IngredientSearched/"+file)
   }
 
   const onChange = (selectedOption) => {
@@ -20061,36 +20049,32 @@ function TopCategory() {
   return (
     <div className="rounded-lg overflow-hidden bg-opacity-0">
       <ToastContainer />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 underline text-center">
-          Categories
-        </div>
-
-        <div className="my-12 mb-15 border-b text-center">
-          <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
+      <div className="px-6 py-4 -mt-4">
+        <div className="mb-12 border-b text-center">
+          <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium">
             Search by available Ingredients
           </div>
-
           <div>
+            <NavLink onClick={searchRecipe} className="  text-center">
+              <div className="grid grid-cols-1 place-content-center rounded-lg text-center justify-center  p-2 mt-5 w-full bg-green-800 font-bold text-white hover:bg-green-700">
+                <div>
+                  <span>Find</span>
+                </div>
+              </div>
+            </NavLink>
             <Select
-              className="mt-10"
+              className="mt-2"
               closeMenuOnSelect={false}
               components={animatedComponents}
               onChange={onChange}
               isMulti
               options={options}
             />
-
-            <NavLink onClick={searchRecipe} className="  text-center">
-              <div className="grid grid-cols-1 place-content-center rounded-lg text-center justify-center  p-2 mt-5 w-full bg-yellow-200 font-bold text-black hover:bg-yellow-300">
-                <div>
-                  <span>Find</span>
-                </div>
-              </div>
-            </NavLink>
           </div>
         </div>
-
+        <div className="font-bold text-xl mb-5 underline text-center">
+          Categories
+        </div>
         <NavLink to={"/foodscreen/Option/ketogenic"}>
           <div className="rounded-lg text-center p-6 bg-green-800 font-bold text-white hover:bg-green-700">
             <span>Meat Lover</span>

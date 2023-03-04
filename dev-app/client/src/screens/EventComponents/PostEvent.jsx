@@ -215,7 +215,7 @@ function PostEvent() {
           <div className="text-center justify-center ">
             {allEvents.map((event) => (
               <div
-                className="bg-gray-100 box transition-all  p-2 justify-center 
+                className="bg-gray-100 box transition-all mb-3 p-2 justify-center 
             duration-300 ease-in-out hover:bg-yellow-200 rounded-lg mt-5 mr-20 ml-20 shadow-lg grid grid-cols-5  gap-4
             sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5  xl:grid-cols-5
 

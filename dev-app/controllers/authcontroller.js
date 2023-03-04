@@ -151,8 +151,8 @@ exports.loginController = (req, res) => {
           error: "User with that email does not exist",
         });
       }
-      // user.status = "online";
-      // user.save();
+      user.status = "online";
+      user.save();
       //Authenticate
       if (!user.authenticate(password)) {
         return res.status(400).json({

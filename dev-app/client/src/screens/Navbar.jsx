@@ -35,11 +35,11 @@ const Navbar = () => {
   }
   const items = [
     {
-      text: "Recipe",
+      text: "Try out Recipes",
       href: "/FoodScreen",
     },
     {
-      text: "Takeout",
+      text: "Find Resturants",
       href: "/takeouts",
     },
   ];

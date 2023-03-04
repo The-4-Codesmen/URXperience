@@ -162,6 +162,11 @@ const SideBar = () => {
     joinRoom(roomID, false);
     toogleSideBar();
   }
+  function sortBy(field) {
+    return function (a, b) {
+      return (a[field] < b[field]) - (a[field] > b[field]);
+    };
+  }
   return (
     <div className="md:sticky md:top-0 z-50 text-white">
       {/* MOBILE SIDEBAR */}
@@ -294,50 +299,45 @@ const SideBar = () => {
         </h2>
         <div
           className="container overflow-y-scroll rounded bg-transparent px-2 font-medium"
-          style={{ height: "250px" }}
+          style={{ height: "210px" }}
         >
-          {members
-            ?.map(
-              (member, idx) =>
-                member._id === user._id ? (
-                  <ListGroup.Item
-                    key={idx}
-                    className="hidden "
-                  ></ListGroup.Item>
-                ) : (
-                  <ListGroup.Item
-                    key={member._id}
-                    className="w-full cursor-pointer max-w-xs font-bold shadow-md rounded-lg py-3
+          {members?.sort(sortBy("status")).map(
+            (member, idx) =>
+              member._id === user._id ? (
+                <ListGroup.Item key={idx} className="hidden "></ListGroup.Item>
+              ) : (
+                <ListGroup.Item
+                  key={member._id}
+                  className="w-full cursor-pointer max-w-xs font-bold shadow-md rounded-lg py-3
                                 bg-green-700 text-white justify-center transition-all border border-green-800
                                 duration-300 ease-in-out focus:outline-none hover:bg-green-600 
                                 focus:shadow-sm focus:shadow-outline mt-5 grid grid-cols-5 gap-2 items-center"
-                    active={directMemberMessage?._id === member?._id}
-                    onClick={() => handleDirectMemberMessage(member)}
-                  >
-                    <div className="col-span-1 px-2">
-                      {member.status === "online" ? (
-                        <i className="fas fa-circle text-green-300 "></i>
-                      ) : (
-                        <i className="fas fa-circle text-red-600"></i>
-                      )}
-                    </div>
-                    <div className=" text-center col-span-3">{member.name}</div>
-                    <div className="col-span-1">
-                      <Badge
-                        className="col-span-2"
-                        badgeContent={
-                          user?.newMessages[sortIds(member._id, user._id)]
-                        }
-                        color="primary"
-                      >
-                        <MailIcon sx={{ color: "white" }} />
-                      </Badge>
-                    </div>
-                  </ListGroup.Item>
-                )
-              // sort by status
-            )
-            .sort((a, b) => (a.status > b.status ? -1 : 1))}
+                  active={directMemberMessage?._id === member?._id}
+                  onClick={() => handleDirectMemberMessage(member)}
+                >
+                  <div className="col-span-1 px-2">
+                    {member.status === "online" ? (
+                      <i className="fas fa-circle text-green-300 "></i>
+                    ) : (
+                      <i className="fas fa-circle text-red-600"></i>
+                    )}
+                  </div>
+                  <div className=" text-center col-span-3">{member.name}</div>
+                  <div className="col-span-1">
+                    <Badge
+                      className="col-span-2"
+                      badgeContent={
+                        user?.newMessages[sortIds(member._id, user._id)]
+                      }
+                      color="primary"
+                    >
+                      <MailIcon sx={{ color: "white" }} />
+                    </Badge>
+                  </div>
+                </ListGroup.Item>
+              )
+            // sort by status
+          )}
         </div>
         {/* For newly created group chats */}
         <div className="grid grid-cols-5 gap-2  items-center ">

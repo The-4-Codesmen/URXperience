@@ -66,7 +66,7 @@ function EventByDate() {
             Pick a Date
           </h1>
           <Calendar
-            className="CalendarContainer react-calendar"
+            className="CalendarContainer react-calendar h-screen"
             onChange={onChange}
             value={dateValue}
             minDate={new Date()}

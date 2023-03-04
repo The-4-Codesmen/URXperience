@@ -151,15 +151,14 @@ exports.loginController = (req, res) => {
           error: "User with that email does not exist",
         });
       }
-      user.status = "online";
-      user.save();
+      // user.status = "online";
+      // user.save();
       //Authenticate
       if (!user.authenticate(password)) {
         return res.status(400).json({
           error: "Password is incorrect",
         });
       }
-
       //generate token
       const token = jwt.sign(
         {
@@ -332,7 +331,7 @@ exports.updateController = (req, res) => {
       user.name = name;
     }
     if (password) {
-      if (password.length < 8 && !password.match(/\d/)) {
+      if (password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
         return res.status(400).json({
           error:
             "Password should be min 8 characters long and contains a number",

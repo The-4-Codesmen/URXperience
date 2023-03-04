@@ -156,7 +156,7 @@ const Dashboard = () => {
                       key={event._id}
                       className="mb-8 pl-2 w-full p-4 rounded-lg shadow-lg bg-white text-center"
                     >
-                      <div className="italic font-bold text-lg text-indigo-500 underline">
+                      <div className="italic font-bold text-lg text-green-800">
                         <h1>{event.title}</h1>
                       </div>
                       <p className=" font-bold">

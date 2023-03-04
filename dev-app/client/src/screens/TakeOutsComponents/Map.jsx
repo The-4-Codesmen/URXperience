@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import GoogleMapReact from "google-map-react";
 import {
   Paper,
@@ -13,7 +13,6 @@ import useStyles from "./Styles/MapStyle";
 const Map = ({ setCoords, setBounds, coords, places, setChildClicked }) => {
   const classes = useStyles();
   const isDesktop = useMediaQuery("(min-width:600px");
-
   return (
     <div className={classes.mapContainer}>
       <GoogleMapReact
@@ -31,12 +30,12 @@ const Map = ({ setCoords, setBounds, coords, places, setChildClicked }) => {
       >
         {places?.map((place, i) => (
           <div
-            className={`${classes.markerContainer} cursor-pointer hover:text-purple-300`}
+            className={`${classes.markerContainer} cursor-pointer hover:text-red-500 `}
             lat={Number(place.latitude)}
             lng={Number(place.longitude)}
             key={i}
           >
-            <LocationOnOutlinedIcon color="secondary" fontSize="larger" />
+            <i className={`fas fa-map-marker-alt text-xl`}></i>
           </div>
         ))}
       </GoogleMapReact>

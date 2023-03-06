@@ -61,17 +61,16 @@ function EventByDate() {
       <div className="divB absolute rounded-full top-60 left-50 top-20  w-80 h-80 bg-yellow-200 mix-blend-multiply  opacity-20 filter blur-xl"></div>
       <div className="divB2 absolute rounded-full top-60 left-50 mr-20  top-40  w-80 h-80 bg-indigo-500 mix-blend-multiply opacity-20 filter blur-xl"></div>
       <div className=" mt-4 m-4  flex text-center justify-center grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-10">
-        <div className="   col-span-1 justify-center  align-center text-center ">
+        <div className=" col-span-1 justify-center  align-center text-center ">
           <h1 className=" underline mt-20 mb-10  text-black font-bold dark:text-dw">
             Pick a Date
           </h1>
           <Calendar
-            className="CalendarContainer react-calendar"
+            className="CalendarContainer react-calendar h-screen"
             onChange={onChange}
             value={dateValue}
             minDate={new Date()}
           />
-
           <button
             onClick={handleClick}
             className="CalendarContainer mt-5 ml-16 tracking-wide  font-semibold bg-green-800 text-gray-100 w-1/2 py-4 rounded-lg hover:bg-green-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
@@ -85,8 +84,8 @@ function EventByDate() {
             {" "}
             Avaliable Events
           </h1>
-          <div className="  shadow-3xl   rounded-lg ">
-            <div className=" backdrop-filter  backdrop-blur-2xl bg-white/150  shadow-3xl  mt-10  ">
+          <div className="  shadow-3xl rounded-lg ">
+            <div className=" backdrop-filter  backdrop-blur-2xl bg-white/150  shadow-3xl  mt-10 border border-black rounded-lg ">
               {dateChosen ? (
                 <Carousel
                   showArrows={true}

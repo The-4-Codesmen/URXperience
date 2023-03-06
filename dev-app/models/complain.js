@@ -10,6 +10,7 @@ const complainSchema = new mongoose.Schema({
     required: true,
   },
   image: String,
+  cloudinary_id: String,
   user: {
     type: String,
     required: true,

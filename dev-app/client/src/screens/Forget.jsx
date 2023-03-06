@@ -25,7 +25,7 @@ const Forget = () => {
           setFormData({
             ...formData,
             email: "",
-            textChange: "Submitting....",
+            textChange: "Submit",
           });
           toast.success(`Password Reset Link is sent to ${email}`);
           setTimeout(() => {
@@ -33,7 +33,7 @@ const Forget = () => {
           }, 4000);
         })
         .catch((err) => {
-          toast.error("Email not valid. Must be your U of R email");
+          toast.error(err.response.data.error);
         });
     } else {
       toast.error("Please fill all fields");
@@ -57,7 +57,7 @@ const Forget = () => {
                 placeholder="Email"
                 onChange={handleChange("email")}
                 value={email}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
               <button
                 type="submit"

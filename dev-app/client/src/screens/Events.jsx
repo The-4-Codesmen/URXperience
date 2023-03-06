@@ -70,74 +70,84 @@ function Events() {
     return moment(date).format("MMM Do YY");
     //  return date;
   }
-
+  function sortBy(field) {
+    return function (a, b) {
+      return (a[field] < b[field]) - (a[field] > b[field]);
+    };
+  }
   return (
     <div className="min-h-screen  text-gray-900 flex justify-center mt-20">
       <Navbar />
-
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
-        <div className="text-center Align-items">
+      <div className=" container justify-center ">
+        <h1 className="text-2xl xl:text-3xl font-extrabold text-center mt-2 -mb-4 ">
+          ALL EVENTS
+        </h1>
+        <div className="text-center Align-items -mb-20">
           <EventPages />
         </div>
 
-        <div className="col-span-2 justify-center ">
-          <h1 className="text-2xl xl:text-3xl font-extrabold text-center ">
-            ALL EVENTS
-          </h1>
-
-          <div className="mt-2 grid p-4 grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto">
-            {allEvents.map((event) => (
-              <div
-                className="  bg-green-800  ok rounded-lg  mt-20 mb-20 "
-                key={event._id}
-              >
-                <div className=" bg-yellow-200  ok2 rounded-lg  mt-10 ">
-                  <div
-                    className="bg-gray-100 rounded-lg p-3 shadow-lg items-center now"
-                    key={event.id}
-                  >
-                    <div className="rounded-lg text-center ">
-                      <h1 className="font-mono tracking-tight font-bold  italic  text-green-800 text-4xl overflow-hidden">
-                        {event.title}
-                      </h1>{" "}
-                      <br></br>
-                      <label className="font-bold">Description</label>
-                      <h3 className="object-none h-40 overflow-hidden ">
-                        {event.description}
-                      </h3>
-                      <br></br>
-                      <EventNoteIcon
-                        className=" flex-right mb-2 leading-tight relative mb-5 "
-                        color="action "
-                        fontSize="large"
-                        sx={{ color: green[900] }}
-                      ></EventNoteIcon>
-                      <p className=" font-bold">
-                        From:{" "}
-                        <span className=" font-light">
-                          {changeTime(event.from) + " "}
-                        </span>
-                        From:{" "}
-                        <span className=" font-light ">
-                          {changeTime(event.to)}
-                        </span>
-                      </p>
-                      <p className=" font-bold">
-                        On:{" "}
-                        <span className=" font-light">
-                          {changeDate(event.date)}
-                        </span>
-                      </p>
-                      <p className=" font-bold">
-                        Posted By:{" "}
-                        <span className=" font-light">{event.authorName}</span>
-                      </p>
+        <div className="mt-2 grid p-4 grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto">
+          {allEvents?.sort(sortBy("date")).map((event) => (
+            <div
+              className="  bg-green-800  ok rounded-lg  mt-20 mb-20 "
+              key={event._id}
+            >
+              <div className=" bg-yellow-200  ok2 rounded-lg  mt-10 ">
+                <div
+                  className="bg-gray-100 rounded-lg p-3 shadow-lg items-center now"
+                  key={event.id}
+                >
+                  <div className="rounded-lg text-center ">
+                    <h1 className="font-mono tracking-tight font-bold  italic  text-green-800 text-4xl overflow-hidden">
+                      {event.title}
+                    </h1>{" "}
+                    <br></br>
+                    <label className="font-bold">Description</label>
+                    <div className="container mt-2 overflow-y-scroll rounded">
+                      <h3 className="object-none h-40">{event.description}</h3>
                     </div>
+                    <br></br>
+                    <EventNoteIcon
+                      className=" flex-right mb-2 leading-tight relative mb-5 "
+                      color="action "
+                      fontSize="large"
+                      sx={{ color: green[900] }}
+                    ></EventNoteIcon>
+                    <p className=" font-bold">
+                      From:{" "}
+                      <span className=" font-light">
+                        {changeTime(event.from) + " "}
+                      </span>
+                      To:{" "}
+                      <span className=" font-light ">
+                        {changeTime(event.to)}
+                      </span>
+                    </p>
+                    <p className=" font-bold">
+                      On:{" "}
+                      <span className=" font-light">
+                        {changeDate(event.date)}
+                      </span>
+                    </p>
+                    <p className=" font-bold">
+                      Posted By:{" "}
+                      <span className=" font-light">{event.authorName}</span>
+                    </p>
+                    <i>
+                      To register contact{" "}
+                      <a
+                        className="underline text-blue-500"
+                        href="mailto:housing.services@uregina.ca"
+                      >
+                        {" "}
+                        housing.services@uregina.ca
+                      </a>
+                    </i>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

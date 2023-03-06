@@ -6,6 +6,7 @@ import Map from "./TakeOutsComponents/Map";
 import { getPlacesData } from "../backendtakeouts/takeouts";
 import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 const TakeOuts = () => {
@@ -77,7 +78,10 @@ const TakeOuts = () => {
   return (
     <>
       <CssBaseline />
-      <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
+      <div className="mb-20">
+        <Navbar />
+      </div>
+      {/* <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} /> */}
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
         <div>
           <List
@@ -88,7 +92,8 @@ const TakeOuts = () => {
             isLoading={isLoading}
           />
         </div>
-        <div>
+        <div className="xl:col-span-2 xl:mt-10 mt-10">
+          <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} />
           <Map
             setBounds={setBounds}
             setCoords={setCoords}

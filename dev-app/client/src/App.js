@@ -21,6 +21,7 @@ import Events from "./screens/Events";
 import PostEvent from "./screens/EventComponents/PostEvent";
 import EventByDate from "./screens/EventComponents/EventByDate";
 import Complaints from "./screens/Complaints";
+import Confirmation from "./screens/Confimation";
 function App() {
   const [rooms, setRooms] = useState([]);
   const [groupRooms, setGroupRooms] = useState([]);
@@ -57,6 +58,7 @@ function App() {
           <Route path="/dashboard" exact element={<Dashboard />} />
           <Route path="/takeouts" exact element={<TakeOuts />} />
           <Route path="/chat" exact element={<Community />} />
+          <Route path="/confirm" exact element={<Confirmation />} />
           <Route path="/users/password/forget" exact element={<Forget />} />
           <Route path="/users/activate/:token" exact element={<Activate />} />
           <Route

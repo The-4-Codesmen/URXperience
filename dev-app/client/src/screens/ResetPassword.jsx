@@ -39,7 +39,7 @@ const ResetPassword = () => {
           }, 4000);
         })
         .catch((err) => {
-          toast.error("Something Went Wrong");
+          toast.error(err.response.data.error);
         });
     } else {
       toast.error(`Passwords does not match`);
@@ -65,6 +65,14 @@ const ResetPassword = () => {
                 value={pass1}
                 className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
+              <div className="flex text-black">
+                <div className="">
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <i className="ml-1">Password must be at least 8 chars long</i>
+                </div>
+              </div>
               <input
                 type="password"
                 placeholder="Confirm Password"

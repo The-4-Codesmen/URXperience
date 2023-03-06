@@ -30,18 +30,26 @@ function RecipeOfTheDay() {
           <div className="px-6 py-4">
             <div className="flex justify-between">
               <div className="font-bold text-xl mb-2 underline">
-                Recipe of The Day
+                Feelin' Hungry 😋
               </div>
             </div>
             <h2 className="text-gray-700 text-base">{recipe.title}</h2>
-            <p className="text-gray-700 text-base">
-              <strong>Servings: </strong>
-              {recipe.servings} plate(s)
-            </p>
-            <p className="text-gray-700 text-base">
-              <strong>Prep Time: </strong>
-              {recipe.readyInMinutes} mins
-            </p>
+            <div className="flex text-gray-700 text-base">
+              <div className="mr-5">
+                <i className="fas fa-utensils"></i>
+              </div>
+              <div className="">
+                <p>{recipe.servings} plate(s)</p>
+              </div>
+            </div>
+            <div className="flex text-gray-700 text-base">
+              <div className="mr-5">
+                <i className="fas fa-clock"></i>
+              </div>
+              <div className="">
+                <p>{recipe.readyInMinutes} min(s)</p>
+              </div>
+            </div>
           </div>
           <Link to={"/foodscreen/RecipeList/" + recipe.id}>
             <div className="text-center rounded-b-lg p-6 bg-green-800 font-bold text-white hover:bg-green-700">

@@ -9,16 +9,16 @@ export default makeStyles(() => ({
     width: "100px",
   },
   mapContainer: {
-    height: "85vh",
-    width: "200%",
+    height: "70vh",
+    width: "100%",
   },
   markerContainer: {
     position: "absolute",
     transform: "translate(-50%, -50%)",
     zIndex: 1,
-    "&:hover": {
-      zIndex: 2,
-    },
+    // "&:hover": {
+    //   zIndex: 2,
+    // },
   },
   pointer: {
     cursor: "pointer",

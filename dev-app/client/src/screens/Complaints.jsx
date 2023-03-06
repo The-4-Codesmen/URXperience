@@ -5,7 +5,7 @@ import axios from "axios";
 import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
 import Navbar from "./Navbar";
 import defaultImage from ".././img/card-top1.jpg";
-
+import { useDispatch, useSelector } from "react-redux";
 import "./addcss.css";
 
 const Complaints = () => {
@@ -20,6 +20,7 @@ const Complaints = () => {
     day = day.length > 1 ? day : "0" + day;
     return month + "/" + day + "/" + year;
   };
+  const { user } = useSelector((state) => state.user);
   const [complainForm, setComplainForm] = useState({
     title: "",
     image: "",
@@ -127,71 +128,90 @@ const Complaints = () => {
           <h1 className="text-2xl xl:text-3xl text-center font-extrabold mt-5 mb-5">
             Complaint Box
           </h1>
+          <div className="text-center">
+            <i className="text-green-800 font-bold ">
+              Below is a collection of all filed complaints from students.
+              Please find all details in each individual cards
+            </i>
+          </div>
           <div
-            className="col-span-2 xl:col-span-3 rounded-lg container overflow-y-scroll rounded-lg px-2 font-medium border border-gray-200 shadow-lg mb-5 p-2"
+            className="col-span-2 xl:col-span-3 rounded-lg container overflow-y-scroll
+            rounded-lg font-medium border border-gray-200 shadow-lg mb-5 xl:p-2 lg:p-2 md:p-2"
             style={{ height: "800px" }}
           >
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-2">
-              {complaints?.map((complaint) => (
-                <div className="flex justify-center" key={complaint._id}>
-                  <div className="rounded-lg shadow-lg bg-white max-w-sm">
-                    {complaint.image != null ? (
-                      <img
-                        className="rounded-t-lg object-cover img w-full hover:scale-125"
-                        src={`/uploads/${complaint.image}`}
-                        alt=""
-                      />
-                    ) : (
-                      <img
-                        className="rounded-t-lg img"
-                        src={defaultImage}
-                        alt=""
-                      />
-                    )}
-
-                    <div className="p-6 ">
-                      <h5 className="text-black text-xl font-medium mb-2 underline text-indigo-500">
-                        {complaint.title}
-                      </h5>
-                      <div
-                        className="container overflow-y-scroll bg-gray-100 rounded-lg p-2"
-                        style={{ height: "130px" }}
-                      >
-                        <p className="text-black text-base mb-2 overflow-hidden ">
-                          {complaint.description}
+              {complaints.length != 0 ? (
+                complaints?.map((complaint) => (
+                  <div className="flex justify-center" key={complaint._id}>
+                    <div className="rounded-lg shadow-lg bg-white max-w-sm">
+                      {complaint.image != null ? (
+                        <img
+                          className="rounded-t-lg object-cover img w-full hover:scale-125"
+                          src={`${complaint.image}`}
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          className="rounded-t-lg img"
+                          src={defaultImage}
+                          alt=""
+                        />
+                      )}
+                      <div className="p-6 ">
+                        <h5 className="text-black text-xl font-medium mb-2 text-indigo-500">
+                          {complaint.title}
+                        </h5>
+                        <div
+                          className="container overflow-y-scroll bg-gray-100 rounded-lg p-2 max-w-sm"
+                          style={{ height: "130px" }}
+                        >
+                          <p className="text-black text-base mb-2 break-all ">
+                            {complaint.description}
+                          </p>
+                        </div>
+                        <p className="text-base mt-2 mb-2">
+                          <strong className="text-indigo-500">
+                            Submitted By:
+                          </strong>{" "}
+                          <i>{complaint.user}</i>
                         </p>
+                        <p className="text-base mb-2">
+                          <strong className="text-indigo-500">
+                            Submission Date:
+                          </strong>{" "}
+                          <i>{complaint.createdAt}</i>
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleCompleteComplaint(complaint._id);
+                          }}
+                          className=" inline-block w-full px-6 py-2.5 bg-green-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                        >
+                          Resolve
+                        </button>
                       </div>
-                      <p className="text-base mt-2 mb-2">
-                        <strong className="text-indigo-500">
-                          Submitted By:
-                        </strong>{" "}
-                        <i>{complaint.user}</i>
-                      </p>
-                      <p className="text-base mb-2">
-                        <strong className="text-indigo-500">
-                          Submission Date:
-                        </strong>{" "}
-                        <i>{complaint.createdAt}</i>
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleCompleteComplaint(complaint._id);
-                        }}
-                        className=" inline-block w-full px-6 py-2.5 bg-green-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
-                      >
-                        Resolve
-                      </button>
                     </div>
                   </div>
+                ))
+              ) : (
+                <div className="col-span-2 row-span-1 text-center text-lg text-indigo-500">
+                  <h1>Sorry no complaints Avaliable!</h1>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
       ) : (
         <div className="mt-10 p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-5 ">
           <div className="max-w-sm rounded overflow-hidden shadow-lg">
+            <div className="text-center">
+              <i className="text-green-800 font-bold ">
+                Complaints can be filed using this form and a record of your
+                complaints will be kept in the container on the right (or below
+                for cellphones)
+              </i>
+            </div>
             <div className="px-6 py-4">
               <form
                 className="w-full flex-1 mt-2 text-indigo-500"
@@ -208,7 +228,7 @@ const Complaints = () => {
                       placeholder={name}
                       name="name"
                       disabled
-                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     />
                   </div>
                   <div className="flex">
@@ -218,7 +238,7 @@ const Complaints = () => {
                       onChange={handleChange}
                       name="title"
                       value={complainForm.title}
-                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     />
                     <label className="text-red-500">*</label>
                   </div>
@@ -228,7 +248,7 @@ const Complaints = () => {
                       onChange={onChange}
                       accept="image/png, image/jpeg, image/jpg"
                       name="image"
-                      className="w-full px-4 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                      className="w-full px-4 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     />
                     <label>
                       <i>Please upload an image if applicable</i>
@@ -241,7 +261,7 @@ const Complaints = () => {
                       onChange={handleChange}
                       name="description"
                       value={complainForm.description}
-                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 resize-none h-40 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 resize-none h-40 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     />
                     <label className="text-red-500">*</label>
                   </div>
@@ -260,51 +280,57 @@ const Complaints = () => {
               </form>
             </div>
           </div>
-          <div
-            className=" col-span-2 xl:col-span-3 rounded-lg container overflow-y-scroll rounded-lg px-2 font-medium border border-gray-200 p-2 shadow-lg"
-            style={{ height: "616px" }}
-          >
+          <div className=" col-span-2 xl:col-span-3 rounded-lg container overflow-y-scroll rounded-lg px-2 font-medium border border-gray-200 p-2 shadow-lg">
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-2">
-              {complaints?.map((complaint) => (
-                <div className="flex justify-center " key={complaint._id}>
-                  <div className="rounded-lg shadow-lg bg-white max-w-sm ">
-                    <div className="h-30  ">
-                      {complaint.image != null ? (
-                        <img
-                          className="rounded-t-lg object-cover w-full img "
-                          src={`/uploads/${complaint.image}`}
-                          alt=""
-                        />
-                      ) : (
-                        <img
-                          className="rounded-t-lg  w-full img"
-                          src={defaultImage}
-                          alt=""
-                        />
-                      )}
-                    </div>
-                    <div className="p-6 ">
-                      <h5 className="text-indigo-500 text-xl font-medium mb-2 underline">
-                        {complaint.title}
-                      </h5>
-                      <div
-                        className="container overflow-y-scroll bg-gray-100 rounded-lg p-2"
-                        style={{ height: "130px" }}
-                      >
-                        <p className="text-black text-base mb-2 overflow-hidden ">
-                          {complaint.description}
-                        </p>
+              {complaints.length != 0 ? (
+                complaints?.map((complaint) =>
+                  complaint.user === user.name ? (
+                    <div className="flex justify-center" key={complaint._id}>
+                      <div className="rounded-lg shadow-lg bg-white max-w-sm ">
+                        <div className="h-30 ">
+                          {complaint.image != null ? (
+                            <img
+                              className="rounded-t-lg object-cover w-full img "
+                              src={`${complaint.image}`}
+                              alt=""
+                            />
+                          ) : (
+                            <img
+                              className="rounded-t-lg object-cover img"
+                              style={{ width: "348px" }}
+                              src={defaultImage}
+                              alt=""
+                            />
+                          )}
+                        </div>
+                        <div className="p-6 ">
+                          <h5 className="text-indigo-500 text-xl font-medium mb-2">
+                            {complaint.title}
+                          </h5>
+                          <div
+                            className="container overflow-y-scroll bg-gray-100 rounded-lg p-2 max-w-sm"
+                            style={{ height: "130px" }}
+                          >
+                            <p className="text-black text-base mb-2 break-all">
+                              {complaint.description}
+                            </p>
+                          </div>
+                          <p className="text-base mt-2 mb-2">
+                            <strong className="text-indigo-500">
+                              Submission Date:
+                            </strong>{" "}
+                            <i>{complaint.createdAt}</i>
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-base mt-2 mb-2">
-                        <strong className="text-indigo-500">
-                          Submission Date:
-                        </strong>{" "}
-                        <i>{complaint.createdAt}</i>
-                      </p>
                     </div>
-                  </div>
+                  ) : null
+                )
+              ) : (
+                <div className="col-span-2 row-span-1 text-center text-lg text-indigo-500">
+                  <h1>Sorry no complaints Avaliable!</h1>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>

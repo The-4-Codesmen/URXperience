@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { authenticate, isAuth } from "../helpers/auth";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Logo from "../img/URX-logo.svg";
 import Select from "react-select";
 const Register = () => {
@@ -23,6 +23,7 @@ const Register = () => {
     { value: "Business", label: "Business" },
     { value: "SocialWork", label: "SocialWork" },
   ];
+  const navigate = useNavigate();
   const { email, name, pass1, pass2 } = formData;
   //Handle inputs
   const handleChange = (text) => (e) => {
@@ -53,8 +54,9 @@ const Register = () => {
               pass1: "",
               pass2: "",
             });
-
-            toast.success(res.data.message);
+            setSelected("");
+            navigate("/confirm");
+            //toast.success(res.data.message);
           })
           .catch((err) => {
             toast.error(err.response.data.error);
@@ -85,31 +87,47 @@ const Register = () => {
                 placeholder="Name"
                 onChange={handleChange("name")}
                 value={name}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white"
               />
               <input
                 type="text"
                 placeholder="Email"
                 onChange={handleChange("email")}
                 value={email}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
+              <div className="flex text-black">
+                <div className="">
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <i className="ml-1">Only uregina emails are allowed</i>
+                </div>
+              </div>
               <input
                 type="password"
                 placeholder="Password"
                 onChange={handleChange("pass1")}
                 value={pass1}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
+              <div className="flex text-black">
+                <div className="">
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <i className="ml-1">Password must be at least 8 chars long</i>
+                </div>
+              </div>
               <input
                 type="password"
                 placeholder="Confirm Password"
                 onChange={handleChange("pass2")}
                 value={pass2}
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
               />
               <Select
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-md focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                 placeholder="Select Faculty"
                 options={options}
                 closeMenuOnSelect={true}

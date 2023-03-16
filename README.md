@@ -31,5 +31,6 @@ ENSE 400
 * [Vlog #3: End-Semester Vlog](https://youtu.be/DndX3B8u4a0) (December 12nd 2022)
 
 ENSE 477
-* [Vlog #4: Course - First Vlog](https://youtu.be/t9MdULwZKtA) (January 26th 2023)
-* [Vlog #5: Course - Mid-Point Vlog](https://youtu.be/lrFzDl1KM0w) (February 09 2023)
+* [Vlog #4: First Vlog](https://youtu.be/t9MdULwZKtA) (January 26th 2023)
+* [Vlog #5: Mid-Point Vlog](https://youtu.be/lrFzDl1KM0w) (February 09 2023)
+* [Vlog #6: End-Semester Vlog](https://youtu.be/f0l-SxZZ0z4) (March 16 2023)

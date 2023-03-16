@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "NODE_ENV=production node server",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "test": "jest"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.4",
@@ -29,6 +30,11 @@
     "node-fetch": "^3.2.10",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
-    "socket.io": "^4.5.3"
+    "socket.io": "^4.5.3",
+    "supertest": "^6.3.3"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.5.0"
   }
 }

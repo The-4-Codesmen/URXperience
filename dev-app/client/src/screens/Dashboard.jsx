@@ -1,14 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
+import { isAuth, getCookie, signout } from "../helpers/auth";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../context/appContext";
 import ListGroup from "react-bootstrap/ListGroup";
-import Logo from "../img/URX-logo.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Navbar from "./Navbar";
-import Typical from "react-typical";
 import RecipeOfTheDay from "./FoodComponents/RecipeOfTheDay";
 import moment from "moment";
 const Dashboard = () => {
@@ -17,11 +14,6 @@ const Dashboard = () => {
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [allEvents, setAllEvents] = useState([]);
-  const [seePeople, setSeePeople] = useState(false);
-
-  // useEffect(() => {
-
-  // }, []);
   useEffect(() => {
     const token = getCookie("token");
     if (!getCookie("token")) {
@@ -52,7 +44,7 @@ const Dashboard = () => {
       const temp = res.data.members;
       let tempArray = [];
       temp.forEach((member) => {
-        if (member.status === "online" && member._id != user._id) {
+        if (member.status === "online" && member._id !== user._id) {
           tempArray.push(member);
         }
       });
@@ -103,10 +95,6 @@ const Dashboard = () => {
                 </h1>
                 <br></br>
                 <h2 className="max-w-2xl mb-6 font-light italic text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                  {/* <Typical
-                    steps={["Communities", 2000, "Foods", 2000, "Events", 2000]}
-                    loop={Infinity}
-                  /> */}
                   Communities, Foods, Events
                 </h2>
               </div>
@@ -150,7 +138,7 @@ const Dashboard = () => {
                   <br />
                   <i className="fas fa-arrow-down animate-bounce w-6 h-6 text-yellow-200"></i>
                 </div>
-                {allEvents.length != 0 ? (
+                {allEvents.length !== 0 ? (
                   allEvents.map((event) => (
                     <div
                       key={event._id}
@@ -198,7 +186,7 @@ const Dashboard = () => {
                   <br />
                   <i className="fas fa-arrow-down animate-bounce w-6 h-6 text-yellow-200"></i>
                 </div>
-                {users.length != 0 ? (
+                {users.length !== 0 ? (
                   users?.map((usr) => (
                     <ListGroup.Item
                       key={usr._id}

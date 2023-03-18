@@ -1,14 +1,9 @@
-import { Grid } from "@material-ui/core";
-import React from "react";
-import { useEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
 import Navbar from "../Navbar";
-
+import axios from "axios";
 import "../FoodComponents/buttoncss.css";
 function Option() {
-  // const FOOD_API_KEY = 'a42902460cad4a248268cab667591a2f';
   const [Options, setOptions] = useState([]);
   let params = useParams();
 
@@ -16,16 +11,21 @@ function Option() {
     getOptions(params.type);
   }, [params.type]);
 
+  const apiURL = process.env.REACT_APP_FOOD_API_RANDOM;
   const getOptions = async (name) => {
-    //49198b4329a048b381f314c4141e6c14
-
-    const api = await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_FOOD_API_KEY}&number=4&tags=${name}&instructionsRequired=true`
-    );
-    const data = await api.json();
-    // console.log(data)
-
-    setOptions(data.recipes);
+    const api = await axios.get(apiURL, {
+      params: {
+        number: 4,
+        tags: `${name}`,
+        instructionsRequired: "true",
+        sortDirection: "asc",
+      },
+      headers: {
+        "X-RapidAPI-Key": process.env.REACT_APP_FOOD_API_KEY,
+        "X-RapidAPI-Host": process.env.REACT_APP_FOOD_API_HOST,
+      },
+    });
+    setOptions(api.data.recipes);
   };
 
   return (

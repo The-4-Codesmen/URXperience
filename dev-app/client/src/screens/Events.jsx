@@ -9,8 +9,8 @@ import axios from "axios";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import { green } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
+import { toast } from "react-toastify";
+import { isAuth, getCookie, signout } from "../helpers/auth";
 function Events() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -47,7 +47,6 @@ function Events() {
         setAllEvents(res.data);
       })
       .catch((err) => {});
-    //    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5">
   };
 
   useEffect(() => {

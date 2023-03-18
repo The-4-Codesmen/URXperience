@@ -1,37 +1,32 @@
-import { Grid } from "@material-ui/core";
-import React from "react";
-import { useEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
 import Navbar from "../Navbar";
-import { NavLink, Navigate, useNavigate, useLocation } from "react-router-dom";
-
+import axios from "axios";
 import "../FoodComponents/buttoncss.css";
 function IngredientSearched() {
-  // const FOOD_API_KEY = '49198b4329a048b381f314c4141e6c14';
-
   const [Options, setOptions] = useState([]);
   let params = useParams();
-  // const stateParamVal = useLocation().state.stateParam;
-  // console.log(stateParamVal)
-
-  console.log(params.type);
 
   useEffect(() => {
     getOptions(params.type);
   }, [params.type]);
 
+  const apiURL = process.env.REACT_APP_FOOD_API_SEARCHED_INGREDIENTS;
   const getOptions = async (name) => {
-    console.log("search page  " + name);
-
-    const api = await fetch(
-      `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_FOOD_API_KEY}&ingredients=${name}&number=4`
-    );
-    const data = await api.json();
-    console.log(data);
-
-    setOptions(data);
+    const api = await axios.get(apiURL, {
+      params: {
+        ingredients: `${name}`,
+        number: 4,
+        ignorePantry: "false",
+        ranking: 1,
+        instructionsRequired: "true",
+      },
+      headers: {
+        "X-RapidAPI-Key": process.env.REACT_APP_FOOD_API_KEY,
+        "X-RapidAPI-Host": process.env.REACT_APP_FOOD_API_HOST,
+      },
+    });
+    setOptions(api.data);
   };
 
   return (

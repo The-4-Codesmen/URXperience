@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
 import "./Event.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 function EventPages() {
   const { user } = useSelector((state) => state.user);
   return (
     <div>
       <div className=" grid grid-rows-2   justify-center  place-items-center mt-10">
-        {/* <h1 className='justify-center mb-15 mt-5 '>Advanced Options</h1> */}
         <div className="grid p-4 grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto">
           <div className="">
             <NavLink to={"/EventByDate"}>

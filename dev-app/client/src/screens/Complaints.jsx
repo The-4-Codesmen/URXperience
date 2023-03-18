@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
+import { isAuth, getCookie, signout } from "../helpers/auth";
 import Navbar from "./Navbar";
 import defaultImage from ".././img/card-top1.jpg";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import "./addcss.css";
 
 const Complaints = () => {
@@ -118,7 +118,7 @@ const Complaints = () => {
       toast.error("Somethign went Wrong");
     }
   };
-  // console.log(file);
+
   return (
     <div className="min-h-screen text-gray-900 flex justify-center items-center">
       <Navbar />
@@ -140,11 +140,11 @@ const Complaints = () => {
             style={{ height: "800px" }}
           >
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-2">
-              {complaints.length != 0 ? (
+              {complaints.length !== 0 ? (
                 complaints?.map((complaint) => (
                   <div className="flex justify-center" key={complaint._id}>
                     <div className="rounded-lg shadow-lg bg-white max-w-sm">
-                      {complaint.image != null ? (
+                      {complaint.image !== null ? (
                         <img
                           className="rounded-t-lg object-cover img w-full hover:scale-125"
                           src={`${complaint.image}`}
@@ -282,13 +282,13 @@ const Complaints = () => {
           </div>
           <div className=" col-span-2 xl:col-span-3 rounded-lg container overflow-y-scroll rounded-lg px-2 font-medium border border-gray-200 p-2 shadow-lg">
             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-2">
-              {complaints.length != 0 ? (
+              {complaints.length !== 0 ? (
                 complaints?.map((complaint) =>
                   complaint.user === user.name ? (
                     <div className="flex justify-center" key={complaint._id}>
                       <div className="rounded-lg shadow-lg bg-white max-w-sm ">
                         <div className="h-30 ">
-                          {complaint.image != null ? (
+                          {complaint.image !== null ? (
                             <img
                               className="rounded-t-lg object-cover w-full img "
                               src={`${complaint.image}`}

@@ -4,7 +4,6 @@ import TakeoutImage from "../img/TakeoutMap.jpg";
 import { Link } from "react-router-dom";
 import RecipeOfTheDay from "./FoodComponents/RecipeOfTheDay";
 import TopCategory from "./FoodComponents/TopCategory";
-import IngredientSearched from "./FoodPages/IngredientSearched";
 
 function FoodScreen() {
   return (

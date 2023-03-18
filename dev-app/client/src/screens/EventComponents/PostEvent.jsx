@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-
-import { Navigate } from "react-router-dom";
-
 import axios from "axios";
 import Navbar from "../Navbar";
 import moment from "moment";
-import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import { purple, red } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUser, isAuth, getCookie, signout } from "../../helpers/auth";
+import { useSelector } from "react-redux";
+import { isAuth, getCookie, signout } from "../../helpers/auth";
 
 function PostEvent() {
   const navigate = useNavigate();
@@ -75,19 +70,11 @@ function PostEvent() {
   const handleChange = (text) => (e) => {
     setFormData({ ...formData, [text]: e.target.value });
   };
-
-  // function checkFromDate() {
-  //   if (to < from) {
-  //     return `${from}`;
-  //   }
-  //   return to;
-  // }
   function disableDate() {
     const date = new Date();
     return moment(date).format("YYYY-MM-DD");
   }
   // on submit
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -124,7 +111,6 @@ function PostEvent() {
   };
 
   // delete event
-
   const deleteEvent = (_id) => {
     if (_id) {
       axios
@@ -193,7 +179,6 @@ function PostEvent() {
               <br />
               <input
                 type="time"
-                // min={checkFromDate()}
                 onChange={handleChange("to")}
                 value={to}
                 className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
@@ -227,8 +212,6 @@ function PostEvent() {
                   <h1 className="text-center  font-mono font-bold text-m  text-indigo-500">
                     {event.title}
                   </h1>
-
-                  {/* <p className="text-xs   ">On: {event.date}</p>      */}
 
                   <p className="text-xs  text-green-800">
                     Posted On:{" "}

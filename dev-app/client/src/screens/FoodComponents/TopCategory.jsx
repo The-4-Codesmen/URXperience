@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useNavigate, Link, NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 import "./buttoncss.css";
 
@@ -20103,10 +20103,10 @@ function TopCategory() {
         </NavLink>
       </div>
 
-      {selected?.map((recipe) => (
-        <>
+      {selected?.map((recipe, idx) => (
+        <div key={idx}>
           <div>{arrayp(recipe.label)}</div>
-        </>
+        </div>
       ))}
     </div>
   );

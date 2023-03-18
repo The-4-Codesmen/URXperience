@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Logo from "../img/URX-logo.svg";
 import Navbar from "./Navbar";
 const Private = () => {
@@ -63,7 +63,7 @@ const Private = () => {
           pass1: "",
           pass2: "",
         });
-      } else if (pass1 != pass2) {
+      } else if (pass1 !== pass2) {
         toast.error("Passwords needs to match");
       } else {
         setFormData({ ...formData, textChange: "Updated" });

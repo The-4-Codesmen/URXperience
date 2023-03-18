@@ -2,22 +2,26 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./buttoncss.css";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-
+import axios from "axios";
 function RecipeOfTheDay() {
   const [Random, setRandomRecipe] = useState([]);
 
   useEffect(() => {
     getRandomRecipe();
   }, []);
-
-  // const FOOD_API_KEY = "a42902460cad4a248268cab667591a2f";
+  const apiURL = process.env.REACT_APP_FOOD_API_RANDOM;
   const getRandomRecipe = async () => {
-    const api = await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_FOOD_API_KEY}&number=1&instructionsRequired=true&extendedIgredients=true`
-    );
-    const data = await api.json();
-    setRandomRecipe(data.recipes);
+    const api = await axios.get(apiURL, {
+      params: {
+        number: 1,
+        instructionsRequired: "true",
+      },
+      headers: {
+        "X-RapidAPI-Key": process.env.REACT_APP_FOOD_API_KEY,
+        "X-RapidAPI-Host": process.env.REACT_APP_FOOD_API_HOST,
+      },
+    });
+    setRandomRecipe(api.data.recipes);
   };
   return (
     <>

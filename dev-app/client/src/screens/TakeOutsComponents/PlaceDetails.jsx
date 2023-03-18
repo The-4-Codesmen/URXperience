@@ -13,7 +13,6 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PhoneIcon from "@material-ui/icons/Phone";
 import Rating from "@material-ui/lab/Rating";
 import useStyles from "./Styles/PlaceDetailsStyle";
-import LocationOn from "@material-ui/icons/LocationOn";
 
 const PlaceDetails = ({ place, selected, refProp }) => {
   const classes = useStyles();
@@ -24,7 +23,6 @@ const PlaceDetails = ({ place, selected, refProp }) => {
     <>
       {place.photo ? (
         <Card elevation={6}>
-          {/* <CardMedia title={place.name} /> */}
           <CardMedia
             style={{ height: 350 }}
             image={place.photo.images.large.url}

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { CssBaseline, Grid } from "@material-ui/core";
+import { CssBaseline } from "@material-ui/core";
 import Header from "./TakeOutsComponents/Header";
 import List from "./TakeOutsComponents/List";
 import Map from "./TakeOutsComponents/Map";
 import { getPlacesData } from "../backendtakeouts/takeouts";
-import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
+import { isAuth, getCookie, signout } from "../helpers/auth";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 const TakeOuts = () => {
   const [places, setPlaces] = useState([]);
@@ -81,7 +81,6 @@ const TakeOuts = () => {
       <div className="mb-20">
         <Navbar />
       </div>
-      {/* <Header onPlaceChanged={onPlaceChanged} onLoad={onLoad} /> */}
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
         <div>
           <List

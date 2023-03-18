@@ -1,16 +1,13 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import Calendar from "react-calendar";
-//  import 'react-calendar/dist/Calendar.css';
 import "./Event.css";
 import { ToastContainer, toast } from "react-toastify";
 import EventBusyTwoToneIcon from "@mui/icons-material/EventBusyTwoTone";
-import { green, purple, red } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
 import axios from "axios";
 import CelebrationIcon from "@mui/icons-material/Celebration";
-import ReactDOM from "react-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import Navbar from "../Navbar";

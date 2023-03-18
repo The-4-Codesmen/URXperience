@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { authenticate, isAuth } from "../helpers/auth";
 //import axios from 'axios'
@@ -12,7 +12,7 @@ const Login = () => {
   });
   const navigate = useNavigate();
   const [loginUser] = useLoginUserMutation();
-  // const { socket } = useContext(AppContext);
+
   const { email, pass1 } = formData;
   //Handle inputs
   const handleChange = (text) => (e) => {
@@ -31,7 +31,7 @@ const Login = () => {
               pass1: "",
             });
           });
-          // socket.emit('new-user')
+
           toast.success(`Hey ${res.data.user.name}`);
           navigate("/dashboard");
         })

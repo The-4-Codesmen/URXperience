@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import Calendar from "react-calendar";
 import "./Event.css";
@@ -6,7 +6,9 @@ import { ToastContainer, toast } from "react-toastify";
 import EventBusyTwoToneIcon from "@mui/icons-material/EventBusyTwoTone";
 import { green } from "@mui/material/colors";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { isAuth, getCookie, signout } from "../../helpers/auth";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
@@ -20,6 +22,31 @@ function EventByDate() {
 
   const [dateChosen, setDateChosen] = useState(null);
   const [allEvents, setAllEvents] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = getCookie("token");
+    if (!getCookie("token")) {
+      navigate("/login");
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_SERVER}api/user/${isAuth()._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const { role, name, email } = res.data;
+        })
+        .catch((err) => {
+          toast.error(`Error to your Information ${err.response.statusText}`);
+          if (err.response.status === 401) {
+            signout(() => {
+              navigate("/login");
+            });
+          }
+        });
+    }
+  }, []);
 
   const handleClick = () => {
     if (!dateValue) {

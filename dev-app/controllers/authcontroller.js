@@ -331,7 +331,7 @@ exports.updateController = (req, res) => {
       user.name = name;
     }
     if (password) {
-      if (password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+      if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
         return res.status(400).json({
           error:
             "Password should be min 8 characters long and contains a number",

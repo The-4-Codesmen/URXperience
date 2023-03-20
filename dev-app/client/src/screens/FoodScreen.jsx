@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import TakeoutImage from "../img/TakeoutMap.jpg";
 import { Link } from "react-router-dom";
 import RecipeOfTheDay from "./FoodComponents/RecipeOfTheDay";
 import TopCategory from "./FoodComponents/TopCategory";
-
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { isAuth, getCookie, signout } from "../helpers/auth";
 function FoodScreen() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = getCookie("token");
+    if (!getCookie("token")) {
+      navigate("/login");
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_SERVER}api/user/${isAuth()._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const { role, name, email } = res.data;
+        })
+        .catch((err) => {
+          toast.error(`Error to your Information ${err.response.statusText}`);
+          if (err.response.status === 401) {
+            signout(() => {
+              navigate("/login");
+            });
+          }
+        });
+    }
+  }, []);
   return (
     <div className="min-h-screen bg gray-100 text-gray-900 flex justify-center">
       <Navbar />

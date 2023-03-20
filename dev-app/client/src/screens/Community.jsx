@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import SideBar from "../components/SideBar";
 import MessageForm from "../components/MessageForm";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
-import { updateUser, isAuth, getCookie, signout } from "../helpers/auth";
+import { isAuth, getCookie, signout } from "../helpers/auth";
 const Community = () => {
   const navigate = useNavigate();
   useEffect(() => {

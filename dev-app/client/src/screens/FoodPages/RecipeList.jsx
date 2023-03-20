@@ -4,10 +4,39 @@ import { Link } from "react-router-dom";
 import { sanitize } from "dompurify";
 import image from "../../img/recipelistBG.jpg";
 import Navbar from "../Navbar";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "axios";
+import { isAuth, getCookie, signout } from "../../helpers/auth";
 function RecipeList() {
   const [recipeDetail, setRecipeDetail] = useState({});
   let params = useParams();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = getCookie("token");
+    if (!getCookie("token")) {
+      navigate("/login");
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_SERVER}api/user/${isAuth()._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const { role, name, email } = res.data;
+        })
+        .catch((err) => {
+          toast.error(`Error to your Information ${err.response.statusText}`);
+          if (err.response.status === 401) {
+            signout(() => {
+              navigate("/login");
+            });
+          }
+        });
+    }
+  }, []);
+
   const apiURL = `${process.env.REACT_APP_FOOD_API_RECIPE_INFO}${params.id}/information`;
   const api = async () => {
     const datafetch = await axios.get(apiURL, {

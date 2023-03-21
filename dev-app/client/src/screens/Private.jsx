@@ -96,16 +96,17 @@ const Private = () => {
       toast.error("Please fill all required fields");
     }
   };
-  function deleteAccount() {
+  const deleteAccount = async () => {
     const token = getCookie("token");
     if (isAuth()._id != null) {
-      axios
+      await axios
         .delete(`${process.env.REACT_APP_SERVER}api/delete/`, {
           headers: {
             accessToken: token,
           },
         })
-        .then(toast.success(`Account successfully deleted`))
+        .then(toast.success("Account sucessfully deleted!"))
+        .then(await new Promise((resolve) => setTimeout(resolve, 1000)))
         .then(
           signout(() => {
             navigate("/login");
@@ -114,7 +115,7 @@ const Private = () => {
     } else {
       console.log("something went wrong");
     }
-  }
+  };
   return (
     <div className="min-h-screen bg gray-100 text-gray-900 flex justify-center">
       <Navbar />

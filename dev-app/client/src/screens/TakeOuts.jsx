@@ -3,7 +3,7 @@ import { CssBaseline } from "@material-ui/core";
 import Header from "./TakeOutsComponents/Header";
 import List from "./TakeOutsComponents/List";
 import Map from "./TakeOutsComponents/Map";
-import { getPlacesData } from "../backendtakeouts/takeouts";
+import { getPlacesData } from "./TakeOutsComponents/backendtakeouts/takeouts";
 import { isAuth, getCookie, signout } from "../helpers/auth";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";

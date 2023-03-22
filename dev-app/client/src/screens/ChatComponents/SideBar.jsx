@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import Logo from "../img/URX-logo.svg";
+import Logo from "../../img/URX-logo.svg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { AppContext } from "../context/appContext";
+import { AppContext } from "../../context/appContext";
 import ListGroup from "react-bootstrap/ListGroup";
-import { addNotifications, resetNotifications } from "../features/userSlice";
+import { addNotifications, resetNotifications } from "../../features/userSlice";
 import Badge from "@mui/material/Badge";
 import MailIcon from "@mui/icons-material/Mail";
 import axios from "axios";
 import Select from "react-select";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 const SideBar = () => {
   const sideBarRef = useRef();
   const [sideBarState, setSideBarState] = useState(false);
@@ -72,7 +72,6 @@ const SideBar = () => {
     setMembers(payload);
   });
   function getAttributedRoom() {
-    //console.log(process.env.REACT_APP_SERVER);
     axios.get(`${process.env.REACT_APP_SERVER}api/rooms`).then((res) => {
       setRooms(res.data);
     });
@@ -132,12 +131,9 @@ const SideBar = () => {
           return;
         }
       }
-      //console.log(groupChatNames)
-      // // console.log(getdatafromsource)
       const additonalMember = `${user._id}`;
       getdatafromsource.push(additonalMember);
       socket.emit("group-chat", user._id, groupName.trim(), getdatafromsource);
-      // getGroupChatRooms()
       setPopUp(false);
       toast.success("Chat successfully created!");
     }
@@ -290,7 +286,6 @@ const SideBar = () => {
                 </div>
               </div>
             </div>
-            {/* {console.log(groupNameCheck.name)} */}
           </>
         )}
         {/* for members who joined the chat */}

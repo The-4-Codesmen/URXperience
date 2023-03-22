@@ -1,20 +1,19 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { AppContext } from "../context/appContext";
-import { useDispatch, useSelector } from "react-redux";
+import { AppContext } from "../../context/appContext";
+import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import image from "../img/chatBG.jpg";
-import image2 from "../img/chatBG2.jpg";
+import image from "../../img/chatBG.jpg";
+import image2 from "../../img/chatBG2.jpg";
 const MessageForm = () => {
   const [message, setMessage] = useState("");
   const [toggle, setToggle] = useState(false);
   const { socket, currentRoom, messages, setMessages, directMemberMessage } =
     useContext(AppContext);
   const messageEndRef = useRef(null);
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state?.user);
 
   useEffect(() => {
     scrollToBottom();
-    // messageEndRef.current?.scrollIntoView({ behaviour: "smooth" })
   }, [messages]);
   function handleToggle() {
     if (toggle == false) {
@@ -37,7 +36,6 @@ const MessageForm = () => {
   }
   const presentDate = retrieveFormattedDate();
   socket.off("room-messages").on("room-messages", (roomMessages) => {
-    //console.log(roomMessages)
     setMessages(roomMessages);
   });
   function formatAMPM(date) {
@@ -66,7 +64,6 @@ const MessageForm = () => {
   return (
     <div className="">
       <ToastContainer />
-      {/* <button onClick={handleToggle}>toggle me</button> */}
       <div className="float-right mb-5">
         <label className="flex select-none items-center space-x-4">
           <div className="relative cursor-pointer">

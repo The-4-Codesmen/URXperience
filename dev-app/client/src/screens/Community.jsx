@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import SideBar from "../components/SideBar";
-import MessageForm from "../components/MessageForm";
+import SideBar from "./ChatComponents/SideBar";
+import MessageForm from "./ChatComponents/MessageForm";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";

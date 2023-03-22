@@ -34,3 +34,6 @@ ENSE 477
 * [Vlog #4: First Vlog](https://youtu.be/t9MdULwZKtA) (January 26th 2023)
 * [Vlog #5: Mid-Point Vlog](https://youtu.be/lrFzDl1KM0w) (February 09 2023)
 * [Vlog #6: End-Semester Vlog](https://youtu.be/f0l-SxZZ0z4) (March 16 2023)
+
+## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

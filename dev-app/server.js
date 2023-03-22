@@ -47,8 +47,6 @@ app.use((req, res, next) => {
 });
 
 const PORT = process.env.PORT;
-//5000-backend
-//const server = require('http').createServer(app)
 //chat system port
 const http = require("http");
 const { Server } = require("socket.io");
@@ -99,7 +97,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("message-room", async (room, content, sender, time, date) => {
-    // console.log('new-message', content)
     await message.create({ content, from: sender, time, date, to: room });
     //sending message to specified room
     let roomMessages = await retrievePreviousMessagesinRoom(room);

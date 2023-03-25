@@ -35,5 +35,8 @@ ENSE 477
 * [Vlog #5: Mid-Point Vlog](https://youtu.be/lrFzDl1KM0w) (February 09 2023)
 * [Vlog #6: End-Semester Vlog](https://youtu.be/f0l-SxZZ0z4) (March 16 2023)
 
+Link to our website's commercial
+[URXperience Commercial](https://www.youtube.com/watch?v=e4XHVaLO25I)
+
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

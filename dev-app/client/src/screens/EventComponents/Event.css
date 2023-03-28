@@ -1,6 +1,6 @@
 
 
-.divB{
+.event-div-circle{
 
 
     z-index: -1;
@@ -15,7 +15,7 @@
     from { -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg); }
     to   { -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
 }
-.divB2{
+.event-div-circle-2{
 
     z-index: -1;
     animation: eventB2;
@@ -32,8 +32,30 @@
 .eventPageBd{
     z-index: 950;
 }
+
+
+.event-bg-right{
+
+    transform: skewY(7deg);
+    margin-top: 40px;
     
-    .CalendarContainer {
+ 
+}
+
+.event-bg-left{
+
+    transform: skewY(-20deg);
+    margin-top: 40px;
+}
+
+.trans-form-Y-axis{
+
+    transform: skewY(13deg);
+
+
+}
+    
+.CalendarContainer {
     
     
         max-width: 500px;
@@ -47,10 +69,10 @@
          
       
     
-    }
-    .box{
+}
+.box{
         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    }
+}
  
     .react-calendar { 
        

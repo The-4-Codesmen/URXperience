@@ -69,10 +69,10 @@ exports.ensureUserExist = (req, res, next) => {
   }
   const verified = jsonWebToken.verify(token, process.env.JWT_SECRET_KEY);
   //const { _id, name, email, password, faculty } = jsonWebToken.decode(token)
-  // console.log(_id)
+
   if (!verified)
     return res.status(406).json({ err: "token verification failed" });
-  //console.log(verified._id, "hello")
+  
   req.user_id = verified._id;
   next();
 };

@@ -64,6 +64,7 @@ router.post("/eventfindbyid", findEventByIdController);
 router.get("/eventfindall", findEventAllController);
 router.get("/dashboardevent", findEventforDashboardController);
 
+// chat routes
 //get all members
 router.get("/allUsers", retrieveAllContorller);
 

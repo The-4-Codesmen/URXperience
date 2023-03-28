@@ -402,8 +402,8 @@ exports.LogoutController = (req, res) => {
       user.newMessages = {};
       user.save();
     });
-    // const user = User.findById(_id);
-    // user.save();
+
+
     res.status(200).send();
   } catch (error) {
     return res.status(400).send();
@@ -412,7 +412,7 @@ exports.LogoutController = (req, res) => {
 
 exports.deleteController = async (req, res) => {
   try {
-    // console.log(req.user_id, "we here");
+  
     await Chat.deleteMany({ creator: req.user_id });
     const user = await User.findById(req.user_id);
     await Complain.deleteMany({ user: user.name });
@@ -425,7 +425,7 @@ exports.deleteController = async (req, res) => {
 
 exports.retrieveAllContorller = async (req, res) => {
   const members = await User.find().sort({ name: 1 });
-  // console.log(members)
+
   res.json({ members });
 };
 
@@ -437,7 +437,7 @@ exports.getAllGroupChat = async (req, res) => {
 
 exports.deleteGroupChatController = async (req, res) => {
   const { groupRoom } = req.body;
-  // console.log(groupRoom)
+ 
   await Message.deleteMany({ to: groupRoom });
   await Chat.deleteOne({ name: groupRoom });
   res
@@ -484,7 +484,7 @@ exports.findEventAllController = async (req, res) => {
   const events = await Event.find().sort({ _id: -1 });
 
   res.send(events);
-  //res.send(toDo)
+  
 };
 
 exports.findEventByIdController = async (req, res) => {
@@ -499,11 +499,11 @@ exports.findEventforDashboardController = async (req, res) => {
   const events = await Event.find().sort({ date: 1 }).limit(4);
 
   res.send(events);
-  //res.send(toDo)
+
 };
 
 exports.complaintPostController = async (req, res) => {
-  // console.log(req.file?.path || "here");
+ 
   const name = req.body.name;
   const title = req.body.title;
   const description = req.body.description;
@@ -543,7 +543,7 @@ exports.getComplaintController = async (req, res) => {
 exports.deleteComplaintController = async (req, res) => {
   const { postID } = req.body;
   const post = await Complain.findById(postID);
-  // console.log(post.user);
+  
   if (post.cloudinary_id == null) {
     const postee = await User.findOne({ name: post.user });
 

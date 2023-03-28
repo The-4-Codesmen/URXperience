@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
-import "./EventComponents/EventPage.css";
+import "./EventComponents/Event.css";
 
 import EventPages from "./EventComponents/EventPages";
 import moment from "moment";
@@ -88,12 +88,12 @@ function Events() {
         <div className="mt-2 grid p-4 grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-8 auto-cols-auto">
           {allEvents?.sort(sortBy("date")).map((event) => (
             <div
-              className="  bg-green-800  ok rounded-lg  mt-20 mb-20 "
+              className="  bg-green-800 event-bg-right rounded-lg  mt-20 mb-20 "
               key={event._id}
             >
-              <div className=" bg-yellow-200  ok2 rounded-lg  mt-10 ">
+              <div className=" bg-yellow-200  event-bg-left rounded-lg  mt-10 ">
                 <div
-                  className="bg-gray-100 rounded-lg p-3 shadow-lg items-center now"
+                  className="bg-gray-100 rounded-lg p-3 shadow-lg items-center trans-form-Y-axis"
                   key={event.id}
                 >
                   <div className="rounded-lg text-center ">

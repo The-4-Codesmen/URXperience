@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./buttoncss.css";
 import axios from "axios";
 function RecipeOfTheDay() {
   const [Random, setRandomRecipe] = useState([]);

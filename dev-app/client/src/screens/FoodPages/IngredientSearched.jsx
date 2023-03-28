@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { isAuth, getCookie, signout } from "../../helpers/auth";
-import "../FoodComponents/buttoncss.css";
 function IngredientSearched() {
   const [Options, setOptions] = useState([]);
   let params = useParams();

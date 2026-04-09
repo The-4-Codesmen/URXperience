@@ -324,7 +324,7 @@ const Complaints = () => {
                         </div>
                       </div>
                     </div>
-                  ) : null
+                  ) : null,
                 )
               ) : (
                 <div className="col-span-2 row-span-1 text-center text-lg text-indigo-500">
